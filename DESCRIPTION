@@ -1,0 +1,40 @@
+Package: metapacR
+Type: Package
+Title: Data Mining and Analysis of Metabolome Datasets
+Version: 0.1.0
+Author: Ujjwal Mukund Mahajan
+Maintainer: Ujjwal Mukund Mahajan <umahajan@med.lmu.de>
+Description: metapacR is an easy-to-use R package implementing a complete workflow 
+    for downstream analysis of targeted and untargeted metabolome data. 
+    Metabolome results can be imported into metapacR as a numerical matrix,
+    allowing integration into current analysis frameworks. Data mining of metapacR 
+    datasets is enabled through integration with Metabolomics Workbench. metapacR 
+    allows data inspection, normalization, univariate and multivariate analysis, 
+    displaying informative visualizations.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Depends: 
+    R (>= 3.6.0)
+Imports:
+    methods,
+    stats,
+    utils,
+    tidyverse,
+    ggplot2,
+    ggrepel,
+    ggpubr,
+    car,
+    pROC,
+    factoextra,
+    nlme,
+    emmeans,
+    condformat,
+    here,
+    Hmisc,
+    pheatmap,
+    rstatix
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
