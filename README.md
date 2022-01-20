@@ -1,3 +1,5 @@
+![alt text](https://github.com/umahajanatlmu/metapacR/master/inst/figures/metapacR_stickeer.png?raw=TRUE)
+
 # metapacR
 
 In-house package for metabolome analysis. It consist of following functions:
