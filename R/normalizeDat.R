@@ -65,8 +65,8 @@ normalizeDat <- function (data = data,
           paste0(stratifier)
       } else
         indepVars <-
-          paste(confounders,
-                stratifier,
+          paste(c(confounders,
+                stratifier),
                 collapse = " + ",
                 sep = "")
       ## formula
