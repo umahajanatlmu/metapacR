@@ -20,7 +20,7 @@ normalizeDat <- function (data = data,
                           random.effect = NULL) {
   ## define met, empty data-frames
   ##-----------------------------------------------------------------
-  met <- setdiff(colnames(data), confounders)
+  met <- setdiff(colnames(data), c(confounders, stratifier))
   normData <- data
   summaryFC <- data.frame()
 
