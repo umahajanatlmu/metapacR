@@ -16,7 +16,6 @@ In-house package for metabolome analysis. It consists of following functions:
 
 
 ## Package installation
-devtools::install_github("umahajanatlmu/metapacR",
-                        ref="master",
-                        auth_token = "tokenString"
-                        )
+ ```{r}
+devtools::install_github("umahajanatlmu/metapacR", ref="master", auth_token = "tokenString")
+ ```
