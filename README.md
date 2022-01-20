@@ -1,6 +1,6 @@
 # metapacR
 
-In-house package for metabolome analysis. It consists of following functions:
+In-house package for metabolome analysis. It consist of following functions:
 
 |  No |  Function | Descriptions |
 |---|---|---|
