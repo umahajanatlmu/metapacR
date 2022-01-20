@@ -1,13 +1,13 @@
 #' leveneStat
 #'
-#' Computes Levene's test for homogeneity of variance across groups.
+#' Computes Levene's stats for homogeneity of variance across groups
 #'
 #' @param group grouping variable
 #' @param data  dataframe of normalized data
 #' @param location mean or median, median is default
-#' @param trim.alpha specify the % of trimmed mean
+#' @param trim.alpha specify the percentage of trimmed mean
 #' @param bootstrap whether to perform bootstrapping TRUE/FALSE
-#' @param num.bootstrap bootstraping steps
+#' @param num.bootstrap number of bootstraping steps
 #' @param kruskal.test whether to perform kruskal test TRUE/FALSE
 #'
 #' @import tidyverse

@@ -21,14 +21,14 @@ leveneStat(
 
 \item{location}{mean or median, median is default}
 
-\item{trim.alpha}{specify the % of trimmed mean}
+\item{trim.alpha}{specify the percentage of trimmed mean}
 
 \item{bootstrap}{whether to perform bootstrapping TRUE/FALSE}
 
-\item{num.bootstrap}{bootstraping steps}
+\item{num.bootstrap}{number of bootstraping steps}
 
 \item{kruskal.test}{whether to perform kruskal test TRUE/FALSE}
 }
 \description{
-Computes Levene's test for homogeneity of variance across groups.
+Computes Levene's stats for homogeneity of variance across groups
 }

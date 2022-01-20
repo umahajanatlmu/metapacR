@@ -30,7 +30,7 @@ piePlot(
 
 \item{dpi}{dpi only applicable for png}
 
-\item{...}{}
+\item{...}{ggplot2 extensions}
 }
 \description{
 piePlot

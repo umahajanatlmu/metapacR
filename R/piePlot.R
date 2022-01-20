@@ -7,7 +7,7 @@
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
 #' @param dpi  dpi only applicable for png
-#' @param ...
+#' @param ... ggplot2 extensions
 #'
 #' @import tidyverse
 #' @import here

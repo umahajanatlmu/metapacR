@@ -27,7 +27,7 @@ volcanoPlot(
 
 \item{dpi}{dpi only applicable for png}
 
-\item{...}{}
+\item{...}{ggplot2 extensions}
 }
 \description{
 Plot volcano plots
