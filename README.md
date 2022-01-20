@@ -1,4 +1,4 @@
-![alt text](https://github.com/umahajanatlmu/metapacR/blob/master/inst/figures/metapacR_stickeer.png?raw=TRUE)
+![alt text](https://github.com/umahajanatlmu/metapacR/blob/master/inst/figures/metapacR_sticker.png)
 
 # metapacR
 
