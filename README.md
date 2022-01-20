@@ -13,3 +13,10 @@ In-house package for metabolome analysis. It consists of following functions:
 |   |   |   |
 |   |   |   |
 |   |   |   |
+
+
+## to install package
+devtools::install_github("umahajanatlmu/metapacR",
+                        ref="master",
+                        auth_token = "tokenString"
+                        )
