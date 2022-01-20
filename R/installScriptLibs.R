@@ -1,18 +1,12 @@
 #' installScriptLibs
 #'
 #' function to install and load required listed packages
+#'
 #' @param packages list of required packages
 #'
 #' @import utils
-#' @import BiocManager
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' pkgs <- c("ggplot2", "ggrepel", "arsenal", "limma")
-#' installScriptLibs(packages=pkgs)
-#'
+#' @importFrom BiocManager install
+#' @importFrom BiocManager available
 installScriptLibs <- function(packages) {
   options(warn=-1) ## supress all warning
   for (i in packages) {
@@ -25,10 +19,10 @@ installScriptLibs <- function(packages) {
       install.packages(i, character.only = TRUE)
       ## load library
       library(i, character.only = TRUE)
-    } else if (i %in% BiocManager::available(i)) {
+    } else if (i %in% available(i)) {
       print(paste("installing:",i))
       ## install Bioconductor packages
-      BiocManager::install(i)
+      install(i)
       ## load library
       library(i, character.only = TRUE)
     } else

@@ -1,7 +1,8 @@
 #' normalizeDat
 #'
 #' Function to normalize data using fixed effect as well as mixed effects models.
-#' @param data
+#'
+#' @param data metabolome raw data
 #' @param confounders list of confounders, NULL for mixed effect model
 #' @param stratifier classifier variable of interest
 #' @param fix.effect equation of fixed effect, NULL for fixed effect model
@@ -12,15 +13,9 @@
 #' @import emmeans
 #' @import nlme
 #' @import stats
-#'
-#' @return
-#' @export
-#'
-#' @examples
-
-normalizeDat <- function (data,
+normalizeDat <- function (data = data,
                           confounders = NULL,
-                          stratifier,
+                          stratifier = stratifier,
                           fix.effect = NULL,
                           random.effect = NULL) {
   ## define met, empty data-frames

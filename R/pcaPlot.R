@@ -1,6 +1,7 @@
 #' pcaPlot
 #'
 #' Principle component analysis
+#'
 #' @param data metabolome dta
 #' @param group stratifying variable
 #' @param drop.grouping.var drop grouping varibales not necessary for PCA
@@ -13,12 +14,8 @@
 #' @import ggpubr
 #' @import factoextra
 #' @import stats
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' pcaPlot(data=data, group="group")
+#' @import graphics
+#' @import grDevices
 pcaPlot <- function (data = data,
                  group = group, drop.grouping.var = NULL, ...) {
   ## grouping variable

@@ -1,16 +1,11 @@
 #' banner
 #'
 #' print banner as header with separator
+#'
 #' @param txt text to print in banner
 #' @param Char character seperator (eg. "-", "=", "*")
 #'
 #' @import utils
-#' @return
-#' @export
-#'
-#' @examples
-#' banner(txt="metapacR", Char="-")
-#'
 banner <-function(txt, Char ="-") {
   nchar <- 64
   ## head tail

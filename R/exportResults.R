@@ -8,13 +8,6 @@
 #' @import tidyverse
 #' @import here
 #' @import condformat
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' exportResults(data=data, path=NULL)
-
 exportResults <- function(data, path=NULL) {
   ## progrss bar
   niter <- length(unique(data$contrast))

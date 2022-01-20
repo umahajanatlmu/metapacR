@@ -12,12 +12,8 @@
 #' @import ggpubr
 #' @import rstatix
 #' @import stats
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' boxPlots(data=data, group="var", drop.var = NULL, path = NULL
+#' @import graphics
+#' @import grDevices
 boxPlots <- function(data = data,
                      group = group,
                      drop.var = NULL,

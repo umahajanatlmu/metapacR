@@ -14,12 +14,8 @@
 #' @import ggpubr
 #' @import utils
 #' @import stats
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' oplsPlot(data=data, group="group")
+#' @import graphics
+#' @import grDevices
 oplsPlot <- function(data = data,
                      group = group, drop.grouping.var = NULL, ...) {
   dataGroup <- data[, colnames(data) %in% group]
@@ -107,6 +103,18 @@ oplsPlot <- function(data = data,
 # Function to plot Hotelling's T-squared ellipse
 # Adapted from https://github.com/tyrannomark/bldR/blob/master/R/L2017.R
 # GPL-3 license
+
+#' gg_circle
+#'
+#' plot opls circle
+#'
+#' @param rx x axis cordinates on r
+#' @param ry y axis cordinates on r
+#' @param xc x axis cordinate on c
+#' @param yc y axis cordinate on c
+#' @param color circle border color
+#' @param fill circle fill
+#' @param ... ggplot extensions
 gg_circle <- function(rx, ry, xc, yc, color = "black", fill = NA, ...) {
   x <- xc + rx * cos(seq(0, pi, length.out = 100))
   ymax <- yc + ry * sin(seq(0, pi, length.out = 100))

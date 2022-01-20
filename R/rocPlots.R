@@ -5,6 +5,10 @@
 #' @param drop.var drop un-necessary variables
 #' @param path saving path
 #' @param var.imp  disease for which ROC should be compared
+#' @param save either "pdf", "svg" or "png"
+#' @param fig.width plot width not applicable for pdf
+#' @param fig.height plot height not applicable for pdf
+#' @param dpi  dpi only applicable for png
 #'
 #' @import tidyverse
 #' @import here
@@ -15,27 +19,31 @@
 #' @import stats
 #' @import pROC
 #' @import utils
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' rocPlots(data=data, group = "var", var.imp="PDAC")
+#' @import tibble
+#' @import graphics
+#' @import grDevices
+#' @import sjPlot
 rocPlots <- function(data = data,
                      group = group,
                      drop.var = NULL,
                      path = NULL,
-                     var.imp = "PDAC") {
+                     var.imp = "PDAC",
+                     save = "pdf",
+                     fig.width = 12,
+                     fig.height = 9,
+                     dpi = 300) {
   options(warn=-1) ## supress all warning
   if(is.null(path)) {
     path = here()
   } else
     path = path
-
+  if (save == "pdf"){
   pdf(paste(path, "rocCurves.pdf", sep = "/"),
       paper= "a4r",
       onefile = TRUE)
-
+  } else if (save != "pdf") {
+    dir.create(paste(here(), "rocPlots", sep = "/"))
+  }
   ## drop variables
   data <- data[, !colnames(data) %in% drop.var]
 
@@ -156,16 +164,31 @@ rocPlots <- function(data = data,
                                               hjust = 0.5))
         ## print
         print(p)
+
+        ## save plot
+        if (save != "pdf") {
+          save_plot(filename = paste(here(), "rocPlots", paste0(i,
+                                                                "_", uniqueComp[1],
+                                                                "_", uniqueComp[2],
+                                                                ".", save), sep = "/"),
+                    fig = p,
+                    width = fig.width,
+                    height = fig.height,
+                    dpi = dpi
+          )
+        }
       }
     }
     Sys.sleep(0.01)
     setTxtProgressBar(pb, k)
   }
-  dev.off()
+  if (save == "pdf") {
+    dev.off()
+  }
   close(pb)
   options(warn=0) ## reset all warning
   summaryROC <- summaryROC %>%
-    tibble::rownames_to_column("metabolite") %>%
+    rownames_to_column("metabolite") %>%
     extract(metabolite, c("metabolite", "comparison"), "(.*)_([^_]+$)")
   return(summaryROC)
 }

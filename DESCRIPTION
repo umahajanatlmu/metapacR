@@ -11,7 +11,7 @@ Description: metapacR is an easy-to-use R package implementing a complete workfl
     datasets is enabled through integration with Metabolomics Workbench. metapacR 
     allows data inspection, normalization, univariate and multivariate analysis, 
     displaying informative visualizations.
-License: MIT + file LICENSE
+License: MIT
 Encoding: UTF-8
 LazyData: true
 Depends: 
@@ -33,8 +33,15 @@ Imports:
     here,
     Hmisc,
     pheatmap,
-    rstatix
+    rstatix,
+    BiocManager,
+    RColorBrewer,
+    readxl,
+    ropls,
+    tibble,
+    sjPlot
 Suggests: 
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+RoxygenNote: 7.1.2

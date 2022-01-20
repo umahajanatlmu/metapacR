@@ -1,17 +1,12 @@
 #' shapiroTest
 #'
 #' Shapiro-Wilk normality test
+#'
 #' @param data dataframe of which normality testing is necessary
 #'
 #' @import tidyverse
 #' @import utils
 #' @import stats
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' shapiroTest(data = data)
 shapiroTest <- function(data=data) {
 
   result <- data.frame()
