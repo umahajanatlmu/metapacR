@@ -3,7 +3,7 @@
 #' Computes Levene's stats for homogeneity of variance across groups
 #'
 #' @param group grouping variable
-#' @param data  dataframe of normalized data
+#' @param dataList  metabolome raw data expDataList
 #' @param location mean or median, median is default
 #' @param trim.alpha specify the percentage of trimmed mean
 #' @param bootstrap whether to perform bootstrapping TRUE/FALSE
@@ -15,12 +15,42 @@
 #' @import car
 #' @import stats
 leveneStat <- function(group = group,
-                       data = data,
+                       dataList = dataList,
                        location = "median",
                        trim.alpha = 0.25,
                        bootstrap = TRUE,
                        num.bootstrap = 1000,
                        kruskal.test = TRUE) {
+  # load imputed data matrix
+  ##----------------------------------------------------------------
+  imputed.data <- dataList[["imputed.matrix"]]
+
+  ## load metadata
+  ##----------------------------------------------------------------
+  metadata.data <- dataList[["metadata"]]
+
+  ## subset metadata
+  ##----------------------------------------------------------------
+  select.columns <- group
+  metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
+
+  ## define factors
+  ##----------------------------------------------------------------
+  for (c in colnames(metadata.data)) {
+    if (mode(metadata.data[[c]]) %in% c("character", "factor")) {
+      metadata.data[[c]] <- as.factor(metadata.data[[c]])
+    } else if (mode(metadata.data[[c]]) == "difftime") {
+      metadata.data[[c]] <- as.numeric(metadata.data[[c]])
+    } else
+      metadata.data[[c]] <- as.numeric(metadata.data [[c]])
+  }
+
+  ## merge Data
+  ##----------------------------------------------------------------
+  data <- merge(metadata.data,imputed.data,by=0) %>%
+    column_to_rownames("Row.names")
+
+  ## select variables
 
   var <- setdiff(colnames(data), group)
 

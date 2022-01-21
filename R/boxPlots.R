@@ -1,8 +1,7 @@
 #' boxPlots
 #'
-#' @param data normalized data
+#' @param dataList metabolome raw data expDataList
 #' @param group grouping variables
-#' @param drop.var drop un-necessary variables
 #' @param path saving path
 #'
 #' @import tidyverse
@@ -14,21 +13,48 @@
 #' @import stats
 #' @import graphics
 #' @import grDevices
-boxPlots <- function(data = data,
+boxPlots <- function(dataList = dataList,
                      group = group,
-                     drop.var = NULL,
                      path = NULL) {
   if(is.null(path)) {
     path = here()
   } else
     path = path
 
+  ## load imputed data matrix
+  ##----------------------------------------------------------------
+  imputed.data <- dataList[["imputed.matrix"]]
+
+  ## load metadata
+  ##----------------------------------------------------------------
+  metadata.data <- dataList[["metadata"]]
+
+  ## subset metadata
+  ##----------------------------------------------------------------
+  select.columns <- group
+  metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
+
+  ## define factors
+  ##----------------------------------------------------------------
+  for (c in colnames(metadata.data)) {
+    if (mode(metadata.data[[c]]) %in% c("character", "factor")) {
+      metadata.data[[c]] <- as.factor(metadata.data[[c]])
+    } else if (mode(metadata.data[[c]]) == "difftime") {
+      metadata.data[[c]] <- as.numeric(metadata.data[[c]])
+    } else
+      metadata.data[[c]] <- as.numeric(metadata.data [[c]])
+  }
+
+  ## merge Data
+  ##----------------------------------------------------------------
+  data <- merge(metadata.data,imputed.data,by=0) %>%
+    column_to_rownames("Row.names")
+
+  ## save as pdf
+  ##----------------------------------------------------------------
   pdf(paste(path, "boxplots.pdf", sep = "/"),
       paper= "a4r",
       onefile = TRUE)
-
-  ## drop varibales
-  data <- data[, !colnames(data) %in% drop.var]
 
   ## convert to characters
   data[[group]] <- as.character(data[[group]])
@@ -46,7 +72,6 @@ boxPlots <- function(data = data,
                        style = 3,
                        char = "=")
 
-  for(j in 1:niter) {
 
     for (i in colnames(data)) {
 
@@ -118,9 +143,9 @@ boxPlots <- function(data = data,
         theme(plot.title = element_text(size = 12, face = "bold", hjust = 0.5))
       ## print
       print(p)
-    }
+
     Sys.sleep(0.01)
-    setTxtProgressBar(pb, j)
+    setTxtProgressBar(pb, which(colnames(data)==i))
   }
   dev.off()
   close(pb)

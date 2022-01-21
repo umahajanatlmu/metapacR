@@ -9,14 +9,16 @@
 #' @import here
 #' @import condformat
 exportResults <- function(data, path=NULL) {
+
+  ## create result tables groups
+  groups <- unique(data$contrast)
+
   ## progrss bar
-  niter <- length(unique(data$contrast))
+  niter <- length(groups)
   pb <- txtProgressBar(min = 0,
                        max = niter,
                        style = 3,
                        char = "=")
-
-  for(j in 1:niter) {
 
     if(is.null(path)) {
       path = here()
@@ -59,8 +61,6 @@ exportResults <- function(data, path=NULL) {
                            "results.xlsx", sep = "/"),
                      sheet_name = "legends")
 
-    ## create result tables
-    groups <- unique(data$contrast)
 
     for (i in groups) {
       ## subset dataframe
@@ -143,10 +143,8 @@ exportResults <- function(data, path=NULL) {
         sheet_name = ws
       )
 
-
-    }
     Sys.sleep(0.01)
-    setTxtProgressBar(pb, j)
+    setTxtProgressBar(pb, which(groups == i))
   }
 
   close(pb)

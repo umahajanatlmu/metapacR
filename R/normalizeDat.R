@@ -2,7 +2,7 @@
 #'
 #' Function to normalize data using fixed effect as well as mixed effects models.
 #'
-#' @param data metabolome raw data
+#' @param dataList metabolome raw data expDataList
 #' @param confounders list of confounders, NULL for mixed effect model
 #' @param stratifier classifier variable of interest
 #' @param fix.effect equation of fixed effect, NULL for fixed effect model
@@ -13,14 +13,45 @@
 #' @import emmeans
 #' @import nlme
 #' @import stats
-normalizeDat <- function (data = data,
+normalizeDat <- function (dataList = dataList,
                           confounders = NULL,
                           stratifier = stratifier,
                           fix.effect = NULL,
                           random.effect = NULL) {
+
+  ## load imputed data matrix
+  ##----------------------------------------------------------------
+  imputed.data <- dataList[["imputed.matrix"]]
+
+  ## load metadata
+  ##----------------------------------------------------------------
+  metadata.data <- dataList[["metadata"]]
+
+  ## subset metadata
+  ##----------------------------------------------------------------
+  select.columns <- c(confounders, stratifier)
+  metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
+
+  ## define factors
+  ##----------------------------------------------------------------
+  for (c in colnames(metadata.data)) {
+    if (mode(metadata.data[[c]]) %in% c("character", "factor")) {
+      metadata.data[[c]] <- as.factor(metadata.data[[c]])
+    } else if (mode(metadata.data[[c]]) == "difftime") {
+      metadata.data[[c]] <- as.numeric(metadata.data[[c]])
+    } else
+      metadata.data[[c]] <- as.numeric(metadata.data [[c]])
+  }
+
+  ## merge Data
+  ##----------------------------------------------------------------
+  data <- merge(metadata.data,imputed.data,by=0) %>%
+    column_to_rownames("Row.names")
+
+
   ## define met, empty data-frames
   ##-----------------------------------------------------------------
-  met <- setdiff(colnames(data), confounders)
+  met <- setdiff(colnames(data), c(confounders, stratifier))
   normData <- data
   summaryFC <- data.frame()
 
@@ -39,13 +70,12 @@ normalizeDat <- function (data = data,
     "adj.P.Val"
   )
 
-  niter <- ncol(data)
+  niter <- length(methodsPackageMetaName())
   pb <- txtProgressBar(min = 0,
                        max = niter,
                        style = 3,
                        char = "=")
 
-  for(j in 1:niter) {
 
   for (i in met) {
     response <- i
@@ -65,8 +95,8 @@ normalizeDat <- function (data = data,
           paste0(stratifier)
       } else
         indepVars <-
-          paste(confounders,
-                stratifier,
+          paste(c(confounders,
+                stratifier),
                 collapse = " + ",
                 sep = "")
       ## formula
@@ -96,7 +126,7 @@ normalizeDat <- function (data = data,
       anova.results.fdr <- update(anova.model, adjust = "BH") %>%
         as.data.frame() %>%
         select(contrast, p.value) %>%
-        rename(adj.P.Val = p.value) %>%
+        rename(p.value = "adj.P.Val") %>%
         full_join(anova.results, by = "contrast") %>%
         select(all_of(column.order))
 
@@ -142,7 +172,7 @@ normalizeDat <- function (data = data,
       anova.results.fdr <- update(anova.model, adjust = "BH") %>%
         as.data.frame() %>%
         select(contrast, p.value) %>%
-        rename(adj.P.Val = p.value) %>%
+        rename(p.value = "adj.P.Val") %>%
         full_join(anova.results, by = "contrast") %>%
         select(all_of(column.order))
 
@@ -156,9 +186,8 @@ normalizeDat <- function (data = data,
 
     }
 
-  }
     Sys.sleep(0.01)
-    setTxtProgressBar(pb, j)
+    setTxtProgressBar(pb, which(met == i))
   }
 
   close(pb)

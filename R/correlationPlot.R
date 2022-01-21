@@ -1,7 +1,6 @@
 #' correlationPlot
 #'
 #' @param data normalized data
-#' @param drop.var grouping variables to drop
 #' @param h cluster size
 #' @param save either "pdf", "svg" or "png"
 #' @param fig.width plot width not applicable for pdf
@@ -15,8 +14,7 @@
 #' @import graphics
 #' @import grDevices
 #' @import here
-correlationPlot <- function (data = data,
-                             drop.var = NULL,
+correlationPlot <- function (dataList = dataList,
                              h = 3,
                              path = NULL,
                              save= "pdf",
@@ -34,8 +32,9 @@ correlationPlot <- function (data = data,
     dir.create(paste(here(), "correlationPlots.pdf", sep = "/"))
   }
 
-  ## drop varibales
-  data <- data[, !colnames(data) %in% drop.var]
+  ## load imputed data matrix
+  ##----------------------------------------------------------------
+  data <- dataList[["imputed.matrix"]]
 
   ## convert to numeric
   data <- data %>%

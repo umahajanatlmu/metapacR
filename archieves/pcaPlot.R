@@ -4,7 +4,7 @@
 #'
 #' @param data metabolome dta
 #' @param group stratifying variable
-#' @param drop.grouping.var drop grouping varibales not necessary for PCA
+#' @param drop.grouping.var drop grouping variables not necessary for PCA
 #' @param ... ggplot extensions
 #'
 #' @import tidyverse
@@ -19,8 +19,8 @@
 pcaPlot <- function (data = data,
                  group = group, drop.grouping.var = NULL, ...) {
   ## grouping variable
-  dataGroup <- data[, colnames(data) %in% group] %>%
-    as.data.frame()
+  dataGroup <- data[, colnames(data) %in% group, drop = FALSE]
+
 
   colnames(dataGroup) <- group
 

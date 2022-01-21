@@ -68,8 +68,6 @@ rocPlots <- function(data = data,
                        style = 3,
                        char = "=")
 
-  for(k in 1:niter) {
-
     for (i in colnames(data)) {
       if (class(data[[i]]) %in% c("character", "factor")) {
         next
@@ -178,9 +176,8 @@ rocPlots <- function(data = data,
           )
         }
       }
-    }
     Sys.sleep(0.01)
-    setTxtProgressBar(pb, k)
+    setTxtProgressBar(pb, which(colnames(data) == i))
   }
   if (save == "pdf") {
     dev.off()
