@@ -2,12 +2,14 @@
 #'
 #' Shapiro-Wilk normality test
 #'
-#' @param data dataframe of which normality testing is necessary
+#' @param data metabolome raw data expDataList
 #'
 #' @import tidyverse
 #' @import utils
 #' @import stats
-shapiroTest <- function(data=data) {
+shapiroTest <- function(dataList=dataList) {
+
+  data <- dataList[["imputed.matrix"]]
 
   result <- data.frame()
 
