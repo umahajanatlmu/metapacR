@@ -2,9 +2,8 @@
 #'
 #' @param data normalized data
 #' @param group grouping variables
-#' @param drop.var drop un-necessary variables
 #' @param path saving path
-#' @param var.imp  disease for which ROC should be compared
+#' @param var.imp  disease for which ROC should be compared---should be one.
 #' @param save either "pdf", "svg" or "png"
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
@@ -25,7 +24,6 @@
 #' @import sjPlot
 rocPlots <- function(data = data,
                      group = group,
-                     drop.var = NULL,
                      path = NULL,
                      var.imp = "PDAC",
                      save = "pdf",
@@ -44,8 +42,34 @@ rocPlots <- function(data = data,
   } else if (save != "pdf") {
     dir.create(paste(here(), "rocPlots", sep = "/"))
   }
-  ## drop variables
-  data <- data[, !colnames(data) %in% drop.var]
+  ## load imputed data matrix
+  ##----------------------------------------------------------------
+  imputed.data <- dataList[["imputed.matrix"]]
+
+  ## load metadata
+  ##----------------------------------------------------------------
+  metadata.data <- dataList[["metadata"]]
+
+  ## subset metadata
+  ##----------------------------------------------------------------
+  select.columns <- group
+  metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
+
+  ## define factors
+  ##----------------------------------------------------------------
+  for (c in colnames(metadata.data)) {
+    if (mode(metadata.data[[c]]) %in% c("character", "factor")) {
+      metadata.data[[c]] <- as.factor(metadata.data[[c]])
+    } else if (mode(metadata.data[[c]]) == "difftime") {
+      metadata.data[[c]] <- as.numeric(metadata.data[[c]])
+    } else
+      metadata.data[[c]] <- as.numeric(metadata.data [[c]])
+  }
+
+  ## merge Data
+  ##----------------------------------------------------------------
+  data <- merge(metadata.data,imputed.data,by=0) %>%
+    column_to_rownames("Row.names")
 
   ## convert to characters
   data[[group]] <- as.character(data[[group]])
@@ -147,7 +171,16 @@ rocPlots <- function(data = data,
                 size = 4,
                 label = paste0("Specificity = ", round(bestObj$specificity, 3))
               ) +
-              ggplot_theme +
+          theme_bw() +
+          theme(
+            panel.border = element_rect(colour = "black", fill=NA, size=1),
+            axis.text = element_text(
+              size = 11,
+              #face = "bold",
+              colour = "black"
+            ),
+            axis.title = element_text(size = 12, face = "bold")
+          ) +
               ggtitle(paste(
                 i,
                 ":",

@@ -39,7 +39,13 @@ Imports:
     readxl,
     ropls,
     tibble,
-    sjPlot
+    sjPlot,
+    grid,
+    ggthemes,
+    scales,
+    umap,
+    Rtsne,
+    
 Suggests: 
     knitr,
     rmarkdown

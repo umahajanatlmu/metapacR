@@ -95,10 +95,10 @@ volcanoPlot <- function (data = data,
                       min.segment.length = 0) +
       theme_bw() +
       theme(
-        axis.line = element_line(size = 0.75),
+        panel.border = element_rect(colour = "black", fill=NA, size=1),
         axis.text = element_text(
           size = 11,
-          face = "bold",
+          #face = "bold",
           colour = "black"
         ),
         axis.title = element_text(size = 12, face = "bold")

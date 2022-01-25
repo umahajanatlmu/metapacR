@@ -16,28 +16,28 @@
 #' @import stats
 #' @import graphics
 #' @import grDevices
-compareDiamReduction <- function (dataList = dataList, 
+compareDiamReduction <- function (dataList = dataList,
                             grouping.variables = grouping.variables,
                             plotting.variable = plotting.variables) {
   ## load imputed data matrix
   ##----------------------------------------------------------------
   imputed.data <- dataList[["imputed.matrix"]]
-  
+
   ## load metadata
   ##----------------------------------------------------------------
   metadata.data <- dataList[["metadata"]]
-  
+
   ## select row for which metadata is available
   ##----------------------------------------------------------------
   imputed.data <- imputed.data[rownames(metadata.data),]
-  
+
   ## subset metadata
   ##----------------------------------------------------------------
   select.columns <- c(grouping.variables, plotting.variable)
   metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
-  
+
   group <- plotting.variable
-  
+
   ## define factors
   ##----------------------------------------------------------------
   for (c in colnames(metadata.data)) {
@@ -48,10 +48,10 @@ compareDiamReduction <- function (dataList = dataList,
     } else
       metadata.data[[c]] <- as.numeric(metadata.data [[c]])
   }
-  
+
   ## number of groups
   nVar <- length(unique(metadata.data[[group]]))
-  
+
   # perform pca
   ##----------------------------------------------------------------
   ## select numeric data, filter NaN and NAs
@@ -60,18 +60,23 @@ compareDiamReduction <- function (dataList = dataList,
     mutate_all(~ifelse(is.nan(.), NA, .)) %>%
     select_if(~!all(is.na(.))) %>%
     as.data.frame()
-  
+
+  # perform Kmeans clustering
+  ##----------------------------------------------------------------
+  print(paste("Performing kmeans for", nVar, "clusters...."))
+  kmeans <- kmeans(dataNumeric, centers = nVar, nstart = 100)
+
   print("Performing PCA ....")
   ## perform PCA
   pca <- prcomp(dataNumeric)
   ## plot PCA
   plot.dat.pca <- as.data.frame(pca$x)
   plot.dat.pca <- merge(plot.dat.pca, metadata.data, by = 0)
-  
+
   ## PCA componants
   pc1var <- round(summary(pca)$importance[2, 1] * 100, digits = 2)
   pc2var <- round(summary(pca)$importance[2, 2] * 100, digits = 2)
-  
+
   ## plot
   p_pca <- ggplot(plot.dat.pca, aes(x = PC1,
                                     y = PC2,
@@ -85,10 +90,10 @@ compareDiamReduction <- function (dataList = dataList,
     labs(color = group) +
     theme_bw() +
     theme(
-      axis.line = element_line(size = 0.75),
+      panel.border = element_rect(colour = "black", fill=NA, size=1),
       axis.text = element_text(
         size = 11,
-        face = "bold",
+        #face = "bold",
         colour = "black"
       ),
       axis.title = element_text(size = 12, face = "bold")
@@ -97,7 +102,7 @@ compareDiamReduction <- function (dataList = dataList,
                                            "Set1")) +
     theme(legend.position = "right") +
     ggtitle("PCA")
-  
+
   print("Performing OPLS ....")
   # perform opls
   ##----------------------------------------------------------------
@@ -110,12 +115,12 @@ compareDiamReduction <- function (dataList = dataList,
   ## plot opls
   plot.dat.opls <- data.frame(opls@scoreMN)
   plot.dat.opls <- merge(plot.dat.opls, metadata.data, by = 0)
-  
+
   N <- nrow(plot.dat.opls)
   pscores <- plot.dat.opls[["p1"]]
   oscores <- plot.dat.opls[["p2"]]
   hotFisN <- (N - 1) * 2 * (N^2 - 1) / (N^2 * (N - 2)) * qf(0.95, 2, N - 2)
-  
+
   ## plot
   p_opls <-  ggplot(plot.dat.opls, aes(x = p1, y = p2, color = .data[[group]])) +
     gg_circle(
@@ -133,10 +138,10 @@ compareDiamReduction <- function (dataList = dataList,
       alpha = 0.75) +
     theme_bw() +
     theme(
-      axis.line = element_line(size = 0.75),
+      panel.border = element_rect(colour = "black", fill=NA, size=1),
       axis.text = element_text(
         size = 11,
-        face = "bold",
+        #face = "bold",
         colour = "black"
       ),
       axis.title = element_text(size = 12, face = "bold")
@@ -164,17 +169,17 @@ compareDiamReduction <- function (dataList = dataList,
              size = 4) +
     labs(color = group) +
     theme(panel.background = element_rect(fill = "grey90"))
-  
+
   print("Performing t-SNE....")
   # perform t-SNE plus PCA
   ##----------------------------------------------------------------
   rtsne.pca <- Rtsne(dataNumeric)
-  
+
   ## plot rtsne
   plot.dat.rtsne.pca <- as.data.frame(rtsne.pca$Y)
   rownames(plot.dat.rtsne.pca) <- rownames(dataNumeric)
   plot.dat.rtsne.pca <- merge(plot.dat.rtsne.pca, metadata.data, by = 0)
-  
+
   ## plot
   p_rtsne.pca <- ggplot(plot.dat.rtsne.pca, aes(x = V1,
                                                 y = V2,
@@ -188,10 +193,10 @@ compareDiamReduction <- function (dataList = dataList,
     labs(color = group) +
     theme_bw() +
     theme(
-      axis.line = element_line(size = 0.75),
+      panel.border = element_rect(colour = "black", fill=NA, size=1),
       axis.text = element_text(
         size = 11,
-        face = "bold",
+        #face = "bold",
         colour = "black"
       ),
       axis.title = element_text(size = 12, face = "bold")
@@ -200,17 +205,17 @@ compareDiamReduction <- function (dataList = dataList,
                                            "Set1")) +
     theme(legend.position = "right") +
     ggtitle("PCA + tSNE")
-  
+
   print("Performing t-SNE and PCA ....")
   # perform t-SNE w/o PCA
   ##----------------------------------------------------------------
   rtsne <- Rtsne(dataNumeric, pca = FALSE)
-  
+
   ## plot rtsne
   plot.dat.rtsne <- as.data.frame(rtsne$Y)
   rownames(plot.dat.rtsne) <- rownames(dataNumeric)
   plot.dat.rtsne <- merge(plot.dat.rtsne, metadata.data, by = 0)
-  
+
   ## plot
   p_rtsne <- ggplot(plot.dat.rtsne, aes(x = V1,
                                         y = V2,
@@ -224,10 +229,10 @@ compareDiamReduction <- function (dataList = dataList,
     labs(color = group) +
     theme_bw() +
     theme(
-      axis.line = element_line(size = 0.75),
+      panel.border = element_rect(colour = "black", fill=NA, size=1),
       axis.text = element_text(
         size = 11,
-        face = "bold",
+        #face = "bold",
         colour = "black"
       ),
       axis.title = element_text(size = 12, face = "bold")
@@ -236,16 +241,16 @@ compareDiamReduction <- function (dataList = dataList,
                                            "Set1")) +
     theme(legend.position = "right") +
     ggtitle("tSNE")
-  
+
   print("Performing UMAP....")
   # perform umap
   ##----------------------------------------------------------------
   umap <- umap(dataNumeric)
-  
+
   ## plot rtsne
   plot.dat.umap <- as.data.frame(umap$layout)
   plot.dat.umap <- merge(plot.dat.umap, metadata.data, by = 0)
-  
+
   p_umap <- ggplot(plot.dat.umap, aes(x = V1,
                                       y = V2,
                                       color = .data[[group]])) +
@@ -258,10 +263,10 @@ compareDiamReduction <- function (dataList = dataList,
     labs(color = group) +
     theme_bw() +
     theme(
-      axis.line = element_line(size = 0.75),
+      panel.border = element_rect(colour = "black", fill=NA, size=1),
       axis.text = element_text(
         size = 11,
-        face = "bold",
+        #face = "bold",
         colour = "black"
       ),
       axis.title = element_text(size = 12, face = "bold")
@@ -270,24 +275,25 @@ compareDiamReduction <- function (dataList = dataList,
                                            "Set1")) +
     theme(legend.position = "right") +
     ggtitle("UMAP")
-  
+
   p <- ggarrange(p_pca,
                  p_opls,
                  p_rtsne ,
                  p_rtsne.pca,
                  p_umap,
-                 ncol = 3, 
+                 ncol = 3,
                  nrow = 2,
                  common.legend = TRUE,
                  legend = "bottom")
-  
+
   return(list(plot = p,
               pca = pca,
               opls = opls,
               tsne = rtsne,
               tsne_pca=rtsne.pca,
+              kmeans=kmeans,
               umap = umap))
-  
+
 }
 
 
