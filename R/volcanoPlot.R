@@ -108,8 +108,10 @@ volcanoPlot <- function (data = data,
       labs(fill = "Metabololites category",
            x = "Relative Abundance",
            y = "p value (-log10)")
-    ## print
-    print(p)
+    if (save == "pdf") {
+      ## print
+      print(p)
+    }
 
     ## save plots
     if (save != "pdf") {

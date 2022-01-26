@@ -18,6 +18,7 @@
 #' @import ggpubr
 #' @import graphics
 #' @import grDevices
+#' @import sjPlot
 distributionPlot <- function (data = data,
                               path = NULL,
                               cutoff = 0.01,
@@ -39,7 +40,7 @@ distributionPlot <- function (data = data,
     dir.create(paste(here(), "distributionPlots", sep = "/"))
   }
 
-  metabolite.class <- system.file("inst/extdata/ref", "Chemical_annotations_lipids.csv", package="metapacR")
+  metabolite.class <- system.file("inst/extdata/ref", "Chemical_annotations.csv", package="metapacR")
 
   ## define metabolites
   data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
@@ -56,9 +57,8 @@ distributionPlot <- function (data = data,
   colorsOntologyOne <-
     data.frame(
       MetaboliteClass = unique(dat$MetaboliteClass),
-      color = brewer.pal(length(unique(
-        dat$MetaboliteClass
-      )), "Paired")
+      color = colorRampPalette(brewer.pal(9, "Set1"))(length(
+        unique(dat$MetaboliteClass)))
     )
   ## match colors
   matchColumnColors <-
@@ -87,11 +87,19 @@ distributionPlot <- function (data = data,
                  show.legend = FALSE)  +
       facet_grid(. ~ MetaboliteClass) +
       scale_fill_manual(values = unique(filteredData$color)) +
-      theme_classic() +
+      theme_bw() +
+      theme(
+        panel.border = element_rect(colour = "black", fill=NA, size=1),
+        axis.text = element_text(
+          size = 11,
+          #face = "bold",
+          colour = "black"
+        ),
+        axis.title = element_text(size = 12, face = "bold")
+      ) +
+      theme(axis.ticks.x = element_blank()) +
       theme(axis.text.x = element_blank(),
-            axis.ticks.x = element_blank(),
-            axis.line = element_line(size = 0.75),
-            axis.title = element_text(size = 11, face = "bold")) +
+            axis.ticks.x = element_blank()) +
       geom_hline(yintercept = -log10(cutoff), linetype='dotted') +
       geom_hline(yintercept = -log10(cutoff*5), linetype='dotted') +
       geom_text_repel(aes(label = ifelse(filteredData$adj.P.Val < cutoff,
@@ -101,9 +109,10 @@ distributionPlot <- function (data = data,
                       show.legend = FALSE) +
       ggtitle(groups[i]) +
       xlab("")
-    ## print
-    print(p)
-
+    if (save == "pdf") {
+      ## print
+      print(p)
+    }
     ## save plots
     if (save != "pdf") {
       save_plot(filename = paste(here(), "distributionPlots", paste0(groups[i], ".", save), sep = "/"),
@@ -141,9 +150,8 @@ distributionPlot <- function (data = data,
     colorsOntologyOne <-
       data.frame(
         lipidClass = unique(dat$lipidClass),
-        color = brewer.pal(length(unique(
-          dat$lipidClass
-        )), "Paired")
+        color = colorRampPalette(brewer.pal(9, "Set1"))(length(
+          unique(dat$lipidClass)))
       )
     ## match colors
     matchColumnColors <-
@@ -172,11 +180,19 @@ distributionPlot <- function (data = data,
                    show.legend = FALSE)  +
         facet_grid(. ~ lipidClass) +
         scale_fill_manual(values = unique(filteredData$color)) +
-        theme_classic() +
+        theme_bw() +
+        theme(
+          panel.border = element_rect(colour = "black", fill=NA, size=1),
+          axis.text = element_text(
+            size = 11,
+            #face = "bold",
+            colour = "black"
+          ),
+          axis.title = element_text(size = 12, face = "bold")
+        ) +
+        theme(axis.ticks.x = element_blank()) +
         theme(axis.text.x = element_blank(),
-              axis.ticks.x = element_blank(),
-              axis.line = element_line(size = 0.75),
-              axis.title = element_text(size = 11, face = "bold")) +
+              axis.ticks.x = element_blank()) +
         geom_hline(yintercept = -log10(cutoff), linetype='dotted') +
         geom_hline(yintercept = -log10(cutoff*5), linetype='dotted') +
         geom_text_repel(aes(label = ifelse(filteredData$adj.P.Val < cutoff,
@@ -186,9 +202,10 @@ distributionPlot <- function (data = data,
                         show.legend = FALSE) +
         ggtitle(groups[i]) +
         xlab("")
-      ## print
-      print(p)
-
+      if (save == "pdf") {
+        ## print
+        print(p)
+      }
       ## save plots
       if (save != "pdf") {
         save_plot(filename = paste(here(), "distributionPlots_lipids", paste0(groups[i], ".", save), sep = "/"),

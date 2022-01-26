@@ -176,7 +176,7 @@ findMarkers <- function (results = results,
     mat.row <- results %>%
       filter(Metabolite %in% selected.metabolites$metabolite) %>%
       mutate(contrast = sub(" - .*", "", contrast)) %>%
-      filter(adj.P.Val > p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
+      filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
       select(contrast, Metabolite, logFC) %>%
       pivot_wider(names_from = contrast, values_from = logFC) %>%
       column_to_rownames("Metabolite") %>%
@@ -197,7 +197,7 @@ findMarkers <- function (results = results,
     mat.col <- results %>%
       filter(Metabolite %in% selected.metabolites$metabolite) %>%
       mutate(contrast = sub(" - .*", "", contrast)) %>%
-      filter(adj.P.Val > p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
+      filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
       select(contrast, Metabolite, logFC) %>%
       pivot_wider(names_from = Metabolite, values_from = logFC) %>%
       column_to_rownames("contrast") %>%
@@ -220,7 +220,7 @@ findMarkers <- function (results = results,
                                  levels = clust$labels[clust$order])) %>%
       mutate(contrast = factor(contrast,
                                levels = clust.col$labels[clust.col$order])) %>%
-      filter(adj.P.Val > p.value.cutoff,
+      filter(adj.P.Val < p.value.cutoff,
              logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
       ggplot(aes(x=contrast,
                  y = Metabolite,

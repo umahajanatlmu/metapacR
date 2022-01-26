@@ -82,6 +82,11 @@ normalizeDat.binary <- function (dataList = dataList,
 
     data[["bin.stratifier"]] <- ifelse(data[[stratifier]] == g, g, "rest")
 
+    data[["bin.stratifier"]] <- as.factor(data[["bin.stratifier"]])
+
+    data[["bin.stratifier"]] <- relevel(data[["bin.stratifier"]], ref = g)
+
+
     for (i in met) {
 
       response <- i

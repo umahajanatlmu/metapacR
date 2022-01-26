@@ -7,6 +7,7 @@
 #' @param stratifier classifier variable of interest
 #' @param fix.effect equation of fixed effect, NULL for fixed effect model
 #' @param random.effect equation of random effects, NULL for fixed effect model
+#' @param reference refenence for the disease of interest to compare.
 #'
 #' @import tidyverse
 #' @import utils
@@ -16,6 +17,7 @@
 normalizeDat <- function (dataList = dataList,
                           confounders = NULL,
                           stratifier = stratifier,
+                          reference = reference,
                           fix.effect = NULL,
                           random.effect = NULL) {
 
@@ -47,6 +49,9 @@ normalizeDat <- function (dataList = dataList,
   ##----------------------------------------------------------------
   data <- merge(metadata.data,imputed.data,by=0) %>%
     column_to_rownames("Row.names")
+
+  ## set references
+  data[[stratifier]] <- relevel(data[[stratifier]], ref = reference)
 
 
   ## define met, empty data-frames
