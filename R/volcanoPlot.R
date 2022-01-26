@@ -16,7 +16,6 @@
 #' @import ggrepel
 #' @import RColorBrewer
 #' @import ggpubr
-#' @import readxl
 #' @import graphics
 #' @import grDevices
 #' @import sjPlot
@@ -39,7 +38,8 @@ volcanoPlot <- function (data = data,
     dir.create(paste(here(), "volcanoPlots", sep = "/"))
   }
 
-  metabolite.class <- read_excel("./inst/extdata/ref/Chemical_annotations_lipids.xlsx")
+  metabolite.class <- system.file("inst/extdata/ref", "Chemical_annotations_lipids.csv", package="metapacR")
+
 
   ## define metabolites
   data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(

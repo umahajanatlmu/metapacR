@@ -17,7 +17,6 @@
 #' @import ggpubr
 #' @import graphics
 #' @import grDevices
-#' @import readxl
 #' @import sjPlot
 piePlot <- function (data = data,
                      path = NULL,
@@ -37,7 +36,7 @@ piePlot <- function (data = data,
 } else if (save != "pdf") {
     dir.create(paste(here(), "piePlots", sep = "/"))
   }
-  metabolite.class <- readxl::read_excel("./inst/extdata/ref/Chemical_annotations_lipids.xlsx")
+  metabolite.class <- system.file("inst/extdata/ref", "Chemical_annotations_lipids.csv", package="metapacR")
 
   ## define metabolites
   data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
