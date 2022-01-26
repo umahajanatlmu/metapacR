@@ -1,9 +1,9 @@
 
-<img src="https://github.com/umahajanatlmu/metapacR/blob/master/inst/figures/metapacR_sticker.png" alt="alt text" width="200" height="200">
+# metapacR <img src="https://github.com/umahajanatlmu/metapacR/blob/master/inst/figures/metapacR_sticker.png" alt="alt text" width="150" height="150" align="right">
 
-# metapacR
+In-house package for metabolome analysis.
 
-In-house package for metabolome analysis. It consist of following functions:
+## Functions
 
 |  No |  Function | Descriptions |
 |---|---|---|
