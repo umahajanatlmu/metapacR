@@ -39,7 +39,7 @@ lipidChainLengthCorrelation <- function (results=results,
 
 
   ## load annotation file
-  metabolite.class <- system.file("inst/extdata/ref",
+  chemicalMetadata <- system.file("inst/extdata/ref",
                                   "Chemical_annotations.csv",
                                   package="metapacR")
 
