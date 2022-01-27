@@ -371,7 +371,7 @@ enrichmentScore.KEGG <- function(species=species,
       ## plot
       p <- enrichTable %>%
         ggplot(aes(x=reorder(pathway,enrichment, FUN = sum), y=enrichment, group=direction, fill=direction)) +
-        geom_bar(stat = "identity", color = "black", size=0.5, alpha=0.5) +
+        geom_bar(stat = "identity", color = "black", size=0.25) +
         theme_bw() +
         theme(
           panel.border = element_rect(colour = "black", fill=NA, size=1),

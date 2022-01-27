@@ -232,4 +232,3 @@ diffAbundanceScore <- function(species=species,
 
 }
 
-}

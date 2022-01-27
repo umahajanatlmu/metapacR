@@ -47,7 +47,9 @@ Imports:
     ggdendro,
     ggtree,
     patchwork,
-    pheatmap
+    pheatmap,
+    ggpmisc,
+    KEGGREST
 Suggests: 
     knitr,
     rmarkdown
