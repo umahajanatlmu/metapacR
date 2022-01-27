@@ -2,6 +2,7 @@
 # metapacR <img src="https://github.com/umahajanatlmu/metapacR/blob/master/inst/figures/metapacR_sticker.png" alt="alt text" width="150" height="150" align="right">
 
 In-house package for metabolome analysis.
+metapacR is an easy-to-use R package implementing a complete workflow for downstream analysis of targeted and untargeted metabolome data. Metabolome results can be imported into metapacR as a numerical matrix, allowing integration into current analysis frameworks. metapacR allows data inspection, normalization, univariate and multivariate analysis, displaying informative visualizations.
 
 ## Functions
 
@@ -19,7 +20,7 @@ In-house package for metabolome analysis.
 | 10  |boxPlots  |   |
 | 11  |rocPlots   |   |
 | 12  |piePlots   |   |
-| 13  |correaltionPlots   |   |
+| 13  |correlationPlots   |   |
 | 14  |distributionPlots  |   |
 | 15  |volcanoPlots   |   |
 | 16  |plotMetaboliteAlteration   |   |
