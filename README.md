@@ -15,7 +15,7 @@ In-house package for metabolome analysis.
 | 6 |leveneStat   |   |
 | 7 |shapiroTest   |   |
 | 8 |compareDiamReduction  |   |
-| 9  |plotDiamRecuction  |   |
+| 9   |plotDiamRecuction  |   |
 | 10  |boxPlots  |   |
 | 11  |rocPlots   |   |
 | 12  |piePlots   |   |
@@ -25,9 +25,13 @@ In-house package for metabolome analysis.
 | 16  |plotMetaboliteAlteration   |   |
 | 17  |findMarkers   |   |
 | 18  |exportResults   |   |
-| 19 |lipidChainLengthCorrelation   |   |
+| 19  |lipidChainLengthCorrelation   |   |
 | 20  |lipidChainLengthDistribution   |   |
-| 21  |compare.common.thermes  |   |
+| 21  |compare.common.themes  |   |
+| 22  |erichmentScore.KEGG |   |
+| 23  |diffAbundanceScore  |   |
+| 24  |  |   |
+| 25  | |   |
 
 ## Package installation
  ```{r}
