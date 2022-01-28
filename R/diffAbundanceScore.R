@@ -37,6 +37,7 @@
 #' @import KEGGREST
 #' @import stats
 #' @import reshape2
+#' @import scales
 
 diffAbundanceScore <- function(species=species,
                                ref.path=NULL,
@@ -204,7 +205,7 @@ diffAbundanceScore <- function(species=species,
       ) +
       scale_fill_gradientn(colours = rev(brewer.pal(10, "RdYlBu")),
                            limits = c(-2,2),
-                           oob = scales::squish,
+                           oob = squish,
                            name = 'fold changes') +
       guides(fill = guide_colourbar(barwidth = unit(0.3, "cm"),
                                     ticks.colour = "black",

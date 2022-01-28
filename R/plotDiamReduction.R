@@ -143,7 +143,7 @@ plotDiamReduction <- function(dataList = dataList,
         ) +
         scale_color_gradientn(colours = brewer.pal(8, "Greens"),
                               limits = c(-3,3),
-                              oob = scales::squish,
+                              oob = squish,
                               name = '') +
         theme(legend.position = "right") +
         ggtitle(dist) +
@@ -252,7 +252,7 @@ plotDiamReduction <- function(dataList = dataList,
         ) +
         scale_color_gradientn(colours = brewer.pal(8, "Greens"),
                               limits = c(-3,3),
-                              oob = scales::squish,
+                              oob = squish,
                               name = '') +
         theme(legend.position = "right") +
         ggtitle(dist) +
@@ -348,7 +348,7 @@ plotDiamReduction <- function(dataList = dataList,
         ) +
         scale_color_gradientn(colours = brewer.pal(8, "Greens"),
                               limits = c(-3,3),
-                              oob = scales::squish,
+                              oob = squish,
                               name = '') +
         theme(legend.position = "right") +
         ggtitle(dist) +
@@ -424,7 +424,7 @@ plotDiamReduction <- function(dataList = dataList,
       ) +
       scale_color_gradientn(colours = brewer.pal(8, "Greens"),
                             limits = c(-3,3),
-                            oob = scales::squish,
+                            oob = squish,
                             name = '') +
       theme(legend.position = "right") +
       ggtitle(dist) +

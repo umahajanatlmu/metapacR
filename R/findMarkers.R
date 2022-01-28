@@ -26,6 +26,7 @@
 #' @import grDevices
 #' @import ggplot2
 #' @import tidyverse
+#' @import scales
 #'
 findMarkers <- function (results = results,
                          dataList = dataList,
@@ -230,7 +231,7 @@ findMarkers <- function (results = results,
       theme_bw() +
       scale_colour_gradientn(colours = rev(brewer.pal(10, "RdYlBu")),
                              limits = c(0,3),
-                             oob = scales::squish,
+                             oob = squish,
                              name = 'log10(ratio)') +
       guides(colour = guide_colourbar(barwidth = unit(0.3, "cm"),
                                       ticks.colour = "black",

@@ -19,6 +19,7 @@
 #' @import ggpubr
 #' @import graphics
 #' @import grDevices
+#' @import scales
 lipidChainLengthDistribution <- function (results=results,
                                           p.value.cutoff=0.05,
                                           fold.changes.cutoff=1.5,
@@ -96,7 +97,7 @@ lipidChainLengthDistribution <- function (results=results,
       ) +
       scale_colour_gradientn(colours = rev(brewer.pal(10, "RdYlBu")),
                              limits = c(-2,2),
-                             oob = scales::squish,
+                             oob = squish,
                              name = 'fold changes') +
       guides(colour = guide_colourbar(barwidth = unit(0.3, "cm"),
                                       ticks.colour = "black",
