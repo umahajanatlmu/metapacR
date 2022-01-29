@@ -65,13 +65,13 @@ plotSplitViolin <- function(dataList=dataList,
     data.subset[[grouping.variable]] <- relevel(data.subset[[grouping.variable]], ref = i)
 
     ## gather data
-    gData <- gather(data.subset, key = variable, value = value,-grouping.variable)
+    gData <- gather(data.subset, key = metabolite, value = value,-grouping.variable)
 
     name <- paste(i, "vs", "rest")
 
     p <- gData %>%
       mutate(metabolite = str_wrap(metabolite, width = 20)) %>%
-      ggplot(aes(x=variable,
+      ggplot(aes(x=metabolite,
                  y=value, fill=.data[[grouping.variable]])) +
       .splitViolin() +
       stat_compare_means(aes(group = .data[[grouping.variable]]), label = "p.signif", paired = TRUE) +
@@ -106,7 +106,7 @@ plotSplitViolin <- function(dataList=dataList,
 #' @param self auxillary function
 #' @param data data
 #' @param ...
-#' @param draw_quantiles whether to draw quantile
+#' @param draw_quantiles list of quantile to draw
 #'
 #' @import plyr
 #' @import ggplot2
@@ -136,7 +136,7 @@ GeomSplitViolin <- ggproto("GeomSplitViolin",
                              if (length(draw_quantiles) > 0 & !scales::zero_range(range(data$y))) {
                                stopifnot(all(draw_quantiles >= 0),
                                          all(draw_quantiles <= 1))
-                               quantiles <- ggplot2:::create_quantile_segment_frame(data, draw_quantiles)
+                               quantiles <- .create_quantile_segment_frame(data, draw_quantiles)
                                aesthetics <- data[rep(1, nrow(quantiles)),
                                                   setdiff(names(data),
                                                           c("x", "y")),
@@ -144,12 +144,12 @@ GeomSplitViolin <- ggproto("GeomSplitViolin",
                                aesthetics$alpha <- rep(1, nrow(quantiles))
                                both <- cbind(quantiles, aesthetics)
                                quantile_grob <- GeomPath$draw_panel(both, ...)
-                               ggplot2:::ggname("geom_split_violin",
+                               .ggname("geom_split_violin",
                                                 grid::grobTree(GeomPolygon$draw_panel(newdata, ...),
                                                                quantile_grob))
                              }
                              else {
-                               ggplot2:::ggname("geom_split_violin",
+                              .ggname("geom_split_violin",
                                                 GeomPolygon$draw_panel(newdata, ...))
                              }
                            })
@@ -193,3 +193,44 @@ GeomSplitViolin <- ggproto("GeomSplitViolin",
                       na.rm = na.rm, ...))
 }
 
+#' .create_quantile_segment_frame
+#'
+#' @param data plotting dataframe
+#' @param draw_quantiles list of quantile to draw
+#'
+#' @import stats
+#' @import ggplot2
+.create_quantile_segment_frame <- function(data, draw_quantiles) {
+  dens <- cumsum(data$density) / sum(data$density)
+  ecdf <- stats::approxfun(dens, data$y)
+  ys <- ecdf(draw_quantiles) # these are all the y-values for quantiles
+
+  # Get the violin bounds for the requested quantiles.
+  violin.xminvs <- (stats::approxfun(data$y, data$xminv))(ys)
+  violin.xmaxvs <- (stats::approxfun(data$y, data$xmaxv))(ys)
+
+  # We have two rows per segment drawn. Each segment gets its own group.
+  new_data_frame(list(
+    x = interleave(violin.xminvs, violin.xmaxvs),
+    y = rep(ys, each = 2),
+    group = rep(ys, each = 2)
+  ))
+}
+
+
+
+# geom_rangeframe is adapted from ggthemes::geom_rangeframe, but it uses the panel_scales
+# to compute the endpoints of the lines rather than the data (as ggthemes::geom_rangeframe does)
+
+#' .ggname
+#'
+#' @param prefix prefix
+#' @param grob grob
+#'
+#' @import grid
+#'
+.ggname <- function(prefix, grob) {
+  # copy of ggthemes:::ggname
+  grob$name <- grid::grobName(grob, prefix)
+  grob
+}

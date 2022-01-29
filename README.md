@@ -10,17 +10,17 @@ metapacR is an easy-to-use R package implementing a complete workflow for downst
 
 |  No |  Function | Descriptions |
 |---|---|---|
-| 1 | InstallScriptLibs   |  Function for installing and loading listed libraries |
-| 2 | banner | Function of tidy titles and banners within scripts  |
-| 3 | ImputeTransformScale |  Function for imputation, transformations and scaling of metabolome data |
-| 4 |normalizeDat   | Function for normalization and anova analysis of metabolome data (fixed effects as well as mixed effect models)    |
-| 5 |normalizeDat.binary   |   |
-| 6 |leveneStat   |   |
-| 7 |shapiroTest   |   |
-| 8 |compareDiamReduction  |   |
-| 9   |plotDiamRecuction  |   |
-| 10  |boxPlots  |   |
-| 11  |rocPlots   |   |
+| 1 | banner | function to print tidy labels and separators |
+| 2 | boxPlots | function to plot box and violin plot |
+| 3 | compareDiamReduction | funcion to compare different diamentionality reduction methods, namely, PCA, OPLS, TSNE and UMAP. |
+| 4 |normalizeDat   | Function for normalization and pairwise anova analysis of metabolome data (fixed effects as well as mixed effect models)    |
+| 5 |normalizeDat.binary   | Function for normalization and group vs rest anova analysis of metabolome data (fixed effects as well as mixed effect models)    |
+| 6 |leveneStat   |Function to test variance |
+| 7 |shapiroTest   |Function to test data normality |
+| 8 |compareDiamReduction  |Function to test different methods of diamentionality reduction  |
+| 9   |plotDiamReduction  |Fuction to plot method of choice of diamentionality reduction  |
+| 10  |boxPlots  |Function to plot boxplots |
+| 11  |rocPlots   |Function to plot roc curves |
 | 12  |piePlots   |   |
 | 13  |correlationPlots   |   |
 | 14  |distributionPlots  |   |
@@ -33,8 +33,9 @@ metapacR is an easy-to-use R package implementing a complete workflow for downst
 | 21  |compare.common.themes  |   |
 | 22  |erichmentScore.KEGG |   |
 | 23  |diffAbundanceScore  |   |
-| 24  |  |   |
-| 25  | |   |
+| 24  |enrichedNetwork  |   |
+| 25  |plotSplitViolin |   |
+| 26  |plotMarkerViolin |   |
 
 ## Package installation
  ```{r}

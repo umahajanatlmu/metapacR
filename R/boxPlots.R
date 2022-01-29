@@ -1,7 +1,9 @@
-#' boxPlots
+#' @title boxPlots
 #'
-#' @param dataList metabolome raw data expDataList
-#' @param group grouping variables
+#' @description function to plot box and violin plot from normalized metabolome data
+#'
+#' @param dataList raw metabolome data list from imputeTransformScale function.It need to have imputed.matrix and metadata.
+#' @param group plotting grouping variable..should be 1
 #' @param path saving path
 #'
 #' @import tidyverse
@@ -13,11 +15,29 @@
 #' @import stats
 #' @import graphics
 #' @import grDevices
-boxPlots <- function(dataList = dataList,
-                     group = group,
+#'
+#' @return returns compiled pdf file.
+#'
+#' @export
+
+boxPlots <- function(dataList,
+                     group = NULL,
                      path = NULL) {
-  if(is.null(path)) {
+
+  stopifnot(inherits(dataList, "list"))
+  validObject(dataList)
+
+  if (is.null(group)) {
+    stop("grouping variable is missing")
+  } else if (length(group) !=1) {
+    stop("multiple grouping variables available....provide only one grouping variable")
+  }
+
+  if (is.null(path)) {
     path = here()
+    ifelse(!dir.exists(file.path(paste0(path), "results")),
+           dir.create(file.path(paste0(path), "results")),
+           FALSE)
   } else
     path = path
 
@@ -52,7 +72,7 @@ boxPlots <- function(dataList = dataList,
 
   ## save as pdf
   ##----------------------------------------------------------------
-  pdf(paste(path, "boxplots.pdf", sep = "/"),
+  pdf(paste(path,"results","boxplots.pdf", sep = "/"),
       paper= "a4r",
       onefile = TRUE)
 
@@ -145,8 +165,11 @@ boxPlots <- function(dataList = dataList,
       print(p)
 
     Sys.sleep(0.01)
+
     setTxtProgressBar(pb, which(colnames(data)==i))
   }
   dev.off()
+
   close(pb)
 }
+

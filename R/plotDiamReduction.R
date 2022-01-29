@@ -92,8 +92,8 @@ plotDiamReduction <- function(dataList = dataList,
       nVar <- length(unique(plot.dat[[pl]]))
       ## plot
       p_diam <- ggplot(plot.dat, aes(x = PC1,
-                                        y = PC2,
-                                        color = .data[[pl]])) +
+                                     y = PC2,
+                                     color = .data[[pl]])) +
         geom_point(
           size = 3,
           alpha = 0.8
@@ -122,8 +122,8 @@ plotDiamReduction <- function(dataList = dataList,
     for (dist in dist.variables) {
       ## plot
       p_dist <- ggplot(plot.dat, aes(x = PC1,
-                                        y = PC2,
-                                        color = .data[[dist]])) +
+                                     y = PC2,
+                                     color = .data[[dist]])) +
         geom_point(
           size = 3,
           alpha = 0.8
@@ -149,7 +149,7 @@ plotDiamReduction <- function(dataList = dataList,
         ggtitle(dist) +
         guides(colour = guide_colourbar(barwidth = unit(0.4, "cm"),
                                         ticks.colour = "black",
-                                         frame.colour = "black"))
+                                        frame.colour = "black"))
       ## add to list
       plot.list.dist[[dist]] <- p_dist
     }
@@ -171,7 +171,7 @@ plotDiamReduction <- function(dataList = dataList,
 
       nVar <- length(unique(plot.dat[[pl]]))
       ## plot
-      ggplot(plot.dat, aes(x = p1, y = p2, color = .data[[pl]])) +
+      p_diam <- ggplot(plot.dat, aes(x = p1, y = p2, color = .data[[pl]])) +
         gg_circle(
           rx = sqrt(var(pscores) * hotFisN),
           ry = sqrt(var(oscores) * hotFisN),
@@ -452,5 +452,5 @@ plotDiamReduction <- function(dataList = dataList,
   p2 <- wrap_plots(plot.list.dist, ncol = ncol)
 
   return(list(group.plot=p1,
-         distribution.plot=p2))
+              distribution.plot=p2))
 }

@@ -1,8 +1,3 @@
-library(grid)
-library(ggthemes)
-library(scales)
-
-
 #' theme_pub
 #'
 #' @param base_size font size
@@ -14,10 +9,10 @@ library(scales)
 
 theme_pub <- function(base_size=14, base_family="helvetica") {
 
-  (theme_foundation(base_size=base_size, 
+  (theme_foundation(base_size=base_size,
                     base_family=base_family)
     + theme(plot.title = element_text(face = "bold",
-                                      size = rel(1.2), 
+                                      size = rel(1.2),
                                       hjust = 0.5),
             text = element_text(),
             panel.background = element_rect(colour = NA),
@@ -26,7 +21,7 @@ theme_pub <- function(base_size=14, base_family="helvetica") {
             axis.title = element_text(face = "bold",size = rel(1)),
             axis.title.y = element_text(angle=90,vjust =2),
             axis.title.x = element_text(vjust = -0.2),
-            axis.text = element_text(), 
+            axis.text = element_text(),
             axis.line = element_line(colour="black"),
             axis.ticks = element_line(),
             panel.grid.major = element_line(colour="#f0f0f0"),
@@ -42,7 +37,7 @@ theme_pub <- function(base_size=14, base_family="helvetica") {
             strip.text = element_text(face="bold")
     )
    )
-  
+
 }
 
 #' scale_fill_pub
@@ -55,7 +50,7 @@ scale_fill_pub <- function(n, color.theme, ...){
   discrete_scale("fill",
                  "Publication",
                  manual_pal(values = brewer.pal(n, color.theme)), ...)
-  
+
 }
 
 #' scale_colour_pub
@@ -68,5 +63,5 @@ scale_colour_pub <- function(n, color.theme, ...){
   discrete_scale("colour",
                  "Publication",
                  manual_pal(values = brewer.pal(n, color.theme)), ...)
-  
+
 }

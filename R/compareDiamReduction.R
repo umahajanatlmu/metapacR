@@ -1,8 +1,9 @@
-#' compareDiamReduction
+#' @title  compareDiamReduction
 #'
-#' @param dataList raw data list of metabolome data
-#' @param grouping.variables grouping variables, can be NULL
-#' @param plotting.variable ploting grouping variable..should be 1
+#' @description funcion to compare different diamentionality reduction methods, namely, PCA, OPLS, TSNE and UMAP.
+#'
+#' @param dataList raw metabolome data list from imputeTransformScale function.It need to have imputed.matrix and metadata.
+#' @param plotting.variable plotting grouping variable..should be 1
 #'
 #' @import tidyverse
 #' @import ropls
@@ -16,9 +17,42 @@
 #' @import stats
 #' @import graphics
 #' @import grDevices
-compareDiamReduction <- function (dataList = dataList,
-                            grouping.variables = grouping.variables,
-                            plotting.variable = plotting.variables) {
+#'
+#' @return Multivariate analyses results in list object.
+#'   The object contains the following:\itemize{
+#'     \item plot comparative diamemtionality reduction plot
+#'     \item pca S4 object of pca results
+#'     \item opls S4 object of opls results
+#'     \item rtsne S4 object of tsne results
+#'     \item rtsme.pca S4 object of tsne + pca results
+#'     \item kmeans S4 object of kmeans results
+#'     \item umap S4 object of umap results
+#'   }
+
+return(list(plot = p,
+            pca = pca,
+            opls = opls,
+            tsne = rtsne,
+            tsne_pca=rtsne.pca,
+            kmeans=kmeans,
+            umap = umap))
+
+
+
+compareDiamReduction <- function (dataList,
+                            plotting.variable = NULL) {
+
+  stopifnot(inherits(dataList, "list"))
+  validObject(dataList)
+
+
+  if (is.null(plotting.variable)) {
+    stop("plotting variable is missing")
+  } else if (length(group) !=1) {
+    stop("multiple plotting variables available....provide only one plotting variable")
+  }
+
+
   ## load imputed data matrix
   ##----------------------------------------------------------------
   imputed.data <- dataList[["imputed.matrix"]]
@@ -33,7 +67,7 @@ compareDiamReduction <- function (dataList = dataList,
 
   ## subset metadata
   ##----------------------------------------------------------------
-  select.columns <- c(grouping.variables, plotting.variable)
+  select.columns <- plotting.variable
   metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
 
   group <- plotting.variable
@@ -64,7 +98,10 @@ compareDiamReduction <- function (dataList = dataList,
   # perform Kmeans clustering
   ##----------------------------------------------------------------
   print(paste("Performing kmeans for", nVar, "clusters...."))
-  kmeans <- kmeans(dataNumeric, centers = nVar, nstart = 100)
+
+  kmeans <- kmeans(dataNumeric,
+                   centers = nVar,
+                   nstart = 100)
 
   print("Performing PCA ....")
   ## perform PCA
