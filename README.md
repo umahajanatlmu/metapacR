@@ -37,6 +37,13 @@ metapacR is an easy-to-use R package implementing a complete workflow for downst
 | 25 | volcanoPlots | function to plot volcano plots |
 
 ## Package installation
- ```{r}
+
+### install bioconductor dependancies before package installation
+```{r}
+packages <- c("FELLA", "ggtree", "KEGGREST", "ropls")
+BiocManager::install(packages)
+```
+### install package from source  
+```{r}
 devtools::install_github("umahajanatlmu/metapacR", ref="master", auth_token = "tokenString")
- ```
+```
