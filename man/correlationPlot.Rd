@@ -5,20 +5,16 @@
 \title{correlationPlot}
 \usage{
 correlationPlot(
-  data = data,
-  drop.var = NULL,
+  dataList,
   h = 3,
   path = NULL,
-  save = "pdf",
+  save = c("pdf", "svg", "png"),
   fig.width = 12,
-  fig.height = 9,
-  ...
+  fig.height = 9
 )
 }
 \arguments{
-\item{data}{normalized data}
-
-\item{drop.var}{grouping variables to drop}
+\item{dataList}{normalized data}
 
 \item{h}{cluster size}
 
@@ -29,9 +25,10 @@ correlationPlot(
 \item{fig.width}{plot width not applicable for pdf}
 
 \item{fig.height}{plot height not applicable for pdf}
-
-\item{...}{ggplot extensions}
+}
+\value{
+correlation matrix as a list and pdf output in defined path folder.
 }
 \description{
-correlationPlot
+function to plot intragroup correlation plot.
 }

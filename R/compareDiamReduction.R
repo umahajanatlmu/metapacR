@@ -29,16 +29,6 @@
 #'     \item umap S4 object of umap results
 #'   }
 
-return(list(plot = p,
-            pca = pca,
-            opls = opls,
-            tsne = rtsne,
-            tsne_pca=rtsne.pca,
-            kmeans=kmeans,
-            umap = umap))
-
-
-
 compareDiamReduction <- function (dataList,
                             plotting.variable = NULL) {
 
@@ -48,7 +38,7 @@ compareDiamReduction <- function (dataList,
 
   if (is.null(plotting.variable)) {
     stop("plotting variable is missing")
-  } else if (length(group) !=1) {
+  } else if (length(plotting.variable) !=1) {
     stop("multiple plotting variables available....provide only one plotting variable")
   }
 

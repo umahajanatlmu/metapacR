@@ -1,6 +1,8 @@
-#' rocPlots
+#' @title rocPlots
 #'
-#' @param data normalized data
+#' @description compute and plot roc curves
+#'
+#' @param dataList normalized data
 #' @param group grouping variables
 #' @param path saving path
 #' @param var.imp  disease for which ROC should be compared---should be one.
@@ -22,19 +24,45 @@
 #' @import graphics
 #' @import grDevices
 #' @import sjPlot
-rocPlots <- function(data = data,
-                     group = group,
+#'
+#' @return summaryROC results table. rocPlots in save oblect in defined path.
+
+rocPlots <- function(dataList,
+                     group,
                      path = NULL,
                      var.imp = "PDAC",
-                     save = "pdf",
+                     save= c("pdf", "svg","png"),
                      fig.width = 12,
                      fig.height = 9,
                      dpi = 300) {
   options(warn=-1) ## supress all warning
+
+  stopifnot(inherits(dataList, "list"))
+  validObject(dataList)
+
+  save <- match.arg(save)
+
+  if (is.null(group)) {
+    stop("group variable is missing")
+  } else if (length(group) !=1) {
+    stop("multiple group variables available....provide only one group variable")
+  }
+
+  if (is.null(var.imp)) {
+    stop("variable importance is missing")
+  } else if (length(var.imp) !=1) {
+    stop("variable importance variables available....provide only one variable importance variable")
+  }
+
   if(is.null(path)) {
     path = here()
+    ifelse(!dir.exists(file.path(paste0(path), "results")),
+           dir.create(file.path(paste0(path), "results")),
+           FALSE)
+    path = paste(path,"results", sep = "/")
   } else
     path = path
+
   if (save == "pdf"){
   pdf(paste(path, "rocCurves.pdf", sep = "/"),
       paper= "a4r",

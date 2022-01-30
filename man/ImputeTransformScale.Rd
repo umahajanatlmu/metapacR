@@ -9,7 +9,7 @@ ImputeTransformScale(
   Impute = FALSE,
   Transform = FALSE,
   Scaling = FALSE,
-  ScaleType = ScaleType
+  ScaleType = c("Centering", "Auto", "Range", "Pareto", "Vast", "Level")
 )
 }
 \arguments{
@@ -23,9 +23,9 @@ ImputeTransformScale(
 
 \item{ScaleType}{Scaling method, either of "Centering", "Auto", "Range","Pareto", "Vast", "Level".}
 }
+\value{
+scaled data
+}
 \description{
 This function median Imputation, transformation and scaling by different methods.
 }
-\keyword{Imputations,}
-\keyword{Scaling}
-\keyword{transformation,}

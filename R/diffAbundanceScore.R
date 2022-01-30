@@ -1,6 +1,6 @@
-#' diffAbundanceScore
+#' @title diffAbundanceScore
 #'
-#' The differential abundance (DA) score captures the tendency for a pathway t
+#' @description The differential abundance (DA) score captures the tendency for a pathway t
 #' o have increased levels of metabolites, relative to a control group.
 #' The score is calculating by first applying a non-parametric differential
 #' abundance test (in this study, Benjamini-Hochberg corrected Mann-Whitney
@@ -8,7 +8,7 @@
 #' metabolites are significantly increased/decreased in abundance, the
 #' differential abundance score is defined as:
 #' $$
-#' DAS = \frac{n(Metabolites_{up}) - n(Metabolites_{down})}{n(Metabolites_{up}) + n(Metabolites_{down})}
+#' DAS = {n(Metabolites_{up}) - n(Metabolites_{down})}{n(Metabolites_{up}) + n(Metabolites_{down})}
 #' $$
 #' Thus, the DA score varies from -1 to 1. A score of -1 indicates that all
 #' metabolites in a pathway decreased in abundance, while a score of 1
@@ -38,20 +38,33 @@
 #' @import stats
 #' @import reshape2
 #' @import scales
+#'
+#' @return output in defined path
 
-diffAbundanceScore <- function(species=species,
+diffAbundanceScore <- function(species=c("hsa", "mmu"),
                                ref.path=NULL,
-                               results = results,
+                               results,
                                p.value.cutoff = 0.05,
                                fold.changes.cutoff = 1.5,
                                common.mets =15,
-                               save = "pdf",
+                               save= c("pdf", "svg","png"),
                                fig.width = 12,
                                fig.height = 9,
                                dpi = 300) {
-  enrichment.results <- data.frame()
+
+  stopifnot(inherits(results, "data.frame"))
+  validObject(results)
+
+  species <- match.arg(species)
+  save <- match.arg(save)
+
   if(is.null(ref.path)) {
     ref.path = here()
+    ifelse(!dir.exists(file.path(paste0(ref.path), "results")),
+           dir.create(file.path(paste0(ref.path), "results")),
+           FALSE)
+    path = paste(ref.path,"results", sep = "/")
+
   } else
     ref.path = ref.path
 
@@ -168,6 +181,7 @@ diffAbundanceScore <- function(species=species,
 
   ## select groups
   groups <- unique(pathDatDas$contrast)
+
   for (j in seq_along(groups)) {
     ## filtered dataset
     datFiltered <- pathDatDas[pathDatDas$contrast %in% groups[j],]  %>%

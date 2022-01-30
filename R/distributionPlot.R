@@ -1,4 +1,6 @@
-#' distributionPlot
+#' @title distributionPlot
+#'
+#' @description plot distribution of all metabolites with fold changes and p-values.
 #'
 #' @param data fold changes data
 #' @param path saving path
@@ -8,7 +10,6 @@
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
 #' @param dpi  dpi only applicable for png
-#' @param ...   ggplot extensions
 #'
 #' @import tidyverse
 #' @import here
@@ -19,17 +20,26 @@
 #' @import graphics
 #' @import grDevices
 #' @import sjPlot
-distributionPlot <- function (data = data,
+distributionPlot <- function (data,
                               path = NULL,
                               cutoff = 0.01,
                               lipid.class = TRUE,
-                              save = "pdf",
+                              save= c("pdf", "svg","png"),
                               fig.width = 12,
                               fig.height = 9,
-                              dpi = 300,
-                              ...) {
+                              dpi = 300) {
+
+  stopifnot(inherits(data, "data.frame"))
+  validObject(data)
+
+  save <- match.arg(save)
+
   if(is.null(path)) {
     path = here()
+    ifelse(!dir.exists(file.path(paste0(path), "results")),
+           dir.create(file.path(paste0(path), "results")),
+           FALSE)
+    path = paste(path,"results", sep = "/")
   } else
     path = path
   if (save == "pdf"){

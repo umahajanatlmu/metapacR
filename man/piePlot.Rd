@@ -5,22 +5,24 @@
 \title{piePlot}
 \usage{
 piePlot(
-  data = data,
+  data,
   path = NULL,
   cutoff = 0.05,
-  save = "pdf",
+  lipid.class = TRUE,
+  save = c("pdf", "svg", "png"),
   fig.width = 12,
   fig.height = 9,
-  dpi = 300,
-  ...
+  dpi = 300
 )
 }
 \arguments{
-\item{data}{fold changes data}
+\item{data}{anova results obtained from normalizeDat.binary or normalizeDat function}
 
 \item{path}{saving path}
 
 \item{cutoff}{significance cutoff}
+
+\item{lipid.class}{wheather to plot lipid or not}
 
 \item{save}{either "pdf", "svg" or "png"}
 
@@ -29,9 +31,10 @@ piePlot(
 \item{fig.height}{plot height not applicable for pdf}
 
 \item{dpi}{dpi only applicable for png}
-
-\item{...}{ggplot2 extensions}
+}
+\value{
+output in save format in defined path
 }
 \description{
-piePlot
+plot class distribution using pie charts
 }

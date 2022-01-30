@@ -1,6 +1,6 @@
-#' leveneStat
+#' @title leveneStat
 #'
-#' Computes Levene's stats for homogeneity of variance across groups
+#' @description computes Levene's stats for homogeneity of variance across groups
 #'
 #' @param group grouping variable
 #' @param dataList  metabolome raw data expDataList
@@ -14,13 +14,28 @@
 #' @import utils
 #' @import car
 #' @import stats
-leveneStat <- function(group = group,
-                       dataList = dataList,
-                       location = "median",
+#'
+#' @return result table
+
+leveneStat <- function(group,
+                       dataList,
+                       location = c("mean","median"),
                        trim.alpha = 0.25,
                        bootstrap = TRUE,
                        num.bootstrap = 1000,
                        kruskal.test = TRUE) {
+
+  stopifnot(inherits(dataList, "list"))
+  validObject(dataList)
+
+  location <- match.arg(location)
+
+  if (is.null(group)) {
+    stop("group variable is missing")
+  } else if (length(group) !=1) {
+    stop("multiple group variables available....provide only one group variable")
+  }
+
   # load imputed data matrix
   ##----------------------------------------------------------------
   imputed.data <- dataList[["imputed.matrix"]]

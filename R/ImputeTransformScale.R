@@ -1,6 +1,6 @@
-#' ImputeTransformScale
+#' @title ImputeTransformScale
 #'
-#' This function median Imputation, transformation and scaling by different methods.
+#' @description This function median Imputation, transformation and scaling by different methods.
 #'
 #' @param Data data-frame with column names
 #' @param Impute whether to perform median imputation, default is TRUE
@@ -11,12 +11,18 @@
 #' @import stats
 #' @import utils
 #'
-#' @keywords Imputations, transformation, Scaling
+#' @return scaled data
 ImputeTransformScale <- function(Data,
                                  Impute = FALSE,
                                  Transform = FALSE,
                                  Scaling = FALSE,
-                                 ScaleType = ScaleType) {
+                                 ScaleType = c("Centering", "Auto", "Range","Pareto", "Vast", "Level")) {
+
+  stopifnot(inherits(Data, "data.frame"))
+  validObject(Data)
+
+  ScaleType <- match.arg(ScaleType)
+
   ## subset data
   nCol <- ncol(Data)
   ## empty data-frame

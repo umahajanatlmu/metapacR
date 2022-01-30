@@ -1,25 +1,41 @@
-#' normalizeDat
+#' @title normalizeDat
 #'
-#' Function to normalize data using fixed effect as well as mixed effects models.
+#' @description normalize data using fixed effect as well as mixed effects models.
 #'
-#' @param dataList metabolome raw data expDataList
+#' @param dataList raw metabolome data list from imputeTransformScale function.It need to have imputed.matrix and metadata.
 #' @param confounders list of confounders, NULL for mixed effect model
-#' @param stratifier classifier variable of interest
+#' @param stratifier classifier variable of interest, Should not be in confounders. Should be one length 1.
 #' @param fix.effect equation of fixed effect, NULL for fixed effect model
 #' @param random.effect equation of random effects, NULL for fixed effect model
-#' @param reference refenence for the disease of interest to compare.
+#' @param reference reference for the disease of interest to compare. Should be one length 1.
 #'
 #' @import tidyverse
 #' @import utils
 #' @import emmeans
 #' @import nlme
 #' @import stats
-normalizeDat <- function (dataList = dataList,
+#'
+#' @return Analyses results in list object.
+#'   The object contains the following:\itemize{
+#'     \item fitted.value fitted values for each variable
+#'     \item summaryFC anova results
+#'   }
+
+normalizeDat <- function (dataList,
                           confounders = NULL,
-                          stratifier = stratifier,
-                          reference = reference,
+                          stratifier,
+                          reference,
                           fix.effect = NULL,
                           random.effect = NULL) {
+
+  stopifnot(inherits(dataList, "list"))
+  validObject(dataList)
+
+  if (is.null(stratifier)) {
+    stop("stratifier variable is missing")
+  } else if (length(stratifier) !=1) {
+    stop("multiple stratifier variables available....provide only one stratifier variable")
+  }
 
   ## load imputed data matrix
   ##----------------------------------------------------------------

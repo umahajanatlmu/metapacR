@@ -12,30 +12,29 @@ metapacR is an easy-to-use R package implementing a complete workflow for downst
 |---|---|---|
 | 1 | banner | function to print tidy labels and separators |
 | 2 | boxPlots | function to plot box and violin plot |
-| 3 | compareDiamReduction | funcion to compare different diamentionality reduction methods, namely, PCA, OPLS, TSNE and UMAP. |
-| 4 |normalizeDat   | Function for normalization and pairwise anova analysis of metabolome data (fixed effects as well as mixed effect models)    |
-| 5 |normalizeDat.binary   | Function for normalization and group vs rest anova analysis of metabolome data (fixed effects as well as mixed effect models)    |
-| 6 |leveneStat   |Function to test variance |
-| 7 |shapiroTest   |Function to test data normality |
-| 8 |compareDiamReduction  |Function to test different methods of diamentionality reduction  |
-| 9   |plotDiamReduction  |Fuction to plot method of choice of diamentionality reduction  |
-| 10  |boxPlots  |Function to plot boxplots |
-| 11  |rocPlots   |Function to plot roc curves |
-| 12  |piePlots   |   |
-| 13  |correlationPlots   |   |
-| 14  |distributionPlots  |   |
-| 15  |volcanoPlots   |   |
-| 16  |plotMetaboliteAlteration   |   |
-| 17  |findMarkers   |   |
-| 18  |exportResults   |   |
-| 19  |lipidChainLengthCorrelation   |   |
-| 20  |lipidChainLengthDistribution   |   |
-| 21  |compare.common.themes  |   |
-| 22  |erichmentScore.KEGG |   |
-| 23  |diffAbundanceScore  |   |
-| 24  |enrichedNetwork  |   |
-| 25  |plotSplitViolin |   |
-| 26  |plotMarkerViolin |   |
+| 3 | compareDiamReduction | funcion to compare different diamentionality reduction methods, namely, PCA, OPLS, TSNE and UMAP |
+| 4 |correlationPlot | function to plot intragroup correlation plot |
+| 5 |diffAbundanceScore | function to analyse differential abundance score of enriched pathways |
+| 6 |distributionPlot | function to analyse distribution of different classes of metabolites |
+| 7 | enrichedNetwork | function to plot enriched annotated netwroks for the signficantly altered metabolic pathways |
+| 8 | enrichedNetwork.KEGG | function to plot influence of metabolic alteration on enriched pathway (direction of change) |
+| 9 | exportResults  | function to export results in color coded format in excel table |
+| 10 | findMarkers  | function to select and plot most differentiated markers based on roc analysis |
+| 11 | ImputeTransformScale | function to impute, transform and scale raw data |
+| 12 | installScriptLibs | function to install listed R-packages from CRAN and Bioconductor  |
+| 13 | leveneStat   | function to compute Levene's stats for homogeneity of variance across groups |
+| 14 | lipidChainLengthCorrelation | function to compute correlation of chain length with abundance |
+| 15 | lipidChainLengthDistribution | function to compute distribution of chain length per class |
+| 16 | normalizeDat.binary | function to normalize data using fixed effect as well as mixed effects models for comparison of binary groups ie group vs rest |
+| 17 | normalizeDat | function to normalize data using fixed effect as well as mixed effects models |
+| 18 | piePlot | function to plot pieCharts |
+| 19 | plotDiamReduction | function to plot groups and distribution of metsbolites in diamentionality reduction plot |
+| 20 | plotMarkerViolin | function to plot violin plots of identified markers |
+| 21 | plotMetaboliteAlteration | function to compute atered metabolites distribution per class |
+| 22 | plotSplitViolin | function to plot split violin plots |
+| 23 | rocPlots | function to compute and plot roc curves |
+| 24 | shapiroTest | function to test normality |
+| 25 | volcanoPlots | function to plot volcano plots |
 
 ## Package installation
  ```{r}

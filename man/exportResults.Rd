@@ -11,6 +11,9 @@ exportResults(data, path = NULL)
 
 \item{path}{saving path of the data}
 }
+\value{
+color coded result table in excel formant
+}
 \description{
 export results with precolored formatting
 }

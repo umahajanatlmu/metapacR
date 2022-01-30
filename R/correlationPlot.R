@@ -1,12 +1,13 @@
-#' correlationPlot
+#' @title correlationPlot
 #'
-#' @param data normalized data
+#' @description function to plot intragroup correlation plot.
+#'
+#' @param dataList normalized data
 #' @param h cluster size
 #' @param save either "pdf", "svg" or "png"
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
 #' @param path  saving path
-#' @param ... ggplot extensions
 #'
 #' @import tidyverse
 #' @import Hmisc
@@ -14,15 +15,26 @@
 #' @import graphics
 #' @import grDevices
 #' @import here
-correlationPlot <- function (dataList = dataList,
+#'
+#' @return correlation matrix as a list and pdf output in defined path folder.
+
+correlationPlot <- function (dataList,
                              h = 3,
                              path = NULL,
-                             save= "pdf",
+                             save= c("pdf", "svg","png"),
                              fig.width = 12,
-                             fig.height = 9,
-                             ...) {
+                             fig.height = 9) {
+
+  stopifnot(inherits(dataList, "list"))
+  validObject(dataList)
+  save <- match.arg(save)
+
   if(is.null(path)) {
     path = here()
+    ifelse(!dir.exists(file.path(paste0(path), "results")),
+           dir.create(file.path(paste0(path), "results")),
+           FALSE)
+    path = paste(path,"results", sep = "/")
   } else
     path = path
   if (save == "pdf"){

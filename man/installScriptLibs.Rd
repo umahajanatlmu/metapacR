@@ -10,5 +10,5 @@ installScriptLibs(packages)
 \item{packages}{list of required packages}
 }
 \description{
-function to install and load required listed packages
+function to install and load listed R-packages from CRAN and Bioconductor
 }

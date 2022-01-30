@@ -5,13 +5,12 @@
 \title{volcanoPlot}
 \usage{
 volcanoPlot(
-  data = data,
+  data,
   path = NULL,
-  save = "pdf",
+  save = c("pdf", "svg", "png"),
   fig.width = 12,
   fig.height = 9,
-  dpi = 300,
-  ...
+  dpi = 300
 )
 }
 \arguments{
@@ -26,9 +25,10 @@ volcanoPlot(
 \item{fig.height}{plot height not applicable for pdf}
 
 \item{dpi}{dpi only applicable for png}
-
-\item{...}{ggplot2 extensions}
+}
+\value{
+plots in save object in defined path
 }
 \description{
-Plot volcano plots
+plot volcano plots
 }

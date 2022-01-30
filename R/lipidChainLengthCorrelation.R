@@ -1,4 +1,6 @@
-#' lipidChainLengthCorrelation
+#' @title lipidChainLengthCorrelation
+#'
+#' @description compute correlation of chain length with abundance.
 #'
 #' @param results fold changes data
 #' @param path saving path
@@ -6,7 +8,6 @@
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
 #' @param dpi dpi only applicable for png
-#' @param ... ggplot extensions
 #'
 #' @import tidyverse
 #' @import here
@@ -18,17 +19,30 @@
 #' @import graphics
 #' @import grDevices
 #' @import ggpmisc
-lipidChainLengthCorrelation <- function (results=results,
+#'
+#' @return plot as save object in defined path.
+
+lipidChainLengthCorrelation <- function (results,
                                          path = NULL,
-                                         save = "pdf",
+                                         save = c("pdf", "svg", "png"),
                                          fig.width = 12,
                                          fig.height = 9,
-                                         dpi = 300,
-                                         ...) {
+                                         dpi = 300) {
+
+  stopifnot(inherits(results, "data.frame"))
+  validObject(results)
+
+  save <- match.arg(save)
+
   if(is.null(path)) {
     path = here()
+    ifelse(!dir.exists(file.path(paste0(path), "results")),
+           dir.create(file.path(paste0(path), "results")),
+           FALSE)
+    path = paste(path,"results", sep = "/")
   } else
     path = path
+
   if (save == "pdf"){
     pdf(paste(path, "chainLengthCorrelation.pdf", sep = "/"),
         paper = "a4r",

@@ -8,7 +8,13 @@
 #' @import tidyverse
 #' @import here
 #' @import condformat
+#'
+#' @return color coded result table in excel formant
+#'
 exportResults <- function(data, path=NULL) {
+
+  stopifnot(inherits(data, "data.frame"))
+  validObject(dataList)
 
   ## create result tables groups
   groups <- unique(data$contrast)
@@ -22,6 +28,10 @@ exportResults <- function(data, path=NULL) {
 
     if(is.null(path)) {
       path = here()
+      ifelse(!dir.exists(file.path(paste0(path), "results")),
+             dir.create(file.path(paste0(path), "results")),
+             FALSE)
+      path = paste(path,"results", sep = "/")
     } else
       path = path
     ## create keys

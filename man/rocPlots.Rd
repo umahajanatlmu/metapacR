@@ -5,27 +5,24 @@
 \title{rocPlots}
 \usage{
 rocPlots(
-  data = data,
-  group = group,
-  drop.var = NULL,
+  dataList,
+  group,
   path = NULL,
   var.imp = "PDAC",
-  save = "pdf",
+  save = c("pdf", "svg", "png"),
   fig.width = 12,
   fig.height = 9,
   dpi = 300
 )
 }
 \arguments{
-\item{data}{normalized data}
+\item{dataList}{normalized data}
 
 \item{group}{grouping variables}
 
-\item{drop.var}{drop un-necessary variables}
-
 \item{path}{saving path}
 
-\item{var.imp}{disease for which ROC should be compared}
+\item{var.imp}{disease for which ROC should be compared---should be one.}
 
 \item{save}{either "pdf", "svg" or "png"}
 
@@ -35,6 +32,9 @@ rocPlots(
 
 \item{dpi}{dpi only applicable for png}
 }
+\value{
+summaryROC results table. rocPlots in save oblect in defined path.
+}
 \description{
-rocPlots
+compute and plot roc curves
 }

@@ -4,10 +4,13 @@
 \alias{shapiroTest}
 \title{shapiroTest}
 \usage{
-shapiroTest(data = data)
+shapiroTest(dataList)
 }
 \arguments{
-\item{data}{dataframe of which normality testing is necessary}
+\item{dataList}{metabolome raw data expDataList}
+}
+\value{
+results table
 }
 \description{
 Shapiro-Wilk normality test

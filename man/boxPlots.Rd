@@ -4,17 +4,18 @@
 \alias{boxPlots}
 \title{boxPlots}
 \usage{
-boxPlots(data = data, group = group, drop.var = NULL, path = NULL)
+boxPlots(dataList, group = NULL, path = NULL)
 }
 \arguments{
-\item{data}{normalized data}
+\item{dataList}{raw metabolome data list from imputeTransformScale function.It need to have imputed.matrix and metadata.}
 
-\item{group}{grouping variables}
-
-\item{drop.var}{drop un-necessary variables}
+\item{group}{plotting grouping variable..should be 1}
 
 \item{path}{saving path}
 }
+\value{
+returns compiled pdf file.
+}
 \description{
-boxPlots
+function to plot box and violin plot from normalized metabolome data
 }

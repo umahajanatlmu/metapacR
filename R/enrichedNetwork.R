@@ -1,16 +1,17 @@
-#' enrichedNetwork
+#' @title enrichedNetwork
+#'
+#' @description plot enriched annotated netwroks for the signficantly altered metabolic pathways.
 #'
 #' @param species species to use "hsa" or "mmu"
 #' @param ref.path saving path
 #' @param results fold changes results
 #' @param p.value.cutoff cutoff value of p.value
 #' @param fold.changes.cutoff higher cutoff value of fold changes
-#' @param network.method "diffusion" as method of choice, for other method refer to FELLA.
+#' @param network.method "diffusion" as method of choice, for other method refer to FELLA. CUrrently only caliberated for diffusion.
 #' @param legend.pathway number of pathways to map on plot
 #' @param save either "pdf", "svg" or "png"
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
-#' @param ... plot extensions
 #'
 #' @import tidyverse
 #' @import here
@@ -26,17 +27,30 @@
 #' @import FELLA
 #' @import igraph
 #' @import scales
-enrichedNetwork <- function(species=species,
+#'
+#' @return results of enrichment network and network plots as save object in defined path.
+#' The object contains the following:\itemize{
+#'     \item results enrichment results
+#'     \item plot.pathway.impact list of all the plots of pathway.impact
+#'   }
+
+enrichedNetwork <- function(species= c("hsa", "mmu"),
                             ref.path=NULL,
-                            results = results,
+                            results,
                             p.value.cutoff = 0.05,
                             fold.changes.cutoff = 1.5,
                             network.method = "diffusion",
                             legend.pathway = 3,
-                            save = "pdf",
+                            save= c("pdf", "svg","png"),
                             fig.width = 12,
-                            fig.height = 9,
-                            ...) {
+                            fig.height = 9) {
+
+  stopifnot(inherits(results, "data.frame"))
+  validObject(results)
+
+  species <- match.arg(species)
+  network.method <- match.arg(network.method)
+  save <- match.arg(save)
 
   enrichment.results <- data.frame()
 
@@ -44,6 +58,10 @@ enrichedNetwork <- function(species=species,
 
   if(is.null(ref.path)) {
     ref.path = here()
+    ifelse(!dir.exists(file.path(paste0(ref.path), "results")),
+           dir.create(file.path(paste0(ref.path), "results")),
+           FALSE)
+    path = paste(ref.path,"results", sep = "/")
   } else
     ref.path = ref.path
 
@@ -283,8 +301,11 @@ enrichedNetwork <- function(species=species,
            cex=0.7,
            legend=levels(Group),
            fill=colors)
+
+    if (save != "pdf") {
     ## print
     dev.off()
+    }
 
     ## plot pathway impact
     ## plot
@@ -330,6 +351,10 @@ enrichedNetwork <- function(species=species,
     ## save enrichTable
     enrichment.results <- bind_rows(enrichment.results, table.plot)
 
+  }
+
+  if(save == "pdf") {
+    dev.off()
   }
   return(list(results=enrichment.results,
               plot.pathway.impact = plot.pathway.impact))

@@ -1,4 +1,6 @@
-#' enrichmentScore.KEGG
+#' @title enrichmentScore.KEGG
+#'
+#' @description enrichmentScore calualtion based on enrichement pathway analysis.
 #'
 #' @param species species to use "hsa" or "mmu"
 #' @param ref.path saving path
@@ -9,7 +11,6 @@
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
 #' @param dpi dpi only applicable for png
-#' @param ... ggplot extensions
 #'
 #' @import tidyverse
 #' @import here
@@ -22,19 +23,33 @@
 #' @import sjPlot
 #' @import KEGGREST
 #' @import stats
-enrichmentScore.KEGG <- function(species=species,
+#'
+#' @return data.frame onject with enrichement.results and plots as save object in defined path.
+
+enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
                                  ref.path=NULL,
-                                 results = results,
+                                 results,
                                  p.value.cutoff = 0.05,
                                  fold.changes.cutoff = 1.5,
-                                 save = "pdf",
+                                 save = c("pdf", "svg", "png"),
                                  fig.width = 12,
                                  fig.height = 9,
-                                 dpi = 300,
-                                 ...) {
+                                 dpi = 300) {
+
+  stopifnot(inherits(results, "data.frame"))
+  validObject(results)
+
+  species <- match.arg(species)
+  save <- match.arg(save)
+
+
   enrichment.results <- data.frame()
   if(is.null(ref.path)) {
     ref.path = here()
+    ifelse(!dir.exists(file.path(paste0(ref.path), "results")),
+           dir.create(file.path(paste0(ref.path), "results")),
+           FALSE)
+    path = paste(ref.path,"results", sep = "/")
   } else
     ref.path = ref.path
 

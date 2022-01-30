@@ -5,9 +5,9 @@
 \title{leveneStat}
 \usage{
 leveneStat(
-  group = group,
-  data = data,
-  location = "median",
+  group,
+  dataList,
+  location = c("mean", "median"),
   trim.alpha = 0.25,
   bootstrap = TRUE,
   num.bootstrap = 1000,
@@ -17,7 +17,7 @@ leveneStat(
 \arguments{
 \item{group}{grouping variable}
 
-\item{data}{dataframe of normalized data}
+\item{dataList}{metabolome raw data expDataList}
 
 \item{location}{mean or median, median is default}
 
@@ -29,6 +29,9 @@ leveneStat(
 
 \item{kruskal.test}{whether to perform kruskal test TRUE/FALSE}
 }
+\value{
+result table
+}
 \description{
-Computes Levene's stats for homogeneity of variance across groups
+computes Levene's stats for homogeneity of variance across groups
 }

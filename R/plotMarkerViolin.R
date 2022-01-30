@@ -1,8 +1,10 @@
-#' plotMarkerViolin
+#' @title plotMarkerViolin
+#'
+#' @description plot violin plot for selected markers
 #'
 #' @param dataList raw data list of metabolome data
 #' @param grouping.variable grouping variable to plot..need to be binary or multinomial
-#' @param markers list of markers to plots
+#' @param markers list of markers to plots. List can be supplemented from findMarkers function.
 #' @param n.markers number of markers to plots
 #'
 #' @import ggplot2
@@ -12,10 +14,21 @@
 #' @import stats
 #' @import graphics
 #' @import grDevices
-plotMarkerViolin <- function(dataList=dataList,
-                             grouping.variable = grouping.variable,
+#'
+#' @return markers plots.
+plotMarkerViolin <- function(dataList,
+                             grouping.variable,
                              markers=markers,
                              n.markers = 5) {
+
+  stopifnot(inherits(dataList, "list"))
+  validObject(dataList)
+
+  if (is.null(grouping.variables)) {
+    stop("group variable is missing....please provide atleast one grouping variable")
+  } else if (length(grouping.variables) !=1) {
+    stop("multiple group variables available....provide only one group variable")
+  }
 
   if (length(markers) < 5) {
     n.markers <- length(markers)

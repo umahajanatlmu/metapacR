@@ -1,6 +1,8 @@
-#' piePlot
+#' @title piePlot
 #'
-#' @param data fold changes data
+#' @description plot class distribution using pie charts
+#'
+#' @param data anova results obtained from normalizeDat.binary or normalizeDat function
 #' @param path saving path
 #' @param cutoff significance cutoff
 #' @param lipid.class wheather to plot lipid or not
@@ -8,7 +10,6 @@
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
 #' @param dpi  dpi only applicable for png
-#' @param ... ggplot2 extensions
 #'
 #' @import tidyverse
 #' @import here
@@ -19,19 +20,32 @@
 #' @import graphics
 #' @import grDevices
 #' @import sjPlot
-piePlot <- function (data = data,
+#'
+#' @return output in save format in defined path
+
+piePlot <- function (data,
                      path = NULL,
                      cutoff = 0.05,
                      lipid.class =TRUE,
-                     save = "pdf",
+                     save= c("pdf", "svg","png"),
                      fig.width = 12,
                      fig.height = 9,
-                     dpi = 300,
-                     ...) {
+                     dpi = 300) {
+
+  stopifnot(inherits(data, "data.frame"))
+  validObject(dataList)
+
+  save <- match.arg(save)
+
   if(is.null(path)) {
     path = here()
+    ifelse(!dir.exists(file.path(paste0(path), "results")),
+           dir.create(file.path(paste0(path), "results")),
+           FALSE)
+    path = paste(path,"results", sep = "/")
   } else
     path = path
+
   if (save == "pdf"){
   pdf(paste(path, "piePlots.pdf", sep = "/"),
       onefile = TRUE)

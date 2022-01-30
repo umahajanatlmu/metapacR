@@ -1,13 +1,18 @@
-#' installScriptLibs
+#' @title installScriptLibs
 #'
-#' function to install and load required listed packages
+#' @description function to install and load listed R-packages from CRAN and Bioconductor
 #'
 #' @param packages list of required packages
 #'
 #' @import utils
 #' @importFrom BiocManager install
 #' @importFrom BiocManager available
+#'
 installScriptLibs <- function(packages) {
+
+  stopifnot(inherits(packages, "character"))
+  validObject(packages)
+
   options(warn=-1) ## supress all warning
   for (i in packages) {
     if (i %in% .packages(all.available = TRUE)) {

@@ -1,6 +1,6 @@
-#' volcanoPlot
+#' @title volcanoPlot
 #'
-#' Plot volcano plots
+#' @description plot volcano plots
 #'
 #' @param data fold changes data
 #' @param path saving path
@@ -8,7 +8,6 @@
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
 #' @param dpi  dpi only applicable for png
-#' @param ... ggplot2 extensions
 #'
 #' @import tidyverse
 #' @import here
@@ -19,15 +18,27 @@
 #' @import graphics
 #' @import grDevices
 #' @import sjPlot
-volcanoPlot <- function (data = data,
+#'
+#' @return plots in save object in defined path
+
+volcanoPlot <- function (data,
                          path = NULL,
-                         save = "pdf",
+                         save= c("pdf", "svg","png"),
                          fig.width = 12,
                          fig.height = 9,
-                         dpi = 300,
-                         ...) {
+                         dpi = 300) {
+
+  stopifnot(inherits(data, "data.frame"))
+  validObject(data)
+
+  save <- match.arg(save)
+
   if(is.null(path)) {
     path = here()
+    ifelse(!dir.exists(file.path(paste0(path), "results")),
+           dir.create(file.path(paste0(path), "results")),
+           FALSE)
+    path = paste(path,"results", sep = "/")
   } else
     path = path
 
@@ -38,7 +49,9 @@ volcanoPlot <- function (data = data,
     dir.create(paste(here(), "volcanoPlots", sep = "/"))
   }
 
-  metabolite.class <- system.file("inst/extdata/ref", "Chemical_annotations_lipids.csv", package="metapacR")
+  metabolite.class <- system.file("inst/extdata/ref",
+                                  "Chemical_annotations_lipids.csv",
+                                  package="metapacR")
 
 
   ## define metabolites
@@ -108,6 +121,7 @@ volcanoPlot <- function (data = data,
       labs(fill = "Metabololites category",
            x = "Relative Abundance",
            y = "p value (-log10)")
+
     if (save == "pdf") {
       ## print
       print(p)

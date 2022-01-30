@@ -1,7 +1,9 @@
-#' plotSplitViolin
+#' @title plotSplitViolin
+#'
+#' @description plot split violin plot for comparison of two groups.
 #'
 #' @param dataList raw data from metabolome study
-#' @param grouping.variable grouping variable to plot..need to be binary or multinomial
+#' @param grouping.variable grouping variable to plot..need to be binary or multinomial variable
 #' @param markers list of markers to plots
 #'
 #' @import ggplot2
@@ -13,9 +15,25 @@
 #' @import grDevices
 #' @import ggpubr
 #' @import rstatix
-plotSplitViolin <- function(dataList=dataList,
-                            grouping.variable = grouping.variable,
-                            markers= markers) {
+#'
+#' @return violin plot
+
+plotSplitViolin <- function(dataList,
+                            grouping.variable = NULL,
+                            markers= NULL) {
+
+  stopifnot(inherits(dataList, "list"))
+  validObject(dataList)
+
+  if (is.null(grouping.variables)) {
+    stop("group variable is missing....please provide atleast one grouping variable")
+  } else if (length(grouping.variables) !=1) {
+    stop("multiple group variables available....provide only one group variable")
+  }
+
+  if (is.null(markers)) {
+    stop("disribution variable is missing....please provide atleast one marker")
+  }
 
   violin.plot <- list()
 
@@ -100,18 +118,6 @@ plotSplitViolin <- function(dataList=dataList,
 }
 
 
-
-#' GeomSplitViolin
-#'
-#' @param self auxillary function
-#' @param data data
-#' @param ...
-#' @param draw_quantiles list of quantile to draw
-#'
-#' @import plyr
-#' @import ggplot2
-#' @import scales
-#' @import grid
 GeomSplitViolin <- ggproto("GeomSplitViolin",
                            GeomViolin,
                            draw_group = function(self,
@@ -154,21 +160,6 @@ GeomSplitViolin <- ggproto("GeomSplitViolin",
                              }
                            })
 
-#' .splitViolin
-#'
-#' @param mapping ggplot mapping
-#' @param data ggplot data
-#' @param stat stats
-#' @param position position
-#' @param ... extensions
-#' @param draw_quantiles TRUE/FALSE
-#' @param trim TRUE/FALSE
-#' @param scale scale type
-#' @param na.rm TRUE/FALSE
-#' @param show.legend TRUE/FALSE
-#' @param inherit.aes TRUE/FALSE
-#'
-#' @import ggplot2
 
 .splitViolin <- function(mapping = NULL,
                          data = NULL,
@@ -193,13 +184,7 @@ GeomSplitViolin <- ggproto("GeomSplitViolin",
                       na.rm = na.rm, ...))
 }
 
-#' .create_quantile_segment_frame
-#'
-#' @param data plotting dataframe
-#' @param draw_quantiles list of quantile to draw
-#'
-#' @import stats
-#' @import ggplot2
+
 .create_quantile_segment_frame <- function(data, draw_quantiles) {
   dens <- cumsum(data$density) / sum(data$density)
   ecdf <- stats::approxfun(dens, data$y)
@@ -221,14 +206,6 @@ GeomSplitViolin <- ggproto("GeomSplitViolin",
 
 # geom_rangeframe is adapted from ggthemes::geom_rangeframe, but it uses the panel_scales
 # to compute the endpoints of the lines rather than the data (as ggthemes::geom_rangeframe does)
-
-#' .ggname
-#'
-#' @param prefix prefix
-#' @param grob grob
-#'
-#' @import grid
-#'
 .ggname <- function(prefix, grob) {
   # copy of ggthemes:::ggname
   grob$name <- grid::grobName(grob, prefix)

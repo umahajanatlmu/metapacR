@@ -1,6 +1,6 @@
-#' findMarkers
+#' @title findMarkers
 #'
-#' method to select classifer markers by AUC.
+#' @description method to select classifer markers by AUC.
 #'
 #' @param results anova results obtained from normalizeDat.binary function
 #' @param dataList raw data list of metabolome data
@@ -13,9 +13,8 @@
 #' @param dot.plot whether to plot dot plot
 #' @param heatmap whether to plot heatmap
 #'
-#'
 #' @import pROC
-#' @import ggdendra
+#' @import ggdendro
 #' @import ggtree
 #' @import RColorBrewer
 #' @import patchwork
@@ -28,9 +27,18 @@
 #' @import tidyverse
 #' @import scales
 #'
-findMarkers <- function (results = results,
-                         dataList = dataList,
-                         group = group,
+#' @return findMarkers analyses results in list object.
+#'   The object contains the following:\itemize{
+#'     \item raw.results all the results of roc analysis
+#'     \item metabolite.rank.plot ranking plot
+#'     \item dot.plot dot.plot of markers
+#'     \item heatmap heatmap distribution of the markers
+#'     \item marker.metabolites list of marker metabolites
+#'   }
+
+findMarkers <- function (results,
+                         dataList,
+                         group,
                          p.value.cutoff = 0.05,
                          auc.threshould = 0.60,
                          fold.changes.cutoff = 1.5,
@@ -40,6 +48,18 @@ findMarkers <- function (results = results,
                          heatmap=TRUE
                          ) {
   options(warn=-1) ## supress all warning
+
+  stopifnot(inherits(dataList, "list"))
+  validObject(dataList)
+
+  stopifnot(inherits(results, "data.frame"))
+  validObject(results)
+
+  if (is.null(group)) {
+    stop("group variable is missing")
+  } else if (length(group) !=1) {
+    stop("multiple group variables available....provide only one group variable")
+  }
 
   ## load imputed data matrix
   ##----------------------------------------------------------------
@@ -104,7 +124,7 @@ findMarkers <- function (results = results,
     group_by(contrast) %>%
     arrange(desc(auc))
 
-  if(rank.plot = TRUE) {
+  if(rank.plot == TRUE) {
     ## plot distribution
     plot.list <- list()
 
@@ -163,7 +183,7 @@ findMarkers <- function (results = results,
   } else
     dist.p <- NULL
 
-  if (dot.plot = TRUE) {
+  if (dot.plot == TRUE) {
 
     ## select markers from auc results
     selected.metabolites <- roc.results.cutoff %>%
@@ -259,7 +279,7 @@ findMarkers <- function (results = results,
   } else
     p.dot <- NULL
 
-  if (heatmap = TRUE) {
+  if (heatmap == TRUE) {
     ## select markers from auc results
     selected.metabolites <- roc.results.cutoff %>%
       group_by(contrast) %>%

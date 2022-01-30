@@ -4,13 +4,16 @@
 \alias{banner}
 \title{banner}
 \usage{
-banner(txt, Char = "-")
+banner(txt, symbol = "-")
 }
 \arguments{
 \item{txt}{text to print in banner}
 
-\item{Char}{character seperator (eg. "-", "=", "*")}
+\item{symbol}{character separator (eg. "-", "=", "*", ....)}
+}
+\value{
+tidy labels.
 }
 \description{
-print banner as header with separator
+function to print tidy labels and separators
 }

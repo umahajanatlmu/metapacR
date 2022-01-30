@@ -1,13 +1,19 @@
-#' shapiroTest
+#' @title shapiroTest
 #'
-#' Shapiro-Wilk normality test
+#' @description Shapiro-Wilk normality test
 #'
-#' @param data metabolome raw data expDataList
+#' @param dataList metabolome raw data expDataList
 #'
 #' @import tidyverse
 #' @import utils
 #' @import stats
-shapiroTest <- function(dataList=dataList) {
+#'
+#' @return results table
+
+shapiroTest <- function(dataList) {
+
+  stopifnot(inherits(dataList, "list"))
+  validObject(dataList)
 
   data <- dataList[["imputed.matrix"]]
 

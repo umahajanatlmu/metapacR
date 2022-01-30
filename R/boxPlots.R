@@ -38,6 +38,7 @@ boxPlots <- function(dataList,
     ifelse(!dir.exists(file.path(paste0(path), "results")),
            dir.create(file.path(paste0(path), "results")),
            FALSE)
+    path = paste(path,"results", sep = "/")
   } else
     path = path
 
@@ -72,7 +73,7 @@ boxPlots <- function(dataList,
 
   ## save as pdf
   ##----------------------------------------------------------------
-  pdf(paste(path,"results","boxplots.pdf", sep = "/"),
+  pdf(paste(path,"boxplots.pdf", sep = "/"),
       paper= "a4r",
       onefile = TRUE)
 

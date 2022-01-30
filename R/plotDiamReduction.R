@@ -1,4 +1,6 @@
-#' plotDiamReduction
+#' @title plotDiamReduction
+#'
+#' @description select and plot the distribution of selected method from compareDiamReduction function.
 #'
 #' @param dataList raw data list of metabolome data
 #' @param results results from diamntionality reduction
@@ -21,11 +23,36 @@
 #' @import patchwork
 #' @import scales
 #'
-plotDiamReduction <- function(dataList = dataList,
-                              results = results,
-                              diam.method = "pca",
+#' @return plotDiamReduction analyses in a list object.
+#'    The object contains the following:\itemize{
+#'     \item group.plot grouping variable plot
+#'     \item distribution.plot distribution plot og listed metabolites.
+#'   }
+
+plotDiamReduction <- function(dataList,
+                              results,
+                              diam.method = c("pca", "opls", "tsne", "tsne_pca", "umap"),
                               grouping.variables = NULL,
                               dist.variables = NULL) {
+
+  stopifnot(inherits(dataList, "list"))
+  validObject(dataList)
+
+  stopifnot(inherits(results, "data.frame"))
+  validObject(results)
+
+  diam.method <- match.arg(diam.method)
+
+  if (is.null(grouping.variables)) {
+    stop("group variable is missing....please provide atleast one grouping variable")
+  } else
+    grouping.variables <- c(grouping.variables, "clusters")
+
+  if (is.null(dist.variables)) {
+    stop("disribution variable is missing....please provide atleast one grouping variable")
+  }
+
+
   ## load imputed data matrix
   ##----------------------------------------------------------------
   imputed.data <- dataList[["imputed.matrix"]]
@@ -50,7 +77,7 @@ plotDiamReduction <- function(dataList = dataList,
 
   ## subset metadata
   ##----------------------------------------------------------------
-  select.columns <- c(grouping.variables, "clusters")
+  select.columns <- grouping.variables
   metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
 
   ## group <- plotting.variable
