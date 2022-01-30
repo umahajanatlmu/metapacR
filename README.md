@@ -36,7 +36,7 @@ metapacR is an easy-to-use R package implementing a complete workflow for downst
 | 24 | shapiroTest | function to test normality |
 | 25 | volcanoPlots | function to plot volcano plots |
 
-<img src="https://github.com/umahajanatlmu/metapacR/blob/master/inst/figures/pipeline.png" alt="alt text" width="900" height="600">
+<img src="https://github.com/umahajanatlmu/metapacR/blob/master/inst/figures/pipeline.png" alt="alt text" width="900" height="550">
 
 ## Package installation
 
