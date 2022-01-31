@@ -21,6 +21,8 @@
 #' @import ggpmisc
 #'
 #' @return plot as save object in defined path.
+#'
+#' @export
 
 lipidChainLengthCorrelation <- function (results,
                                          path = NULL,

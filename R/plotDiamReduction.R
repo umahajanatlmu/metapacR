@@ -28,6 +28,8 @@
 #'     \item group.plot grouping variable plot
 #'     \item distribution.plot distribution plot og listed metabolites.
 #'   }
+#'
+#' @export
 
 plotDiamReduction <- function(dataList,
                               results,

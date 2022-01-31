@@ -25,6 +25,8 @@
 #' @import stats
 #'
 #' @return data.frame onject with enrichement.results and plots as save object in defined path.
+#'
+#' @export
 
 enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
                                  ref.path=NULL,

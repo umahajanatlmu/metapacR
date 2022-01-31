@@ -23,6 +23,8 @@
 #' @import scales
 #'
 #' @return plot in save object in defined path.
+#'
+#' @export
 
 lipidChainLengthDistribution <- function (results,
                                           p.value.cutoff=0.05,

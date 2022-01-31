@@ -40,6 +40,8 @@
 #' @import scales
 #'
 #' @return output in defined path
+#'
+#' @export
 
 diffAbundanceScore <- function(species=c("hsa", "mmu"),
                                ref.path=NULL,

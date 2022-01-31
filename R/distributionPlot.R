@@ -20,6 +20,9 @@
 #' @import graphics
 #' @import grDevices
 #' @import sjPlot
+#'
+#' @export
+
 distributionPlot <- function (data,
                               path = NULL,
                               cutoff = 0.01,

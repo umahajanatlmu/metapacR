@@ -9,6 +9,8 @@
 #' @import stats
 #'
 #' @return results table
+#'
+#' @export
 
 shapiroTest <- function(dataList) {
 

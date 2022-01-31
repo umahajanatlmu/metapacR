@@ -26,6 +26,8 @@
 #' @import sjPlot
 #'
 #' @return summaryROC results table. rocPlots in save oblect in defined path.
+#'
+#' @export
 
 rocPlots <- function(dataList,
                      group,

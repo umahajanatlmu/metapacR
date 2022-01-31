@@ -11,6 +11,8 @@
 #'
 #' @return color coded result table in excel formant
 #'
+#' @export
+
 exportResults <- function(data, path=NULL) {
 
   stopifnot(inherits(data, "data.frame"))

@@ -16,6 +16,9 @@
 #' @import grDevices
 #'
 #' @return markers plots.
+#'
+#' @export
+
 plotMarkerViolin <- function(dataList,
                              grouping.variable,
                              markers=markers,

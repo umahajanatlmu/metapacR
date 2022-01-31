@@ -19,6 +19,8 @@
 #'     \item fitted.value fitted values for each variable
 #'     \item summaryFC anova results
 #'   }
+#'
+#' @export
 
 normalizeDat.binary <- function (dataList,
                                  confounders = NULL,

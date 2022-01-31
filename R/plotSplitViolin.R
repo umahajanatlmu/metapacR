@@ -17,6 +17,8 @@
 #' @import rstatix
 #'
 #' @return violin plot
+#'
+#' @export
 
 plotSplitViolin <- function(dataList,
                             grouping.variable = NULL,

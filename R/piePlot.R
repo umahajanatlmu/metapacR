@@ -22,6 +22,8 @@
 #' @import sjPlot
 #'
 #' @return output in save format in defined path
+#'
+#' @export
 
 piePlot <- function (data,
                      path = NULL,

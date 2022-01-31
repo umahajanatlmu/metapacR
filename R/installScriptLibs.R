@@ -8,6 +8,8 @@
 #' @importFrom BiocManager install
 #' @importFrom BiocManager available
 #'
+#' @export
+
 installScriptLibs <- function(packages) {
 
   stopifnot(inherits(packages, "character"))

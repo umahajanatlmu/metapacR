@@ -20,6 +20,8 @@
 #' @import sjPlot
 #'
 #' @return plots in save object in defined path
+#'
+#' @export
 
 volcanoPlot <- function (data,
                          path = NULL,

@@ -22,6 +22,8 @@
 #' @import sjPlot
 #'
 #' @return save object in defined path.
+#'
+#' @export
 
 plotMetaboliteAlteration <- function (data,
                               path = NULL,

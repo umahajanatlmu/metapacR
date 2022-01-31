@@ -16,6 +16,8 @@
 #' @import stats
 #'
 #' @return result table
+#'
+#' @export
 
 leveneStat <- function(group,
                        dataList,

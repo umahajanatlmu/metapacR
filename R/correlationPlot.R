@@ -17,6 +17,8 @@
 #' @import here
 #'
 #' @return correlation matrix as a list and pdf output in defined path folder.
+#'
+#' @export
 
 correlationPlot <- function (dataList,
                              h = 3,

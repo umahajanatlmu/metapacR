@@ -12,6 +12,9 @@
 #' @import utils
 #'
 #' @return scaled data
+#'
+#' @export
+
 ImputeTransformScale <- function(Data,
                                  Impute = FALSE,
                                  Transform = FALSE,

@@ -28,6 +28,8 @@
 #'     \item kmeans S4 object of kmeans results
 #'     \item umap S4 object of umap results
 #'   }
+#'
+#' @export
 
 compareDiamReduction <- function (dataList,
                             plotting.variable = NULL) {

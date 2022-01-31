@@ -33,6 +33,8 @@
 #'     \item results enrichment results
 #'     \item plot.pathway.impact list of all the plots of pathway.impact
 #'   }
+#'
+#' @export
 
 enrichedNetwork <- function(species= c("hsa", "mmu"),
                             ref.path=NULL,

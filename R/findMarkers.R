@@ -35,6 +35,8 @@
 #'     \item heatmap heatmap distribution of the markers
 #'     \item marker.metabolites list of marker metabolites
 #'   }
+#'
+#' @export
 
 findMarkers <- function (results,
                          dataList,
