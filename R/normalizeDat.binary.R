@@ -156,7 +156,7 @@ normalizeDat.binary <- function (dataList,
           as.data.frame() %>%
           select(contrast, p.value)
 
-       colnames(anova.reults.fdr)[colnames(anova.reults.fdr) == 'p.value'] <- 'adj.P.Val'
+       colnames(anova.results.fdr)[colnames(anova.results.fdr) == 'p.value'] <- 'adj.P.Val'
 
        anova.results.fdr <- anova.results.fdr %>%
           full_join(anova.results, by = "contrast") %>%
@@ -206,7 +206,7 @@ normalizeDat.binary <- function (dataList,
           as.data.frame() %>%
           select(contrast, p.value)
 
-        colnames(anova.reults.fdr)[colnames(anova.reults.fdr) == 'p.value'] <- 'adj.P.Val'
+        colnames(anova.results.fdr)[colnames(anova.results.fdr) == 'p.value'] <- 'adj.P.Val'
 
         anova.results.fdr <- anova.results.fdr %>%
           full_join(anova.results, by = "contrast") %>%
