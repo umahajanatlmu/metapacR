@@ -20,6 +20,7 @@
 #' @import graphics
 #' @import grDevices
 #' @import sjPlot
+#' @import usethis
 #'
 #' @export
 
@@ -53,7 +54,8 @@ distributionPlot <- function (data,
     dir.create(paste(here(), "distributionPlots", sep = "/"))
   }
 
-  metabolite.class <- system.file("inst/extdata/ref", "Chemical_annotations.csv", package="metapacR")
+  metabolite.class <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
+  use_data(metabolite.class, overwrite = TRUE)
 
   ## define metabolites
   data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(

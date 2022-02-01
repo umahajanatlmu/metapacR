@@ -19,6 +19,7 @@
 #' @import graphics
 #' @import grDevices
 #' @import ggpmisc
+#' @import usethis
 #'
 #' @return plot as save object in defined path.
 #'
@@ -55,9 +56,8 @@ lipidChainLengthCorrelation <- function (results,
 
 
   ## load annotation file
-  chemicalMetadata <- system.file("inst/extdata/ref",
-                                  "Chemical_annotations.csv",
-                                  package="metapacR")
+  chemicalMetadata <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
+  use_data(chemicalMetadata, overwrite = TRUE)
 
   ## annotate for class
   results$class <- chemicalMetadata$SUPER_PATHWAY[match(results$Metabolite,

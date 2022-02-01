@@ -52,6 +52,7 @@ Imports:
     tibble,
     tidyverse,
     umap,
+    usethis,
     utils
 Suggests: 
     knitr,

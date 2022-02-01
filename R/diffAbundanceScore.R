@@ -38,6 +38,7 @@
 #' @import stats
 #' @import reshape2
 #' @import scales
+#' @import usethis
 #'
 #' @return output in defined path
 #'
@@ -78,9 +79,8 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
   }
 
   ## load annotation file
-  chemicalMetadata <- system.file("inst/extdata/ref",
-                                  "Chemical_annotations.csv",
-                                  package="metapacR")
+  chemicalMetadata <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
+  use_data(chemicalMetadata, overwrite = TRUE)
 
   ## define metabolite classes
   metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME","KEGG")]

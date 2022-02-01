@@ -27,6 +27,7 @@
 #' @import FELLA
 #' @import igraph
 #' @import scales
+#' @import usethis
 #'
 #' @return results of enrichment network and network plots as save object in defined path.
 #' The object contains the following:\itemize{
@@ -75,9 +76,8 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
   }
 
   ## load annotation file
-  chemicalMetadata <- system.file("inst/extdata/ref",
-                                  "Chemical_annotations.csv",
-                                  package="metapacR")
+  chemicalMetadata <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
+  use_data(chemicalMetadata, overwrite = TRUE)
 
   ## define metabolite classes
   metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME","KEGG")]

@@ -18,6 +18,7 @@
 #' @import graphics
 #' @import grDevices
 #' @import sjPlot
+#' @import usethis
 #'
 #' @return plots in save object in defined path
 #'
@@ -51,9 +52,8 @@ volcanoPlot <- function (data,
     dir.create(paste(here(), "volcanoPlots", sep = "/"))
   }
 
-  metabolite.class <- system.file("inst/extdata/ref",
-                                  "Chemical_annotations_lipids.csv",
-                                  package="metapacR")
+  metabolite.class <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
+  use_data(metabolite.class, overwrite = TRUE)
 
 
   ## define metabolites

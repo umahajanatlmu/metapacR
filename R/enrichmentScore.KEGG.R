@@ -23,6 +23,7 @@
 #' @import sjPlot
 #' @import KEGGREST
 #' @import stats
+#' @import usethis
 #'
 #' @return data.frame onject with enrichement.results and plots as save object in defined path.
 #'
@@ -63,9 +64,8 @@ enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
   }
 
   ## load annotation file
-  chemicalMetadata <- system.file("inst/extdata/ref",
-                                  "Chemical_annotations.csv",
-                                  package="metapacR")
+  chemicalMetadata <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
+  use_data(chemicalMetadata, overwrite = TRUE)
 
   ## define metabolite classes
   metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME","KEGG")]
