@@ -93,7 +93,8 @@ normalizeDat <- function (dataList,
     "adj.P.Val"
   )
 
-  niter <- length(methodsPackageMetaName())
+  niter <- ncol(combn(unique(data[[stratifier]]), 2))
+
   pb <- txtProgressBar(min = 0,
                        max = niter,
                        style = 3,
