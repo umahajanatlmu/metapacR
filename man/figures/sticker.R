@@ -1,5 +1,5 @@
+require(hexSticker)
 sticker(
-
   # image
   "man/figures/metabolomeMAP.png", # https://unsplash.com/photos/7wBFsHWQDlk
   s_x=1, # slightly to right to appear centered
