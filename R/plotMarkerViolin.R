@@ -27,9 +27,9 @@ plotMarkerViolin <- function(dataList,
   stopifnot(inherits(dataList, "list"))
   validObject(dataList)
 
-  if (is.null(grouping.variables)) {
+  if (is.null(grouping.variable)) {
     stop("group variable is missing....please provide atleast one grouping variable")
-  } else if (length(grouping.variables) !=1) {
+  } else if (length(grouping.variable) !=1) {
     stop("multiple group variables available....provide only one group variable")
   }
 
@@ -100,7 +100,7 @@ plotMarkerViolin <- function(dataList,
         ),
         axis.title = element_text(size = 12, face = "bold")
       ) +
-      ggtitle(i) +
+      ggtitle(paste("identified markers:", n.markers)) +
       xlab("") +
       ylab("Relative qunatification") +
       theme(axis.text.x = element_text(angle = 90, hjust=1, vjust=0.5)) +

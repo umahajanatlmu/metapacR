@@ -100,8 +100,7 @@ findMarkers <- function (results,
     compGroup <- sub(" - .*", "", m)
 
     ## p-values cutoff
-    results.subset <- results.subset %>%
-      filter(adj.P.Val < p.value.cutoff)
+    results.subset <- results.subset[results.subset$adj.P.Val < p.value.cutoff, ]
     ## subset data
     data.subset <- data[,colnames(data) %in% c(group, results.subset$Metabolite)]
     data.subset[[group]] <- ifelse(data.subset[[group]] == compGroup, compGroup,"aaaa")
@@ -240,7 +239,7 @@ findMarkers <- function (results,
       mutate(contrast = sub(" - .*", "", contrast)) %>%
       filter(Metabolite %in% selected.metabolites$metabolite) %>%
       mutate(Metabolite = factor(Metabolite,
-                                 levels = clust$labels[clust$order])) %>%
+                                 levels = clust.row$labels[clust.row$order])) %>%
       mutate(contrast = factor(contrast,
                                levels = clust.col$labels[clust.col$order])) %>%
       filter(adj.P.Val < p.value.cutoff,

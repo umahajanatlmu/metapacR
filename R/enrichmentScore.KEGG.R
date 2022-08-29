@@ -37,7 +37,8 @@ enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
                                  save = c("pdf", "svg", "png"),
                                  fig.width = 12,
                                  fig.height = 9,
-                                 dpi = 300) {
+                                 dpi = 300,
+                                 chemicalMetadata = chemicalMetadata) {
 
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
@@ -64,8 +65,9 @@ enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
   }
 
   ## load annotation file
-  chemicalMetadata <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
-  use_data(chemicalMetadata, overwrite = TRUE)
+  chemicalMetadata <- chemicalMetadata
+  #chemicalMetadata <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
+  #use_data(chemicalMetadata, overwrite = TRUE)
 
   ## define metabolite classes
   metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME","KEGG")]
