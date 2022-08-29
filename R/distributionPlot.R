@@ -54,8 +54,10 @@ distributionPlot <- function (data,
     dir.create(paste(here(), "distributionPlots", sep = "/"))
   }
 
-  metabolite.class <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
-  use_data(metabolite.class, overwrite = TRUE)
+  #metabolite.class <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
+  #use_data(metabolite.class, overwrite = TRUE)
+  data("chemicalMetadata")
+  metabolite.class <- force(chemicalMetadata)
 
   ## define metabolites
   data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
