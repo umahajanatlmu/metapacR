@@ -389,7 +389,6 @@ enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
       enrichment.results <- bind_rows(enrichment.results, enrichTable)
       ## plot
       p <- enrichTable %>%
-        arrange(desc(enrichment)) %>%
         mutate(pathway = gsub("\\-.*", "", pathway)) %>%
         dplyr::select(pathway, pathwayName, enrichment, direction, contrast) %>%
         group_by(pathway) %>%
@@ -400,7 +399,9 @@ enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
         mutate(direction=case_when(enrichment>0 ~"up",
                                    enrichment<0 ~"down",
                                    enrichment==0~"nochange")) %>%
-        ggplot(aes(x=reorder(pathway,enrichment, FUN = sum), y=enrichment, group=direction, fill=direction)) +
+        arrange(desc(enrichment)) %>%
+        ungroup() %>%
+        ggplot(aes(x=reorder(pathwayName,enrichment, FUN = sum), y=enrichment, group=direction, fill=direction)) +
         geom_bar(stat = "identity", color = "black", size=0.25) +
         theme_bw() +
         theme(
@@ -417,8 +418,7 @@ enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
         xlab("KEGG pathways") +
         ylab("Enrichment score") +
         ggtitle(paste0("Enriched pathways:", groups[i])) +
-        scale_fill_manual(values = c(up="#e41a1c", down="#377eb8")) +
-        scale_x_discrete(breaks = enrichTable$pathway, labels = enrichTable$pathwayName)
+        scale_fill_manual(values = c(up="#e41a1c", down="#377eb8"))
       if (save == "pdf") {
         ## print
         print(p)
