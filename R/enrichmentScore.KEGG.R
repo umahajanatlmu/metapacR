@@ -389,6 +389,17 @@ enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
       enrichment.results <- bind_rows(enrichment.results, enrichTable)
       ## plot
       p <- enrichTable %>%
+        arrange(desc(enrichment)) %>%
+        mutate(pathway = gsub("\\-.*", "", pathway)) %>%
+        dplyr::select(pathway, pathwayName, enrichment, direction, contrast) %>%
+        group_by(pathway) %>%
+        summarise(n=n(), across()) %>%
+        mutate(enrichment = case_when(n==2 ~ (enrichment[match("up", direction)] + enrichment[match("down", direction)]), TRUE ~ enrichment)) %>%
+        dplyr::select(-direction) %>%
+        distinct() %>%
+        mutate(direction=case_when(enrichment>0 ~"up",
+                                   enrichment<0 ~"down",
+                                   enrichment==0~"nochange")) %>%
         ggplot(aes(x=reorder(pathway,enrichment, FUN = sum), y=enrichment, group=direction, fill=direction)) +
         geom_bar(stat = "identity", color = "black", size=0.25) +
         theme_bw() +
