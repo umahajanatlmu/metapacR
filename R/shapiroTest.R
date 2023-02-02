@@ -19,6 +19,8 @@ shapiroTest <- function(dataList) {
 
   data <- dataList[["imputed.matrix"]]
 
+  var <- colnames(data)
+
   result <- data.frame()
 
   for (y in var) {
@@ -37,6 +39,9 @@ shapiroTest <- function(dataList) {
     remove_rownames()
 
   result <- bind_rows(result, shapiroMet)
+
+  result <- result %>%
+  dplyr::select(Metabolite, statistic, p.value)
 
   }
 

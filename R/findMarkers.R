@@ -19,7 +19,6 @@
 #' @import RColorBrewer
 #' @import patchwork
 #' @import pheatmap
-#' @import pROC
 #' @import stats
 #' @import graphics
 #' @import grDevices
@@ -48,35 +47,35 @@ findMarkers <- function (results,
                          rank.plot=TRUE,
                          dot.plot=TRUE,
                          heatmap=TRUE
-                         ) {
+) {
   options(warn=-1) ## supress all warning
-
+  
   stopifnot(inherits(dataList, "list"))
   validObject(dataList)
-
+  
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
-
+  
   if (is.null(group)) {
     stop("group variable is missing")
   } else if (length(group) !=1) {
     stop("multiple group variables available....provide only one group variable")
   }
-
+  
   ## load imputed data matrix
   ##----------------------------------------------------------------
   imputed.data <- dataList[["imputed.matrix"]]
-
+  
   ## load metadata
   ##----------------------------------------------------------------
   metadata.data <- dataList[["metadata"]]
-
+  
   ## subset metadata
   ##----------------------------------------------------------------
   select.columns <- group
   metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns,
                                  drop = FALSE]
-
+  
   ## define factors
   ##----------------------------------------------------------------
   for (c in colnames(metadata.data)) {
@@ -87,50 +86,54 @@ findMarkers <- function (results,
     } else
       metadata.data[[c]] <- as.numeric(metadata.data [[c]])
   }
-
+  
   ## merge Data
   ##----------------------------------------------------------------
   data <- merge(metadata.data,imputed.data,by=0) %>%
     column_to_rownames("Row.names")
-
+  
   roc.results <- data.frame()
   for (m in unique(results$contrast)) {
     results.subset <- results[results$contrast %in% m, ]
     ## get comparison group
     compGroup <- sub(" - .*", "", m)
-
+    compGroup <- gsub("^[(]", "", 
+                      gsub("[)]$", "", compGroup))
+   
+    
     ## p-values cutoff
     results.subset <- results.subset[results.subset$adj.P.Val < p.value.cutoff, ]
     ## subset data
     data.subset <- data[,colnames(data) %in% c(group, results.subset$Metabolite)]
     data.subset[[group]] <- ifelse(data.subset[[group]] == compGroup, compGroup,"aaaa")
+    
     ## perform roc analysis per metabolite
     roc.results.subset <- data.frame()
     loop <- 1
-
+    
     for (r in colnames(data.subset)[!colnames(data.subset) %in% group]) {
       rocObj <- roc(data.subset[[group]],
                     data.subset[[r]])
-
+      
       roc.results.subset[loop,"metabolite"] <- r
       roc.results.subset[loop,"auc"] <- as.numeric(rocObj$auc)
       roc.results.subset[loop,"contrast"] <- m
-
+      
       loop <- loop + 1
     }
     roc.results <- rbind(roc.results.subset, roc.results)
   }
-
+  
   roc.results.cutoff <- roc.results %>%
     group_by(contrast) %>%
     arrange(desc(auc))
-
+  
   if(rank.plot == TRUE) {
     ## plot distribution
     plot.list <- list()
-
+    
     for (p in unique(roc.results.cutoff$contrast)) {
-
+      
       dist <- roc.results.cutoff %>%
         filter(contrast == p) %>%
         arrange(desc(auc)) %>%
@@ -169,7 +172,7 @@ findMarkers <- function (results,
         ) +
         ylim(c(0,1)) +
         ggtitle(p)
-
+      
       plot.list[[p]] <- dist
     }
     ## print distribution plots
@@ -178,14 +181,14 @@ findMarkers <- function (results,
     } else {
       ncol = length(plot.list)
     }
-
+    
     dist.p <- wrap_plots(plot.list, ncol = ncol)
-
+    
   } else
     dist.p <- NULL
-
+  
   if (dot.plot == TRUE) {
-
+    
     ## select markers from auc results
     selected.metabolites <- roc.results.cutoff %>%
       group_by(contrast) %>%
@@ -193,7 +196,7 @@ findMarkers <- function (results,
       slice(1:nmarkers) %>%
       ungroup() %>%
       select(metabolite)
-
+    
     ## row dendrogram
     mat.row <- results %>%
       filter(Metabolite %in% selected.metabolites$metabolite) %>%
@@ -205,16 +208,16 @@ findMarkers <- function (results,
       as.matrix() %>%
       dist() %>%
       replace(is.na(.), 0)
-
+    
     ## create clusters
     clust.row <- hclust(mat.row)
-
+    
     ## create dendrogram
     ddgram.row <- as.dendrogram(clust.row)
-
+    
     ## plot  dendrogram
     p.row <- ggtree(ddgram.row)
-
+    
     ## cloumn dendrogram
     mat.col <- results %>%
       filter(Metabolite %in% selected.metabolites$metabolite) %>%
@@ -226,15 +229,15 @@ findMarkers <- function (results,
       as.matrix() %>%
       dist() %>%
       replace(is.na(.), 0)
-
+    
     ## create clusters
     clust.col <- hclust(mat.col)
-
+    
     ## create dendrogram
     ddgram.col <- as.dendrogram(clust.col)
-
+    
     p.col <- ggtree(ddgram.col) + layout_dendrogram()
-
+    
     p.dot <- results %>%
       mutate(contrast = sub(" - .*", "", contrast)) %>%
       filter(Metabolite %in% selected.metabolites$metabolite) %>%
@@ -262,9 +265,9 @@ findMarkers <- function (results,
                                        hjust = 1,
                                        vjust = 0.5)) +
       scale_y_discrete(position = "right")
-
+    
     # p <- plot_grid(p1, NULL, p2, nrow = 1, rel_widths = c(0.5,-0.05,2), align = 'h')
-
+    
     p.dot = plot_spacer() +
       plot_spacer() +
       p.col +
@@ -279,7 +282,7 @@ findMarkers <- function (results,
                   heights = c(1, 0.1, 4))
   } else
     p.dot <- NULL
-
+  
   if (heatmap == TRUE) {
     ## select markers from auc results
     selected.metabolites <- roc.results.cutoff %>%
@@ -289,49 +292,49 @@ findMarkers <- function (results,
       filter(auc > auc.threshould) %>%
       ungroup() %>%
       select(metabolite)
-
+    
     ## subset data for selected metabolites
     data.heatmap <- data[, colnames(data) %in% c(group,
                                                  selected.metabolites$metabolite)]
     n.data.heatmap <- data.heatmap %>%
       select(-group) %>%
       as.matrix()
-
+    
     c.data.heatmap <- data.heatmap %>%
       select(group) %>%
       rename(group = group)
-
+    
     panel.col <-
       brewer.pal(length(sort(unique(c.data.heatmap[["group"]]))), "Dark2")
     names(panel.col) <- sort(unique(c.data.heatmap[["group"]]))
-
+    
     combo.cols <-
       list(group = panel.col)
-
+    
     p.heatmap <- pheatmap(n.data.heatmap,
-                  scale = "row",
-                  color = colorRampPalette(rev(brewer.pal(10, "RdYlBu")))(100),
-                  cluster_rows = TRUE,
-                  cluster_cols = TRUE,
-                  show_rownames = FALSE,
-                  show_colnames = FALSE,
-                  annotation_row = c.data.heatmap,
-                  annotation_colors = combo.cols)
+                          scale = "row",
+                          color = colorRampPalette(rev(brewer.pal(10, "RdYlBu")))(100),
+                          cluster_rows = TRUE,
+                          cluster_cols = TRUE,
+                          show_rownames = FALSE,
+                          show_colnames = FALSE,
+                          annotation_row = c.data.heatmap,
+                          annotation_colors = combo.cols)
   } else
     p.heatmap <- NULL
-
+  
   met.list <- list()
-
+  
   for (ll in unique(roc.results$contrast)) {
     roc.results.cutoff.list <- roc.results %>%
       filter(contrast == ll) %>%
       filter(auc > auc.threshould) %>%
       arrange(desc(auc)) %>%
       select(metabolite)
-
+    
     met.list[[ll]] <- roc.results.cutoff.list$metabolite
   }
-
+  
   return(list(
     raw.results=roc.results,
     metabolite.rank.plot=dist.p,
@@ -339,8 +342,6 @@ findMarkers <- function (results,
     heatmap=p.heatmap,
     marker.metabolites=met.list
   ))
-
+  
   options(warn=0) ## reset all warnings
 }
-
-

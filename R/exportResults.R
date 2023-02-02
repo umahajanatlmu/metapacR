@@ -4,6 +4,7 @@
 #'
 #' @param data log fold changes data generated from normalizeDat function
 #' @param path saving path of the data
+#' @param filename name of the file
 #'
 #' @import tidyverse
 #' @import here
@@ -13,7 +14,7 @@
 #'
 #' @export
 
-exportResults <- function(data, path=NULL) {
+exportResults <- function(data, path=NULL, filename=NULL) {
 
   stopifnot(inherits(data, "data.frame"))
   validObject(dataList)
@@ -36,6 +37,10 @@ exportResults <- function(data, path=NULL) {
       path = paste(path,"results", sep = "/")
     } else
       path = path
+    
+    if (is.null(filename)) {
+      filename <- "results"
+    }
     ## create keys
     keys <- data.frame(
       legends = c(
@@ -149,7 +154,7 @@ exportResults <- function(data, path=NULL) {
         csvFormat,
         paste(
           path,
-          "results.xlsx",
+          paste0(filename, ".xlsx"),
           sep = "/"
         ),
         sheet_name = ws

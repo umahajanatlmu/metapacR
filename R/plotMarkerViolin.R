@@ -46,7 +46,7 @@ plotMarkerViolin <- function(dataList,
 
   ## subset metadata
   ##----------------------------------------------------------------
-  imputed.data <- imputed.data[, colnames(imputed.data) %in% markers,
+  imputed.data <- imputed.data[, colnames(imputed.data) %in% markers[1:n.markers],
                                drop = FALSE]
 
   ## load metadata
