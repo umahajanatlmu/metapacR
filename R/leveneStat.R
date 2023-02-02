@@ -12,7 +12,7 @@
 #'
 #' @import tidyverse
 #' @import utils
-#' @import car
+#' @importFrom car leveneTest 
 #' @import stats
 #'
 #' @return result table
@@ -86,10 +86,10 @@ leveneStat <- function(group,
   if (lower > upper) {
     print(paste("frac.trim.alpha value is too large", y))
   } else
-    leveneMet <- leveneTest(
+    leveneMet <- car::leveneTest(
       y = y.var,
       group = group.var,
-      location = "median",
+      location = location,
       trim.alpha = trim.alpha,
       bootstrap = bootstrap,
       num.bootstrap = num.bootstrap,
@@ -99,8 +99,10 @@ leveneStat <- function(group,
   leveneMet <- leveneMet %>%
     as.data.frame() %>%
     drop_na() %>%
-    mutate(Metabolite = y,
-           Group = group)
+    mutate(Metabolite = y) %>%
+    dplyr::select(Metabolite, `F value`, `Pr(>F)`)
+
+  row.names(leveneMet) <- NULL
 
   result <- bind_rows(result, leveneMet)
 }
