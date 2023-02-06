@@ -24,38 +24,40 @@
 #' @export
 
 volcanoPlot <- function(data,
-                         path = NULL,
-                         save= c("pdf", "svg","png"),
-                         data.type = c("MH", "Metabolon", "Others"),
-                         fig.width = 12,
-                         fig.height = 9,
-                         dpi = 300,
-                         Other_metadata = NULL) {
-
+                        path = NULL,
+                        save = c("pdf", "svg", "png"),
+                        data.type = c("MH", "Metabolon", "Others"),
+                        fig.width = 12,
+                        fig.height = 9,
+                        dpi = 300,
+                        Other_metadata = NULL) {
   stopifnot(inherits(data, "data.frame"))
   validObject(data)
 
-  save <- match.arg(save, c("pdf", "svg","png"))
+  save <- match.arg(save, c("pdf", "svg", "png"))
 
-  data.type <- match.arg(data.type,c("MH", "Metabolon", "Others"))
+  data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
 
   if (data.type == "Others") {
     stopifnot(inherits(Other_metadata, "data.frame"))
     validObject(Other_metadata)
   }
 
-  if(is.null(path)) {
-    path = here::here()
+  if (is.null(path)) {
+    path <- here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
-           dir.create(file.path(paste0(path), "results")),
-           FALSE)
-    path = paste(path,"results", sep = "/")
-  } else
-    path = path
+      dir.create(file.path(paste0(path), "results")),
+      FALSE
+    )
+    path <- paste(path, "results", sep = "/")
+  } else {
+    path <- path
+  }
 
-  if (save == "pdf"){
+  if (save == "pdf") {
     pdf(paste(path, "volcanoPlots.pdf", sep = "/"),
-        onefile = TRUE)
+      onefile = TRUE
+    )
   } else if (save != "pdf") {
     dir.create(paste(here(), "volcanoPlots", sep = "/"))
   }
@@ -69,11 +71,14 @@ volcanoPlot <- function(data,
 
     ## define metabolites
     data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
-      data[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]])]
+      data[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]]
+    )]
     data <- data %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
-      rename(c("MetaboliteClass" = "SUPER_PATHWAY",
-               "MetaboliteName" = "CHEMICAL_NAME"))
+      rename(c(
+        "MetaboliteClass" = "SUPER_PATHWAY",
+        "MetaboliteName" = "CHEMICAL_NAME"
+      ))
   }
 
   if (data.type == "MH") {
@@ -86,9 +91,11 @@ volcanoPlot <- function(data,
     ## define metabolites
     data <- data %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
-      rename(c("MetaboliteClass" = "ONTOLOGY1_NAME",
-               "lipidClass" = "ONTOLOGY2_NAME",
-               "MetaboliteName" = "METABOLITE_NAME"))
+      rename(c(
+        "MetaboliteClass" = "ONTOLOGY1_NAME",
+        "lipidClass" = "ONTOLOGY2_NAME",
+        "MetaboliteName" = "METABOLITE_NAME"
+      ))
   }
 
   if (data.type == "Others") {
@@ -100,10 +107,11 @@ volcanoPlot <- function(data,
     ## define metabolites
     data <- data %>%
       full_join(metabolite.class, by = "Metabolite") %>%
-      rename(c("MetaboliteClass" = "Ontology_Class",
-               "lipidClass" = "Ontology_Subclass",
-               "MetaboliteName" = "Metabolite_Name"))
-
+      rename(c(
+        "MetaboliteClass" = "Ontology_Class",
+        "lipidClass" = "Ontology_Subclass",
+        "MetaboliteName" = "Metabolite_Name"
+      ))
   }
 
   ## prepare volcano data
@@ -124,18 +132,18 @@ volcanoPlot <- function(data,
   ## match colors
   matchColumnColors <-
     match(datVolcano$MetaboliteClass,
-          colorsOntologyOne$MetaboliteClass,
-          nomatch = 0)
+      colorsOntologyOne$MetaboliteClass,
+      nomatch = 0
+    )
   datVolcano$color <- c("")
   datVolcano$color[datVolcano$MetaboliteClass %in%
-                     colorsOntologyOne$MetaboliteClass] <-
+    colorsOntologyOne$MetaboliteClass] <-
     as.character(colorsOntologyOne$color)[matchColumnColors]
 
   ## plot volcano plots
 
   for (i in seq_along(na.omit(groups))) {
-
-    filteredData <- datVolcano[datVolcano$contrast %in% groups[i],]
+    filteredData <- datVolcano[datVolcano$contrast %in% groups[i], ]
 
     ## plot
     p <-
@@ -148,27 +156,33 @@ volcanoPlot <- function(data,
         pch = 21
       ) +
       ggtitle(groups[i]) +
-      ggrepel::geom_text_repel(data = head(filteredData, 5),
-                      aes(label = Metabolite),
-                      min.segment.length = 0) +
-      ggrepel::geom_text_repel(data = tail(filteredData, 5),
-                      aes(label = MetaboliteName),
-                      min.segment.length = 0) +
+      ggrepel::geom_text_repel(
+        data = head(filteredData, 5),
+        aes(label = Metabolite),
+        min.segment.length = 0
+      ) +
+      ggrepel::geom_text_repel(
+        data = tail(filteredData, 5),
+        aes(label = MetaboliteName),
+        min.segment.length = 0
+      ) +
       theme_bw() +
       theme(
-        panel.border = element_rect(colour = "black", fill=NA, size=1),
+        panel.border = element_rect(colour = "black", fill = NA, size = 1),
         axis.text = element_text(
           size = 11,
-          #face = "bold",
+          # face = "bold",
           colour = "black"
         ),
         axis.title = element_text(size = 12, face = "bold")
       ) +
       theme(legend.text.align = 0) +
       scale_fill_manual(values = unique(filteredData$color)) +
-      labs(fill = "Metabololites category",
-           x = "Relative Abundance",
-           y = "p value (-log10)")
+      labs(
+        fill = "Metabololites category",
+        x = "Relative Abundance",
+        y = "p value (-log10)"
+      )
 
     if (save == "pdf") {
       ## print
@@ -177,11 +191,12 @@ volcanoPlot <- function(data,
 
     ## save plots
     if (save != "pdf") {
-      sjPlot::save_plot(filename = paste(here(), "volcanoPlots", paste0(groups[i], ".", save), sep = "/"),
-                fig = p,
-                width = fig.width,
-                height = fig.height,
-                dpi = dpi
+      sjPlot::save_plot(
+        filename = paste(here(), "volcanoPlots", paste0(groups[i], ".", save), sep = "/"),
+        fig = p,
+        width = fig.width,
+        height = fig.height,
+        dpi = dpi
       )
     }
   }

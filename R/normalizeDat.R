@@ -24,49 +24,49 @@
 #'
 #' @export
 
-normalizeDat <- function (dataList,
-                          confounders = NULL,
-                          stratifier,
-                          reference,
-                          fix.effect = NULL,
-                          random.effect = NULL) {
-
+normalizeDat <- function(dataList,
+                         confounders = NULL,
+                         stratifier,
+                         reference,
+                         fix.effect = NULL,
+                         random.effect = NULL) {
   stopifnot(inherits(dataList, "list"))
   validObject(dataList)
 
   if (is.null(stratifier)) {
     stop("stratifier variable is missing")
-  } else if (length(stratifier) !=1) {
+  } else if (length(stratifier) != 1) {
     stop("multiple stratifier variables available....provide only one stratifier variable")
   }
 
   ## load imputed data matrix
-  ##----------------------------------------------------------------
+  ## ----------------------------------------------------------------
   imputed.data <- dataList[["imputed.matrix"]]
 
   ## load metadata
-  ##----------------------------------------------------------------
+  ## ----------------------------------------------------------------
   metadata.data <- dataList[["metadata"]]
 
   ## subset metadata
-  ##----------------------------------------------------------------
+  ## ----------------------------------------------------------------
   select.columns <- c(confounders, stratifier)
   metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
 
   ## define factors
-  ##----------------------------------------------------------------
+  ## ----------------------------------------------------------------
   for (c in colnames(metadata.data)) {
     if (mode(metadata.data[[c]]) %in% c("character", "factor")) {
       metadata.data[[c]] <- as.factor(metadata.data[[c]])
     } else if (mode(metadata.data[[c]]) == "difftime") {
       metadata.data[[c]] <- as.numeric(metadata.data[[c]])
-    } else
-      metadata.data[[c]] <- as.numeric(metadata.data [[c]])
+    } else {
+      metadata.data[[c]] <- as.numeric(metadata.data[[c]])
+    }
   }
 
   ## merge Data
-  ##----------------------------------------------------------------
-  data <- merge(metadata.data,imputed.data,by=0) %>%
+  ## ----------------------------------------------------------------
+  data <- merge(metadata.data, imputed.data, by = 0) %>%
     column_to_rownames("Row.names")
 
   ## set references
@@ -74,13 +74,13 @@ normalizeDat <- function (dataList,
 
 
   ## define met, empty data-frames
-  ##-----------------------------------------------------------------
+  ## -----------------------------------------------------------------
   met <- setdiff(colnames(data), c(confounders, stratifier))
   normData <- data
   summaryFC <- data.frame()
 
   ## define column order
-  ##-----------------------------------------------------------------
+  ## -----------------------------------------------------------------
   column.order <- c(
     "contrast",
     "Metabolite",
@@ -96,10 +96,12 @@ normalizeDat <- function (dataList,
 
   niter <- ncol(combn(unique(data[[stratifier]]), 2))
 
-  pb <- txtProgressBar(min = 0,
-                       max = niter,
-                       style = 3,
-                       char = "=")
+  pb <- txtProgressBar(
+    min = 0,
+    max = niter,
+    style = 3,
+    char = "="
+  )
 
 
   for (i in met) {
@@ -108,62 +110,70 @@ normalizeDat <- function (dataList,
     if (class(data[[response]]) %in% c("character", "factor")) {
       next
     } else if (sum(is.nan(data[[response]])) == nrow(data) |
-               sum(is.na(data[[response]])) == nrow(data)) {
+      sum(is.na(data[[response]])) == nrow(data)) {
       next
     }
 
     if (is.null(fix.effect) && is.null(random.effect)) {
       ## dependent variables
-      ##-----------------------------------------------------------------
+      ## -----------------------------------------------------------------
       if (is.null(confounders)) {
         indepVars <-
           paste0(stratifier)
-      } else
+      } else {
         indepVars <-
-          paste(c(confounders,
-                stratifier),
-                collapse = " + ",
-                sep = "")
+          paste(
+            c(
+              confounders,
+              stratifier
+            ),
+            collapse = " + ",
+            sep = ""
+          )
+      }
       ## formula
-      ##-----------------------------------------------------------------
+      ## -----------------------------------------------------------------
       formula <-
         as.formula(paste(paste("`", response, "`", "~", sep = ""), indepVars))
 
       ## perform modeling
-      ##-----------------------------------------------------------------
+      ## -----------------------------------------------------------------
       model <- lm(formula,
-                  data = data,
-                  na.action = na.exclude)
+        data = data,
+        na.action = na.exclude
+      )
 
       ## perform modeling for annova
-      ##-----------------------------------------------------------------
+      ## -----------------------------------------------------------------
       anova.grid <- emmeans::ref_grid(model)
       anova.emmeans <- emmeans::emmeans(model, stratifier)
       anova.model <- pairs(anova.emmeans)
       anova.results <- anova.model %>%
         as.data.frame() %>%
-        mutate(Metabolite = response,
-               logFC = 10 ^ estimate,
-               OR = exp(estimate))
+        mutate(
+          Metabolite = response,
+          logFC = 10^estimate,
+          OR = exp(estimate)
+        )
 
       ## perform FDR correction
-      ##-----------------------------------------------------------------
+      ## -----------------------------------------------------------------
       anova.results.fdr <- update(anova.model, adjust = "BH") %>%
         as.data.frame() %>%
         select(contrast, p.value)
 
-      colnames(anova.results.fdr)[colnames(anova.results.fdr) == 'p.value'] <- 'adj.P.Val'
+      colnames(anova.results.fdr)[colnames(anova.results.fdr) == "p.value"] <- "adj.P.Val"
 
       anova.results.fdr <- anova.results.fdr %>%
         full_join(anova.results, by = "contrast") %>%
         select(all_of(column.order))
 
       ## fold changes results
-      ##-----------------------------------------------------------------
+      ## -----------------------------------------------------------------
       summaryFC <- bind_rows(summaryFC, anova.results.fdr)
 
       ## fit the model
-      ##-----------------------------------------------------------------
+      ## -----------------------------------------------------------------
       normData[, response] <- fitted.values(model)
     } else if (!is.null(fix.effect)) {
       print("fix effect variable is missing")
@@ -173,48 +183,50 @@ normalizeDat <- function (dataList,
       break
     } else {
       ## formula
-      ##-----------------------------------------------------------------
+      ## -----------------------------------------------------------------
       formula <-
         as.formula(paste(paste("`", response, "`", "~", sep = ""), fix.effect))
 
       ## perform modeling
-      ##-----------------------------------------------------------------\
+      ## -----------------------------------------------------------------\
       model <- nlme::lme(formula,
-                   random = random.effect,
-                   data = data,
-                   na.action = na.exclude)
+        random = random.effect,
+        data = data,
+        na.action = na.exclude
+      )
 
       ## perform modeling for annova
-      ##-----------------------------------------------------------------
+      ## -----------------------------------------------------------------
       anova.grid <- emmeans::ref_grid(model)
       anova.emmeans <- emmeans::emmeans(model, stratifier)
       anova.model <- pairs(anova.emmeans)
       anova.results <- anova.model %>%
         as.data.frame() %>%
-        mutate(Metabolite = response,
-               logFC = 10 ^ estimate,
-               OR = exp(estimate))
+        mutate(
+          Metabolite = response,
+          logFC = 10^estimate,
+          OR = exp(estimate)
+        )
 
       ## perform FDR correction
-      ##-----------------------------------------------------------------
+      ## -----------------------------------------------------------------
       anova.results.fdr <- update(anova.model, adjust = "BH") %>%
         as.data.frame() %>%
         select(contrast, p.value)
 
-      colnames(anova.results.fdr)[colnames(anova.results.fdr) == 'p.value'] <- 'adj.P.Val'
+      colnames(anova.results.fdr)[colnames(anova.results.fdr) == "p.value"] <- "adj.P.Val"
 
       anova.results.fdr <- anova.results.fdr %>%
         full_join(anova.results, by = "contrast") %>%
         select(all_of(column.order))
 
       ## fold changes results
-      ##-----------------------------------------------------------------
+      ## -----------------------------------------------------------------
       summaryFC <- bind_rows(summaryFC, anova.results.fdr)
 
       ## fit the model
-      ##-----------------------------------------------------------------
+      ## -----------------------------------------------------------------
       normData[, response] <- fitted.values(model)
-
     }
 
     Sys.sleep(0.01)
@@ -223,7 +235,8 @@ normalizeDat <- function (dataList,
 
   close(pb)
 
-  return(list(fitted.values = normData,
-              summaryFC = summaryFC))
-
+  return(list(
+    fitted.values = normData,
+    summaryFC = summaryFC
+  ))
 }

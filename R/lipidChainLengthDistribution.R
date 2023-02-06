@@ -25,17 +25,16 @@
 #'
 #' @export
 
-lipidChainLengthDistribution <- function (results,
-                                          p.value.cutoff=0.05,
-                                          fold.changes.cutoff=1.5,
-                                          path = NULL,
-                                          save = c("pdf", "svg", "png"),
-                                          data.type = c("MH", "Metabolon", "Others"),
-                                          fig.width = 12,
-                                          fig.height = 9,
-                                          dpi = 300,
-                                          Other_metadata = NULL) {
-
+lipidChainLengthDistribution <- function(results,
+                                         p.value.cutoff = 0.05,
+                                         fold.changes.cutoff = 1.5,
+                                         path = NULL,
+                                         save = c("pdf", "svg", "png"),
+                                         data.type = c("MH", "Metabolon", "Others"),
+                                         fig.width = 12,
+                                         fig.height = 9,
+                                         dpi = 300,
+                                         Other_metadata = NULL) {
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
 
@@ -46,41 +45,47 @@ lipidChainLengthDistribution <- function (results,
     validObject(Other_metadata)
   }
 
-  save <- match.arg(save, c("pdf", "svg","png"))
+  save <- match.arg(save, c("pdf", "svg", "png"))
 
-  if(is.null(path)) {
-    path = here::here()
+  if (is.null(path)) {
+    path <- here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
-           dir.create(file.path(paste0(path), "results")),
-           FALSE)
-    path = paste(path,"results", sep = "/")
-  } else
-    path = path
+      dir.create(file.path(paste0(path), "results")),
+      FALSE
+    )
+    path <- paste(path, "results", sep = "/")
+  } else {
+    path <- path
+  }
 
-  if (save == "pdf"){
+  if (save == "pdf") {
     pdf(paste(path, "chainLengthDistribution.pdf", sep = "/"),
-        paper = "a4r",
-        onefile = TRUE)
+      paper = "a4r",
+      onefile = TRUE
+    )
   } else if (save != "pdf") {
     dir.create(paste(here(), "chainLengthDistribution", sep = "/"))
   }
 
 
   ## load annotation file
-if (data.type == "Metabolon") {
-  data("chemicalMetadata")
-  metabolite.class <- force(chemicalMetadata)
+  if (data.type == "Metabolon") {
+    data("chemicalMetadata")
+    metabolite.class <- force(chemicalMetadata)
 
-  metabolite.class <- metabolite.class %>%
-    mutate(across(everything(), as.character))
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character))
 
-  ## define metabolites
-  results[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
-    results[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]])]
-  results <- results %>%
-    full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
-    rename(c("MetaboliteClass" = "SUPER_PATHWAY",
-             "MetaboliteName" = "CHEMICAL_NAME"))
+    ## define metabolites
+    results[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
+      results[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]]
+    )]
+    results <- results %>%
+      full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+      rename(c(
+        "MetaboliteClass" = "SUPER_PATHWAY",
+        "MetaboliteName" = "CHEMICAL_NAME"
+      ))
   }
 
   if (data.type == "MH") {
@@ -93,111 +98,133 @@ if (data.type == "Metabolon") {
     ## define metabolites
     results <- results %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
-      rename(c("MetaboliteClass" = "ONTOLOGY1_NAME",
-               "lipidClass" = "ONTOLOGY2_NAME",
-               "MetaboliteName" = "METABOLITE_NAME"))
+      rename(c(
+        "MetaboliteClass" = "ONTOLOGY1_NAME",
+        "lipidClass" = "ONTOLOGY2_NAME",
+        "MetaboliteName" = "METABOLITE_NAME"
+      ))
   }
 
   if (data.type == "Others") {
     metabolite.class <- Other_metadata
 
-     metabolite.class <- metabolite.class %>%
+    metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
 
     ## define metabolites
     results <- results %>%
       full_join(metabolite.class, by = "Metabolite") %>%
-      rename(c("MetaboliteClass" = "Ontology_Class",
-               "lipidClass" = "Ontology_Subclass",
-               "MetaboliteName" = "Metabolite_Name"))
-
+      rename(c(
+        "MetaboliteClass" = "Ontology_Class",
+        "lipidClass" = "Ontology_Subclass",
+        "MetaboliteName" = "Metabolite_Name"
+      ))
   }
 
   ## subset chain lengths
 
   if (data.type == "Metabolon") {
-  ## subset chain lengths
-  results <- results %>%
-    filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
-    filter(MetaboliteClass == "Complex lipids") %>%
-    mutate(newMet = Metabolite) %>%
-    mutate(newMet = gsub("O-|P-", "", newMet)) %>%
-    separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
-    mutate(fatty.acid=gsub(".*/", "", fatty.acid)) %>%
-    mutate(lipid.class = case_when(str_detect(lipid.class, "TAG") ~ "TAG",
-                                   TRUE ~ lipid.class)) %>%
-    mutate(fatty.acid = gsub("FA", "", fatty.acid)) %>%
-    select(contrast,logFC, adj.P.Val, lipid.class, fatty.acid) %>%
-    group_by(contrast, lipid.class, fatty.acid) %>%
-    summarise_all(funs(mean)) %>%
-    arrange(fatty.acid) %>%
-    mutate(new.fatty.acid = fatty.acid) %>%
-    separate(new.fatty.acid, c("chain.length","saturation"), ":") %>%
-    mutate(chain.length = as.numeric(as.character(chain.length))) %>%
-    mutate(saturation.class = ifelse(saturation == "0", "saturated",
-                                     ifelse(saturation == "1", "mono-unsaturated",
-                                            "poly-unsaturated")))
+    ## subset chain lengths
+    results <- results %>%
+      filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
+      filter(MetaboliteClass == "Complex lipids") %>%
+      mutate(newMet = Metabolite) %>%
+      mutate(newMet = gsub("O-|P-", "", newMet)) %>%
+      separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
+      mutate(fatty.acid = gsub(".*/", "", fatty.acid)) %>%
+      mutate(lipid.class = case_when(
+        str_detect(lipid.class, "TAG") ~ "TAG",
+        TRUE ~ lipid.class
+      )) %>%
+      mutate(fatty.acid = gsub("FA", "", fatty.acid)) %>%
+      select(contrast, logFC, adj.P.Val, lipid.class, fatty.acid) %>%
+      group_by(contrast, lipid.class, fatty.acid) %>%
+      summarise_all(funs(mean)) %>%
+      arrange(fatty.acid) %>%
+      mutate(new.fatty.acid = fatty.acid) %>%
+      separate(new.fatty.acid, c("chain.length", "saturation"), ":") %>%
+      mutate(chain.length = as.numeric(as.character(chain.length))) %>%
+      mutate(saturation.class = ifelse(saturation == "0", "saturated",
+        ifelse(saturation == "1", "mono-unsaturated",
+          "poly-unsaturated"
+        )
+      ))
   } else {
     results <- results %>%
-    filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
-    filter(grepl("Complex lipids",MetaboliteClass)) %>%
-    mutate(newMet = Metabolite) %>%
-    mutate(newMet = gsub("O-|P-", "", newMet)) %>%
-    separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
-    mutate(fatty.acid=gsub(".*/", "", fatty.acid)) %>%
-    mutate(lipid.class = case_when(str_detect(lipid.class, "TAG") ~ "TAG",
-                                   TRUE ~ lipid.class)) %>%
-    mutate(fatty.acid = gsub("FA", "", fatty.acid)) %>%
-    select(contrast,logFC, adj.P.Val, lipid.class, fatty.acid) %>%
-    group_by(contrast, lipid.class, fatty.acid) %>%
-    summarise_all(funs(mean)) %>%
-    arrange(fatty.acid) %>%
-    mutate(new.fatty.acid = fatty.acid) %>%
-    separate(new.fatty.acid, c("chain.length","saturation"), ":") %>%
-    mutate(chain.length = as.numeric(as.character(chain.length))) %>%
-    mutate(saturation.class = ifelse(saturation == "0", "saturated",
-                                     ifelse(saturation == "1", "mono-unsaturated",
-                                            "poly-unsaturated")))
+      filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
+      filter(grepl("Complex lipids", MetaboliteClass)) %>%
+      mutate(newMet = Metabolite) %>%
+      mutate(newMet = gsub("O-|P-", "", newMet)) %>%
+      separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
+      mutate(fatty.acid = gsub(".*/", "", fatty.acid)) %>%
+      mutate(lipid.class = case_when(
+        str_detect(lipid.class, "TAG") ~ "TAG",
+        TRUE ~ lipid.class
+      )) %>%
+      mutate(fatty.acid = gsub("FA", "", fatty.acid)) %>%
+      select(contrast, logFC, adj.P.Val, lipid.class, fatty.acid) %>%
+      group_by(contrast, lipid.class, fatty.acid) %>%
+      summarise_all(funs(mean)) %>%
+      arrange(fatty.acid) %>%
+      mutate(new.fatty.acid = fatty.acid) %>%
+      separate(new.fatty.acid, c("chain.length", "saturation"), ":") %>%
+      mutate(chain.length = as.numeric(as.character(chain.length))) %>%
+      mutate(saturation.class = ifelse(saturation == "0", "saturated",
+        ifelse(saturation == "1", "mono-unsaturated",
+          "poly-unsaturated"
+        )
+      ))
   }
 
   groups <- unique(results$contrast)
   for (i in groups) {
-
     p <- results %>%
-      filter(contrast== i) %>%
-      ggplot(aes(x=lipid.class,
-                 y = fatty.acid,
-                 color = log2(logFC),
-                 size = -log10(adj.P.Val),
-                 shape = saturation.class)) +
+      filter(contrast == i) %>%
+      ggplot(aes(
+        x = lipid.class,
+        y = fatty.acid,
+        color = log2(logFC),
+        size = -log10(adj.P.Val),
+        shape = saturation.class
+      )) +
       geom_point() +
       theme_bw() +
       theme(
-        panel.border = element_rect(colour = "black",
-                                    fill=NA,
-                                    size=1),
+        panel.border = element_rect(
+          colour = "black",
+          fill = NA,
+          size = 1
+        ),
         axis.text = element_text(
           size = 11,
-          #face = "bold",
+          # face = "bold",
           colour = "black"
         ),
         axis.title = element_text(size = 12, face = "bold")
       ) +
-      scale_colour_gradientn(colours = rev(RColorBrewer::brewer.pal(10, "RdYlBu")),
-                             limits = c(-2,2),
-                             oob = scales::squish,
-                             name = 'fold changes') +
-      guides(colour = guide_colourbar(barwidth = unit(0.3, "cm"),
-                                      ticks.colour = "black",
-                                      frame.colour = "black")) +
-      labs(title=i,
-           x="",
-           y="fatty acid chain length",
-           size="-log10(P-value)",
-           shape="saturation") +
-      theme(axis.text.x = element_text(angle = 90,
-                                       hjust = 1,
-                                       vjust = 0.5))
+      scale_colour_gradientn(
+        colours = rev(RColorBrewer::brewer.pal(10, "RdYlBu")),
+        limits = c(-2, 2),
+        oob = scales::squish,
+        name = "fold changes"
+      ) +
+      guides(colour = guide_colourbar(
+        barwidth = unit(0.3, "cm"),
+        ticks.colour = "black",
+        frame.colour = "black"
+      )) +
+      labs(
+        title = i,
+        x = "",
+        y = "fatty acid chain length",
+        size = "-log10(P-value)",
+        shape = "saturation"
+      ) +
+      theme(axis.text.x = element_text(
+        angle = 90,
+        hjust = 1,
+        vjust = 0.5
+      ))
 
     if (save == "pdf") {
       ## print
@@ -205,11 +232,12 @@ if (data.type == "Metabolon") {
     }
     ## save plots
     if (save != "pdf") {
-      sjPlot::save_plot(filename = paste(here(), "chainLengthDistribution", paste0(groups[i], ".", save), sep = "/"),
-                fig = p,
-                width = fig.width,
-                height = fig.height,
-                dpi = dpi
+      sjPlot::save_plot(
+        filename = paste(here(), "chainLengthDistribution", paste0(groups[i], ".", save), sep = "/"),
+        fig = p,
+        width = fig.width,
+        height = fig.height,
+        dpi = dpi
       )
     }
   }

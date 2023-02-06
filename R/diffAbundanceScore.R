@@ -40,36 +40,37 @@
 #'
 #' @export
 
-diffAbundanceScore <- function(species=c("hsa", "mmu"),
-                               ref.path=NULL,
+diffAbundanceScore <- function(species = c("hsa", "mmu"),
+                               ref.path = NULL,
                                results,
                                p.value.cutoff = 0.05,
                                fold.changes.cutoff = 1.5,
-                               common.mets =15,
-                               save= c("pdf", "svg","png"),
+                               common.mets = 15,
+                               save = c("pdf", "svg", "png"),
                                fig.width = 12,
                                fig.height = 9,
                                dpi = 300) {
-
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
 
   species <- match.arg(species)
   save <- match.arg(save)
 
-  if(is.null(ref.path)) {
-    ref.path = here::here()
+  if (is.null(ref.path)) {
+    ref.path <- here::here()
     ifelse(!dir.exists(file.path(paste0(ref.path), "results")),
-           dir.create(file.path(paste0(ref.path), "results")),
-           FALSE)
-    path = paste(ref.path,"results", sep = "/")
+      dir.create(file.path(paste0(ref.path), "results")),
+      FALSE
+    )
+    path <- paste(ref.path, "results", sep = "/")
+  } else {
+    ref.path <- ref.path
+  }
 
-  } else
-    ref.path = ref.path
-
-  if (save == "pdf"){
+  if (save == "pdf") {
     pdf(paste(ref.path, "diffAbundenceScore.pdf", sep = "/"),
-        onefile = TRUE)
+      onefile = TRUE
+    )
   } else if (save != "pdf") {
     dir.create(paste(ref.path, "diffAbundenceScore", sep = "/"))
   }
@@ -79,7 +80,7 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
   chemicalMetadata <- force(chemicalMetadata)
 
   ## define metabolite classes
-  metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME","KEGG")]
+  metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG")]
 
   ## load enriched data
   pathDat <- results %>%
@@ -93,15 +94,17 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
     metabolite_class$KEGG[matchColumnID]
   ## define direction
   pathDat$direction <- ifelse(log2(pathDat$logFC) > fold.changes.cutoff, "up",
-                              ifelse(log2(pathDat$logFC) < -fold.changes.cutoff, "down",
-                                     "nochange"))
+    ifelse(log2(pathDat$logFC) < -fold.changes.cutoff, "down",
+      "nochange"
+    )
+  )
 
   ## identify pathways associated with obtained metabolites
 
-  keggTest <- KEGGREST::keggLink("pathway",sort(unique(pathDat$keggID)))
+  keggTest <- KEGGREST::keggLink("pathway", sort(unique(pathDat$keggID)))
   rownames <- names(keggTest)
-  keggTest <- as.data.frame(gsub("path:map","",keggTest))
-  rownames<- gsub("^.*?:","",rownames)
+  keggTest <- as.data.frame(gsub("path:map", "", keggTest))
+  rownames <- gsub("^.*?:", "", rownames)
   keggTest <- cbind(rownames, keggTest)
   names(keggTest) <- c("keggID", "keggPath")
 
@@ -109,7 +112,7 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
 
   keggRef <- KEGGREST::keggLink("pathway", species)
   # rownamesRef <- names(keggRef)  ## gene ID
-  keggRef <- as.data.frame(gsub(paste0("path:",species),"",keggRef))
+  keggRef <- as.data.frame(gsub(paste0("path:", species), "", keggRef))
   # rownamesRef <- gsub("^.*?:","",rownamesRef) ## gene ID
   # keggRef <- cbind(rownamesRef, keggRef) ## gene ID
   names(keggRef) <- c("keggPath")
@@ -121,21 +124,23 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
 
   ## select pathway dataset
   pathDatDas <- keggDf %>%
-    full_join(pathDat, by="keggID") %>%
+    full_join(pathDat, by = "keggID") %>%
     group_by(contrast, keggPath) %>%
     mutate(direction = ifelse(log2(logFC) > fold.changes.cutoff, "positive",
-                              ifelse(log2(logFC) < -fold.changes.cutoff, "negative",
-                                     "nochange"))) %>%
+      ifelse(log2(logFC) < -fold.changes.cutoff, "negative",
+        "nochange"
+      )
+    )) %>%
     filter(direction != "nochange") %>%
     select(contrast, keggPath, direction) %>%
     drop_na() %>%
     mutate(count = n()) %>%
-    reshape2::dcast(contrast + keggPath ~ direction, value.var="count") %>%
-    replace(is.na(.),0) %>%
+    reshape2::dcast(contrast + keggPath ~ direction, value.var = "count") %>%
+    replace(is.na(.), 0) %>%
     ##  more than 15 metabolites in common
     filter((positive + negative) > common.mets) %>%
-    mutate(das=(positive - negative) /
-             (positive + negative))
+    mutate(das = (positive - negative) /
+      (positive + negative))
 
   ## create pathway annotations
 
@@ -145,18 +150,18 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
     ## select kegg pathway name
     keggPath <- KEGGREST::keggGet(pathDatDas$keggPath[i])
     ## add name to annotations
-    annotation[i,"keggPath"] <- unname(keggPath[[1]]$ENTRY)
-    annotation[i,"keggName"] <- unname(gsub("\\ - .*","",keggPath[[1]]$NAME))
+    annotation[i, "keggPath"] <- unname(keggPath[[1]]$ENTRY)
+    annotation[i, "keggName"] <- unname(gsub("\\ - .*", "", keggPath[[1]]$NAME))
     ## create class
     if (is.null(keggPath[[1]]$CLASS)) {
-      annotation[i,"class"] <- unname(gsub("\\ - .*","",keggPath[[1]]$NAME))
-    } else
-      annotation[i,"class"] <- unname(gsub("^.*?; ","",keggPath[[1]]$CLASS))
-
+      annotation[i, "class"] <- unname(gsub("\\ - .*", "", keggPath[[1]]$NAME))
+    } else {
+      annotation[i, "class"] <- unname(gsub("^.*?; ", "", keggPath[[1]]$CLASS))
+    }
   }
   ## join annotation data-frame with pathway data
-  pathDatDas <-pathDatDas %>%
-    full_join(annotation, by="keggPath")
+  pathDatDas <- pathDatDas %>%
+    full_join(annotation, by = "keggPath")
 
   # ## add ceramides and sphigomylins subclass
   # subclass <- keggTest %>%
@@ -182,47 +187,58 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
 
   for (j in seq_along(groups)) {
     ## filtered dataset
-    datFiltered <- pathDatDas[pathDatDas$contrast %in% groups[j],]  %>%
+    datFiltered <- pathDatDas[pathDatDas$contrast %in% groups[j], ] %>%
       arrange(keggName)
     ## plot
     p <- datFiltered %>%
       drop_na(keggName) %>%
-      ggplot(aes(x=keggName, y=das)) +
+      ggplot(aes(x = keggName, y = das)) +
       geom_segment(
-        aes(xend=keggName, yend=0, fill= das),
-        width=0.15, alpha = 0.5) +
-      geom_point(aes(size = (positive + negative),
-                     fill = das), shape=21) +
-      geom_hline(yintercept=0, lty=1) +
-      labs(fill= "DAS",
-           size= "Pathway size",
-           x= "",
-           y= "Differential Abundance score",
-           title = paste0(groups[j])) +
+        aes(xend = keggName, yend = 0, fill = das),
+        width = 0.15, alpha = 0.5
+      ) +
+      geom_point(aes(
+        size = (positive + negative),
+        fill = das
+      ), shape = 21) +
+      geom_hline(yintercept = 0, lty = 1) +
+      labs(
+        fill = "DAS",
+        size = "Pathway size",
+        x = "",
+        y = "Differential Abundance score",
+        title = paste0(groups[j])
+      ) +
       # geom_text(aes(label=subclass,
       #               fontface= "bold"),
       #           size=3,
       #           hjust=-1) +
       theme_bw() +
       theme(
-        panel.border = element_rect(colour = "black",
-                                    fill=NA,
-                                    size=1),
+        panel.border = element_rect(
+          colour = "black",
+          fill = NA,
+          size = 1
+        ),
         axis.text = element_text(
           size = 11,
-          #face = "bold",
+          # face = "bold",
           colour = "black"
         ),
         axis.title = element_text(size = 12, face = "bold")
       ) +
-      scale_fill_gradientn(colours = rev(RColorBrewer::brewer.pal(10, "RdYlBu")),
-                           limits = c(-2,2),
-                           oob = scales::squish,
-                           name = 'fold changes') +
-      guides(fill = guide_colourbar(barwidth = unit(0.3, "cm"),
-                                    ticks.colour = "black",
-                                    frame.colour = "black")) +
-      theme(axis.text.x = element_text(size=8)) +
+      scale_fill_gradientn(
+        colours = rev(RColorBrewer::brewer.pal(10, "RdYlBu")),
+        limits = c(-2, 2),
+        oob = scales::squish,
+        name = "fold changes"
+      ) +
+      guides(fill = guide_colourbar(
+        barwidth = unit(0.3, "cm"),
+        ticks.colour = "black",
+        frame.colour = "black"
+      )) +
+      theme(axis.text.x = element_text(size = 8)) +
       coord_flip()
     if (save == "pdf") {
       print(p)
@@ -230,18 +246,15 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
     ## save results
     if (save != "pdf") {
       sjPlot::save_plot(
-        paste(ref.path, "diffAbundenceScore",paste0("das_",groups[j],".",save), sep = "/"),
+        paste(ref.path, "diffAbundenceScore", paste0("das_", groups[j], ".", save), sep = "/"),
         fig = p,
         width = 22,
         height = 12,
         dpi = 300
       )
     }
-
   }
   if (save == "pdf") {
     dev.off()
   }
-
 }
-

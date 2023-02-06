@@ -20,47 +20,49 @@
 #'
 #' @export
 
-correlationPlot <- function (dataList,
-                             h = 3,
-                             path = NULL,
-                             save= c("pdf", "svg","png"),
-                             fig.width = 12,
-                             fig.height = 9) {
-
+correlationPlot <- function(dataList,
+                            h = 3,
+                            path = NULL,
+                            save = c("pdf", "svg", "png"),
+                            fig.width = 12,
+                            fig.height = 9) {
   stopifnot(inherits(dataList, "list"))
   validObject(dataList)
-  save <- match.arg(save,c("pdf", "svg","png"))
+  save <- match.arg(save, c("pdf", "svg", "png"))
 
-  if(is.null(path)) {
-    path = here()
+  if (is.null(path)) {
+    path <- here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
-           dir.create(file.path(paste0(path), "results")),
-           FALSE)
-    path = paste(path,"results", sep = "/")
-  } else
-    path = path
-  if (save == "pdf"){
+      dir.create(file.path(paste0(path), "results")),
+      FALSE
+    )
+    path <- paste(path, "results", sep = "/")
+  } else {
+    path <- path
+  }
+  if (save == "pdf") {
     pdf(paste(path, "correlationPlots.pdf", sep = "/"),
-        onefile = TRUE)
+      onefile = TRUE
+    )
   } else if (save != "pdf") {
     dir.create(paste(here(), "correlationPlots.pdf", sep = "/"))
   }
 
   ## load imputed data matrix
-  ##----------------------------------------------------------------
+  ## ----------------------------------------------------------------
   data <- dataList[["imputed.matrix"]]
 
   ## convert to numeric
   data <- data %>%
     select_if(., is.numeric) %>%
-    mutate_all(~ifelse(is.nan(.), NA, .)) %>%
-    select_if(~!all(is.na(.)))
+    mutate_all(~ ifelse(is.nan(.), NA, .)) %>%
+    select_if(~ !all(is.na(.)))
 
   ## make correlation matrix
   corrMat <- Hmisc::rcorr(as.matrix(data))
 
   ## define matrix colors
-  macolor = colorRampPalette(c("navyblue", "white", "red"))(100)
+  macolor <- colorRampPalette(c("navyblue", "white", "red"))(100)
 
   ## define matrix
   M <- corrMat$r
@@ -69,30 +71,35 @@ correlationPlot <- function (dataList,
 
   ## plot pheatmap
   p <- pheatmap::pheatmap(M,
-                color = macolor,
-                silent = TRUE)
+    color = macolor,
+    silent = TRUE
+  )
 
   tree_cut <- cutree(p$tree_row, h = h)
 
-  tc <- data.frame(tip = names(tree_cut),
-                   clust_membership = as.character(unname(
-                     tree_cut)))
+  tc <- data.frame(
+    tip = names(tree_cut),
+    clust_membership = as.character(unname(
+      tree_cut
+    ))
+  )
   row.names(tc) <- tc$tip
-  tc <- tc['clust_membership']
+  tc <- tc["clust_membership"]
 
   ## plot heatmap
   p <- pheatmap::pheatmap(M,
-                color = rev(macolor),
-                clustering_method = "complete",
-                annotation_row = tc,
-                annotation_col = tc,
-                fontsize_row = 0.8,
-                fontsize_col = 0.8)
+    color = rev(macolor),
+    clustering_method = "complete",
+    annotation_row = tc,
+    annotation_col = tc,
+    fontsize_row = 0.8,
+    fontsize_col = 0.8
+  )
 
   if (save == "svg") {
-    svg(paste(path, "correlationPlots.svg", sep = "/"), height = fig.height, width=fig.width)
+    svg(paste(path, "correlationPlots.svg", sep = "/"), height = fig.height, width = fig.width)
   } else if (save == "png") {
-    svg(paste(path, "correlationPlots.png", sep = "/"), height = fig.height, width=fig.width)
+    svg(paste(path, "correlationPlots.png", sep = "/"), height = fig.height, width = fig.width)
   }
 
   ## print
@@ -101,6 +108,5 @@ correlationPlot <- function (dataList,
   ## dev off
   dev.off()
 
-  return(result=corrMat)
-
+  return(result = corrMat)
 }

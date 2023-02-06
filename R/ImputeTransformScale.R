@@ -19,8 +19,7 @@ ImputeTransformScale <- function(Data,
                                  Impute = FALSE,
                                  Transform = FALSE,
                                  Scaling = FALSE,
-                                 ScaleType = c("Centering", "Auto", "Range","Pareto", "Vast", "Level")) {
-
+                                 ScaleType = c("Centering", "Auto", "Range", "Pareto", "Vast", "Level")) {
   stopifnot(inherits(Data, "data.frame"))
   validObject(Data)
 
@@ -76,15 +75,16 @@ ImputeTransformScale <- function(Data,
         }
         ## vast scaling
         else if (ScaleType == "Vast") {
-          scaleData[[met]] <- (centreData / mean) * (mean /sd)
+          scaleData[[met]] <- (centreData / mean) * (mean / sd)
         }
         ## level scaling
         else if (ScaleType == "Level") {
           scaleData[[met]] <- (centreData) / mean
         }
       }
-    } else
+    } else {
       scaleData[[met]] <- Data[[i]]
+    }
   }
   return(scaleData)
 }

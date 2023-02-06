@@ -35,18 +35,17 @@
 #'
 #' @export
 
-findMarkers <- function (results,
-                         dataList,
-                         group,
-                         p.value.cutoff = 0.05,
-                         auc.threshould = 0.60,
-                         fold.changes.cutoff = 1.5,
-                         nmarkers=5,
-                         rank.plot=TRUE,
-                         dot.plot=TRUE,
-                         heatmap=TRUE
-) {
-  options(warn=-1) ## supress all warning
+findMarkers <- function(results,
+                        dataList,
+                        group,
+                        p.value.cutoff = 0.05,
+                        auc.threshould = 0.60,
+                        fold.changes.cutoff = 1.5,
+                        nmarkers = 5,
+                        rank.plot = TRUE,
+                        dot.plot = TRUE,
+                        heatmap = TRUE) {
+  options(warn = -1) ## supress all warning
 
   stopifnot(inherits(dataList, "list"))
   validObject(dataList)
@@ -56,38 +55,40 @@ findMarkers <- function (results,
 
   if (is.null(group)) {
     stop("group variable is missing")
-  } else if (length(group) !=1) {
+  } else if (length(group) != 1) {
     stop("multiple group variables available....provide only one group variable")
   }
 
   ## load imputed data matrix
-  ##----------------------------------------------------------------
+  ## ----------------------------------------------------------------
   imputed.data <- dataList[["imputed.matrix"]]
 
   ## load metadata
-  ##----------------------------------------------------------------
+  ## ----------------------------------------------------------------
   metadata.data <- dataList[["metadata"]]
 
   ## subset metadata
-  ##----------------------------------------------------------------
+  ## ----------------------------------------------------------------
   select.columns <- group
   metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns,
-                                 drop = FALSE]
+    drop = FALSE
+  ]
 
   ## define factors
-  ##----------------------------------------------------------------
+  ## ----------------------------------------------------------------
   for (c in colnames(metadata.data)) {
     if (mode(metadata.data[[c]]) %in% c("character", "factor")) {
       metadata.data[[c]] <- as.factor(metadata.data[[c]])
     } else if (mode(metadata.data[[c]]) == "difftime") {
       metadata.data[[c]] <- as.numeric(metadata.data[[c]])
-    } else
-      metadata.data[[c]] <- as.numeric(metadata.data [[c]])
+    } else {
+      metadata.data[[c]] <- as.numeric(metadata.data[[c]])
+    }
   }
 
   ## merge Data
-  ##----------------------------------------------------------------
-  data <- merge(metadata.data,imputed.data,by=0) %>%
+  ## ----------------------------------------------------------------
+  data <- merge(metadata.data, imputed.data, by = 0) %>%
     column_to_rownames("Row.names")
 
   roc.results <- data.frame()
@@ -95,27 +96,31 @@ findMarkers <- function (results,
     results.subset <- results[results$contrast %in% m, ]
     ## get comparison group
     compGroup <- sub(" - .*", "", m)
-    compGroup <- gsub("^[(]", "",
-                      gsub("[)]$", "", compGroup))
+    compGroup <- gsub(
+      "^[(]", "",
+      gsub("[)]$", "", compGroup)
+    )
 
 
     ## p-values cutoff
     results.subset <- results.subset[results.subset$adj.P.Val < p.value.cutoff, ]
     ## subset data
-    data.subset <- data[,colnames(data) %in% c(group, results.subset$Metabolite)]
-    data.subset[[group]] <- ifelse(data.subset[[group]] == compGroup, compGroup,"aaaa")
+    data.subset <- data[, colnames(data) %in% c(group, results.subset$Metabolite)]
+    data.subset[[group]] <- ifelse(data.subset[[group]] == compGroup, compGroup, "aaaa")
 
     ## perform roc analysis per metabolite
     roc.results.subset <- data.frame()
     loop <- 1
 
     for (r in colnames(data.subset)[!colnames(data.subset) %in% group]) {
-      rocObj <- pROC::roc(data.subset[[group]],
-                    data.subset[[r]])
+      rocObj <- pROC::roc(
+        data.subset[[group]],
+        data.subset[[r]]
+      )
 
-      roc.results.subset[loop,"metabolite"] <- r
-      roc.results.subset[loop,"auc"] <- as.numeric(rocObj$auc)
-      roc.results.subset[loop,"contrast"] <- m
+      roc.results.subset[loop, "metabolite"] <- r
+      roc.results.subset[loop, "auc"] <- as.numeric(rocObj$auc)
+      roc.results.subset[loop, "contrast"] <- m
 
       loop <- loop + 1
     }
@@ -127,67 +132,71 @@ findMarkers <- function (results,
     arrange(desc(auc)) %>%
     ungroup()
 
-  if(rank.plot == TRUE) {
+  if (rank.plot == TRUE) {
     ## plot distribution
     plot.list <- list()
 
     for (p in unique(roc.results.cutoff$contrast)) {
-
       dist <- roc.results.cutoff %>%
         filter(contrast == p) %>%
         arrange(desc(auc)) %>%
         slice(1:nmarkers) %>%
-        mutate(metabolite = str_wrap(metabolite, width = 20),
-               color = ifelse(.$auc > auc.threshould, "high", "low")) %>%
-        ggplot(aes(x=reorder(metabolite, -auc),
-                   y=auc,
-                   fill=color)) +
+        mutate(
+          metabolite = str_wrap(metabolite, width = 20),
+          color = ifelse(.$auc > auc.threshould, "high", "low")
+        ) %>%
+        ggplot(aes(
+          x = reorder(metabolite, -auc),
+          y = auc,
+          fill = color
+        )) +
         # geom_segment(aes(x=reorder(metabolite, -auc),
         #                  xend=reorder(metabolite, -auc),
         #                  y=0,
         #                  yend=auc),
         #              size = 0.5,
         #              lty = "dotted") +
-        geom_point(shape=21,
-                   size=4,
-                   color="black",
-                   show.legend = FALSE) +
+        geom_point(
+          shape = 21,
+          size = 4,
+          color = "black",
+          show.legend = FALSE
+        ) +
         xlab("") +
         ylab("AUC") +
         geom_hline(yintercept = auc.threshould) +
         theme_bw() +
-        geom_text(aes(label=metabolite), angle = 90, nudge_y = -0.1, hjust=1) +
+        geom_text(aes(label = metabolite), angle = 90, nudge_y = -0.1, hjust = 1) +
         scale_fill_manual(values = RColorBrewer::brewer.pal(2, "Set1")) +
         theme(
-          panel.border = element_rect(colour = "black", fill=NA, size=0.5),
+          panel.border = element_rect(colour = "black", fill = NA, size = 0.5),
           axis.text = element_text(
             size = 11,
-            #face = "bold",
+            # face = "bold",
             colour = "black"
           ),
           axis.text.x = element_blank(),
           axis.ticks.x = element_blank(),
           axis.title = element_text(size = 12, face = "bold")
         ) +
-        ylim(c(0,1)) +
+        ylim(c(0, 1)) +
         ggtitle(p)
 
       plot.list[[p]] <- dist
     }
     ## print distribution plots
     if (length(plot.list) > 5) {
-      ncol = 5
+      ncol <- 5
     } else {
-      ncol = length(plot.list)
+      ncol <- length(plot.list)
     }
 
     dist.p <- patchwork::wrap_plots(plot.list, ncol = ncol)
-
-  } else
+  } else {
     dist.p <- NULL
+  }
 
   if (dot.plot == TRUE) {
-
     ## select markers from auc results
     selected.metabolites <- roc.results.cutoff %>%
       group_by(contrast) %>%
@@ -241,33 +250,45 @@ findMarkers <- function (results,
       mutate(contrast = sub(" - .*", "", contrast)) %>%
       filter(Metabolite %in% selected.metabolites$metabolite) %>%
       mutate(Metabolite = factor(Metabolite,
-                                 levels = clust.row$labels[clust.row$order])) %>%
+        levels = clust.row$labels[clust.row$order]
+      )) %>%
       mutate(contrast = factor(contrast,
-                               levels = clust.col$labels[clust.col$order])) %>%
-      filter(adj.P.Val < p.value.cutoff,
-             logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
-      ggplot(aes(x=contrast,
-                 y = Metabolite,
-                 color = logFC,
-                 size = t.ratio)) +
+        levels = clust.col$labels[clust.col$order]
+      )) %>%
+      filter(
+        adj.P.Val < p.value.cutoff,
+        logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)
+      ) %>%
+      ggplot(aes(
+        x = contrast,
+        y = Metabolite,
+        color = logFC,
+        size = t.ratio
+      )) +
       geom_point() +
       theme_bw() +
-      scale_colour_gradientn(colours = rev(RColorBrewer::brewer.pal(10, "RdYlBu")),
-                             limits = c(0,3),
-                             oob = scales::squish,
-                             name = 'log10(ratio)') +
-      guides(colour = guide_colourbar(barwidth = unit(0.3, "cm"),
-                                      ticks.colour = "black",
-                                      frame.colour = "black")) +
-      labs(x="", y="", size="t-ratio") +
-      theme(axis.text.x = element_text(angle = 90,
-                                       hjust = 1,
-                                       vjust = 0.5)) +
+      scale_colour_gradientn(
+        colours = rev(RColorBrewer::brewer.pal(10, "RdYlBu")),
+        limits = c(0, 3),
+        oob = scales::squish,
+        name = "log10(ratio)"
+      ) +
+      guides(colour = guide_colourbar(
+        barwidth = unit(0.3, "cm"),
+        ticks.colour = "black",
+        frame.colour = "black"
+      )) +
+      labs(x = "", y = "", size = "t-ratio") +
+      theme(axis.text.x = element_text(
+        angle = 90,
+        hjust = 1,
+        vjust = 0.5
+      )) +
       scale_y_discrete(position = "right")
 
     # p <- plot_grid(p1, NULL, p2, nrow = 1, rel_widths = c(0.5,-0.05,2), align = 'h')
 
-    p.dot = patchwork::plot_spacer() +
+    p.dot <- patchwork::plot_spacer() +
       patchwork::plot_spacer() +
       p.col +
       patchwork::plot_spacer() +
@@ -276,11 +297,14 @@ findMarkers <- function (results,
       p.row +
       patchwork::plot_spacer() +
       p.dot +
-      patchwork::plot_layout(ncol = 3,
-                  widths = c(2, -0.2, 4),
-                  heights = c(1, 0.1, 4))
-  } else
+      patchwork::plot_layout(
+        ncol = 3,
+        widths = c(2, -0.2, 4),
+        heights = c(1, 0.1, 4)
+      )
+  } else {
     p.dot <- NULL
+  }
 
   if (heatmap == TRUE) {
     ## select markers from auc results
@@ -293,8 +317,10 @@ findMarkers <- function (results,
       select(metabolite)
 
     ## subset data for selected metabolites
-    data.heatmap <- data[, colnames(data) %in% c(group,
-                                                 selected.metabolites$metabolite)]
+    data.heatmap <- data[, colnames(data) %in% c(
+      group,
+      selected.metabolites$metabolite
+    )]
     n.data.heatmap <- data.heatmap %>%
       select(-group) %>%
       as.matrix()
@@ -311,16 +337,18 @@ findMarkers <- function (results,
       list(group = panel.col)
 
     p.heatmap <- pheatmap::pheatmap(n.data.heatmap,
-                          scale = "row",
-                          color = colorRampPalette(rev(brewer.pal(10, "RdYlBu")))(100),
-                          cluster_rows = TRUE,
-                          cluster_cols = TRUE,
-                          show_rownames = FALSE,
-                          show_colnames = FALSE,
-                          annotation_row = c.data.heatmap,
-                          annotation_colors = combo.cols)
-  } else
+      scale = "row",
+      color = colorRampPalette(rev(brewer.pal(10, "RdYlBu")))(100),
+      cluster_rows = TRUE,
+      cluster_cols = TRUE,
+      show_rownames = FALSE,
+      show_colnames = FALSE,
+      annotation_row = c.data.heatmap,
+      annotation_colors = combo.cols
+    )
+  } else {
     p.heatmap <- NULL
+  }
 
   met.list <- list()
 
@@ -335,12 +363,12 @@ findMarkers <- function (results,
   }
 
   return(list(
-    raw.results=roc.results,
-    metabolite.rank.plot=dist.p,
-    dot.plot=p.dot,
-    heatmap=p.heatmap,
-    marker.metabolites=met.list
+    raw.results = roc.results,
+    metabolite.rank.plot = dist.p,
+    dot.plot = p.dot,
+    heatmap = p.heatmap,
+    marker.metabolites = met.list
   ))
 
-  options(warn=0) ## reset all warnings
+  options(warn = 0) ## reset all warnings
 }

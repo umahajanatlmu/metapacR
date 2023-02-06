@@ -13,7 +13,6 @@
 #' @export
 
 shapiroTest <- function(dataList) {
-
   stopifnot(inherits(dataList, "list"))
   validObject(dataList)
 
@@ -28,23 +27,22 @@ shapiroTest <- function(dataList) {
       next
     } else if (length(na.omit(data[[y]])) < 5 ||
       sum(is.nan(data[[y]])) == nrow(data)) {
-    next
-  } else
-    shapiroMet <- shapiro.test(as.numeric(as.vector(data[[y]])))
+      next
+    } else {
+      shapiroMet <- shapiro.test(as.numeric(as.vector(data[[y]])))
+    }
 
-  shapiroMet <- do.call(cbind, shapiroMet) %>%
-    as.data.frame() %>%
-    mutate(Metabolite = y) %>%
-    select(-data.name, -method) %>%
-    remove_rownames()
+    shapiroMet <- do.call(cbind, shapiroMet) %>%
+      as.data.frame() %>%
+      mutate(Metabolite = y) %>%
+      select(-data.name, -method) %>%
+      remove_rownames()
 
-  result <- bind_rows(result, shapiroMet)
+    result <- bind_rows(result, shapiroMet)
 
-  result <- result %>%
-  dplyr::select(Metabolite, statistic, p.value)
-
+    result <- result %>%
+      dplyr::select(Metabolite, statistic, p.value)
   }
 
   return(result)
-
 }
