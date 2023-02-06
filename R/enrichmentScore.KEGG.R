@@ -65,7 +65,8 @@ enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
   }
 
   ## load annotation file
-  chemicalMetadata <- chemicalMetadata
+  data("chemicalMetadata")
+  chemicalMetadata <- force(chemicalMetadata)
   #chemicalMetadata <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
   #use_data(chemicalMetadata, overwrite = TRUE)
 

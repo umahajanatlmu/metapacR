@@ -4,10 +4,12 @@
 #'
 #' @param data fold changes data
 #' @param path saving path
+#' @param data.type  select platform used, c("MH", "Metabolon", "Others")
 #' @param save either "pdf", "svg" or "png"
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
 #' @param dpi  dpi only applicable for png
+#' @param Other_metadata dataframe with metadata....it must have  columns: Metabolite, Metabolite_Name, Ontology_Class, Ontology_Subclass
 #'
 #' @import tidyverse
 #' @import here
@@ -24,18 +26,27 @@
 #'
 #' @export
 
-volcanoPlot <- function (data,
+volcanoPlot <- function(data,
                          path = NULL,
                          save= c("pdf", "svg","png"),
+                         data.type = c("MH", "Metabolon", "Others"),
                          fig.width = 12,
                          fig.height = 9,
-                         dpi = 300) {
-
+                         dpi = 300,
+                         Other_metadata = NULL) {
+  
   stopifnot(inherits(data, "data.frame"))
   validObject(data)
-
-  save <- match.arg(save)
-
+  
+  save <- match.arg(save, c("pdf", "svg","png"))
+  
+  data.type <- match.arg(data.type,c("MH", "Metabolon", "Others"))
+  
+  if (data.type == "Others") {
+    stopifnot(inherits(Other_metadata, "data.frame"))
+    validObject(Other_metadata)
+  }
+  
   if(is.null(path)) {
     path = here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
@@ -44,29 +55,67 @@ volcanoPlot <- function (data,
     path = paste(path,"results", sep = "/")
   } else
     path = path
-
+  
   if (save == "pdf"){
-  pdf(paste(path, "volcanoPlots.pdf", sep = "/"),
-      onefile = TRUE)
+    pdf(paste(path, "volcanoPlots.pdf", sep = "/"),
+        onefile = TRUE)
   } else if (save != "pdf") {
     dir.create(paste(here(), "volcanoPlots", sep = "/"))
   }
-
-  metabolite.class <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
-  use_data(metabolite.class, overwrite = TRUE)
-
-
-  ## define metabolites
-  data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
-    data[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]])]
-
+  
+  if (data.type == "Metabolon") {
+    data("chemicalMetadata")
+    metabolite.class <- force(chemicalMetadata) 
+    
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character))
+    
+    ## define metabolites
+    data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
+      data[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]])]
+    data <- data %>%
+      full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+      rename(c("MetaboliteClass" = "SUPER_PATHWAY",
+               "MetaboliteName" = "CHEMICAL_NAME"))
+  }
+  
+  if (data.type == "MH") {
+    data("chemicalMetadata_MH")
+    metabolite.class <- force(chemicalMetadata_MH)
+    
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character))
+    
+    ## define metabolites
+    data <- data %>%
+      full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+      rename(c("MetaboliteClass" = "ONTOLOGY1_NAME",
+               "lipidClass" = "ONTOLOGY2_NAME",
+               "MetaboliteName" = "METABOLITE_NAME"))
+  }
+  
+  if (data.type == "Others") {
+    metabolite.class <- Other_metadata
+    
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character))
+    
+    ## define metabolites
+    data <- data %>%
+      full_join(metabolite.class, by = "Metabolite") %>%
+      rename(c("MetaboliteClass" = "Ontology_Class",
+               "lipidClass" = "Ontology_Subclass",
+               "MetaboliteName" = "Metabolite_Name"))
+    
+  }
+  
   ## prepare volcano data
   datVolcano <- data %>%
     drop_na(MetaboliteClass) %>%
     mutate(foldChanges = log2(logFC))
-
+  
   groups <- unique(datVolcano$contrast)
-
+  
   ## colors
   colorsOntologyOne <-
     data.frame(
@@ -84,13 +133,13 @@ volcanoPlot <- function (data,
   datVolcano$color[datVolcano$MetaboliteClass %in%
                      colorsOntologyOne$MetaboliteClass] <-
     as.character(colorsOntologyOne$color)[matchColumnColors]
-
+  
   ## plot volcano plots
-
-  for (i in seq_along(groups)) {
-
+  
+  for (i in seq_along(na.omit(groups))) {
+    
     filteredData <- datVolcano[datVolcano$contrast %in% groups[i],]
-
+    
     ## plot
     p <-
       filteredData %>%
@@ -106,7 +155,7 @@ volcanoPlot <- function (data,
                       aes(label = Metabolite),
                       min.segment.length = 0) +
       geom_text_repel(data = tail(filteredData, 5),
-                      aes(label = Metabolite),
+                      aes(label = MetaboliteName),
                       min.segment.length = 0) +
       theme_bw() +
       theme(
@@ -123,12 +172,12 @@ volcanoPlot <- function (data,
       labs(fill = "Metabololites category",
            x = "Relative Abundance",
            y = "p value (-log10)")
-
+    
     if (save == "pdf") {
       ## print
       print(p)
     }
-
+    
     ## save plots
     if (save != "pdf") {
       save_plot(filename = paste(here(), "volcanoPlots", paste0(groups[i], ".", save), sep = "/"),
@@ -143,4 +192,3 @@ volcanoPlot <- function (data,
     dev.off()
   }
 }
-

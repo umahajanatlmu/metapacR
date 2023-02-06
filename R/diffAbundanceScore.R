@@ -79,8 +79,8 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
   }
 
   ## load annotation file
-  chemicalMetadata <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
-  use_data(chemicalMetadata, overwrite = TRUE)
+  data("chemicalMetadata")
+  chemicalMetadata <- force(chemicalMetadata)
 
   ## define metabolite classes
   metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME","KEGG")]

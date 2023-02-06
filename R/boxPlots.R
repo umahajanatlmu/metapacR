@@ -101,7 +101,7 @@ boxPlots <- function(dataList,
       }
       ## stats
       plot.Dat <- data %>%
-        select(i, group)
+        select(any_of(c(i, group)))
 
       formula <-
         as.formula(paste0("`", i,"`", "~", paste0(group)))

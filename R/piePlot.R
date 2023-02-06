@@ -5,11 +5,13 @@
 #' @param data anova results obtained from normalizeDat.binary or normalizeDat function
 #' @param path saving path
 #' @param cutoff significance cutoff
+#' @param data.type  select platform used, c("MH", "Metabolon", "Others")
 #' @param lipid.class wheather to plot lipid or not
 #' @param save either "pdf", "svg" or "png"
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
 #' @param dpi  dpi only applicable for png
+#' @param Other_metadata dataframe with metadata....it must have  columns: Metabolite, Metabolite_Name, Ontology_Class, Ontology_Subclass
 #'
 #' @import tidyverse
 #' @import here
@@ -29,8 +31,10 @@
 piePlot <- function (data,
                      path = NULL,
                      cutoff = 0.05,
+                     data.type = c("MH", "Metabolon", "Others"),
                      lipid.class =TRUE,
                      save= c("pdf", "svg","png"),
+                     Other_metadata = NULL,
                      fig.width = 12,
                      fig.height = 9,
                      dpi = 300) {
@@ -38,7 +42,14 @@ piePlot <- function (data,
   stopifnot(inherits(data, "data.frame"))
   validObject(dataList)
 
-  save <- match.arg(save)
+  save <- match.arg(save, c("pdf", "svg","png"))
+
+  data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
+  
+  if (data.type == "Others") {
+    stopifnot(inherits(Other_metadata, "data.frame"))
+    validObject(Other_metadata)
+  }
 
   if(is.null(path)) {
     path = here()
@@ -56,12 +67,51 @@ piePlot <- function (data,
     dir.create(paste(here(), "piePlots", sep = "/"))
   }
 
-  metabolite.class <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
-  use_data(metabolite.class, overwrite = TRUE)
-
+  if (data.type == "Metabolon") {
+  data("chemicalMetadata")
+  metabolite.class <- force(chemicalMetadata) 
+  
+  metabolite.class <- metabolite.class %>%
+    mutate(across(everything(), as.character))
+  
   ## define metabolites
   data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
     data[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]])]
+  data <- data %>%
+    full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+    rename(c("MetaboliteClass" = "SUPER_PATHWAY",
+             "MetaboliteName" = "CHEMICAL_NAME"))
+  }
+  
+  if (data.type == "MH") {
+    data("chemicalMetadata_MH")
+    metabolite.class <- force(chemicalMetadata_MH)
+    
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character))
+    
+    ## define metabolites
+    data <- data %>%
+      full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+      rename(c("MetaboliteClass" = "ONTOLOGY1_NAME",
+               "lipidClass" = "ONTOLOGY2_NAME",
+               "MetaboliteName" = "METABOLITE_NAME"))
+  }
+  
+  if (data.type == "Others") {
+    metabolite.class <- Other_metadata
+
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character))
+    
+    ## define metabolites
+    data <- data %>%
+      full_join(metabolite.class, by = "Metabolite") %>%
+      rename(c("MetaboliteClass" = "Ontology_Class",
+               "lipidClass" = "Ontology_Subclass",
+               "MetaboliteName" = "Metabolite_Name"))
+    
+  }
 
   ## prepare data
   datPie <- data %>%
@@ -69,7 +119,8 @@ piePlot <- function (data,
     drop_na(MetaboliteClass) %>%
     group_by(contrast, MetaboliteClass) %>%
     summarise(Freq = length(MetaboliteClass)) %>%
-    arrange(MetaboliteClass)
+    arrange(MetaboliteClass) %>% 
+    ungroup()
 
   groups <- unique(datPie$contrast)
 
@@ -145,6 +196,7 @@ piePlot <- function (data,
       dir.create(paste(here(), "piechart_lipids", sep = "/"))
     }
     ## prepare distibution data
+    if (data.type == "Metabolon") {
     datPie.lipid <- data %>%
       filter(adj.P.Val < cutoff) %>%
       drop_na(MetaboliteClass) %>%
@@ -154,7 +206,18 @@ piePlot <- function (data,
                                  gsub("[(].*", "", Metabolite))) %>%
       group_by(contrast, lipid.class) %>%
       summarise(Freq = length(lipid.class)) %>%
-      arrange(lipid.class)
+      arrange(lipid.class) %>%
+      ungroup() 
+    } else 
+      datPie.lipid <- data %>%
+        filter(adj.P.Val < cutoff) %>%
+        drop_na(MetaboliteClass) %>%
+        filter(grepl("Complex lipids", MetaboliteClass)) %>%
+      group_by(contrast, lipid.class) %>%
+      summarise(Freq = length(lipid.class)) %>%
+      arrange(lipid.class) %>%
+      ungroup() 
+
 
     groups <- unique(datPie.lipid$contrast)
 

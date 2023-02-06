@@ -42,7 +42,7 @@ rocPlots <- function(dataList,
   stopifnot(inherits(dataList, "list"))
   validObject(dataList)
 
-  save <- match.arg(save)
+  save <- match.arg(save, c("pdf", "svg","png"))
 
   if (is.null(group)) {
     stop("group variable is missing")
