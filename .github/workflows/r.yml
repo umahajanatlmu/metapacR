@@ -33,6 +33,7 @@ jobs:
       - name: Install dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck"))
+          BiocManager::install(c("FELLA", "ggtree", "KEGGREST", "ropls"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
       - name: Check
