@@ -12,18 +12,14 @@
 #' @param dpi  dpi only applicable for png
 #'
 #' @import tidyverse
-#' @import here
-#' @import ggplot2
-#' @import RColorBrewer
-#' @import ggpubr
-#' @import rstatix
+#' @importFrom here here
+#' @importFrom RColorBrewer brewer.pal
 #' @import stats
-#' @import pROC
+#' @importFrom pROC roc coords ggroc
 #' @import utils
-#' @import tibble
 #' @import graphics
 #' @import grDevices
-#' @import sjPlot
+#' @importFrom sjPlot save_plot
 #'
 #' @return summaryROC results table. rocPlots in save oblect in defined path.
 #'
@@ -57,7 +53,7 @@ rocPlots <- function(dataList,
   }
 
   if(is.null(path)) {
-    path = here()
+    path = here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
            dir.create(file.path(paste0(path), "results")),
            FALSE)
@@ -144,12 +140,12 @@ rocPlots <- function(dataList,
             ifelse(dataSubset[[group]] == uniqueComp[2], 1, 0)
         }
         ## roc
-        rocObj <- roc(dataSubset[["shortCode"]],
+        rocObj <- pROC::roc(dataSubset[["shortCode"]],
                       dataSubset[[i]])
 
         ## Get the best threshold
         bestObj <-
-              coords(rocObj, "best", ret = "all",  transpose = FALSE)
+              pROC::coords(rocObj, "best", ret = "all",  transpose = FALSE)
 
        rownames(bestObj)[1] <- paste(i,
                                           "_",
@@ -228,7 +224,7 @@ rocPlots <- function(dataList,
 
         ## save plot
         if (save != "pdf") {
-          save_plot(filename = paste(here(), "rocPlots", paste0(i,
+          sjPlot::save_plot(filename = paste(here(), "rocPlots", paste0(i,
                                                                 "_", uniqueComp[1],
                                                                 "_", uniqueComp[2],
                                                                 ".", save), sep = "/"),

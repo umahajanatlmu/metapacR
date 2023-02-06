@@ -14,16 +14,12 @@
 #' @param Other_metadata dataframe with metadata....it must have  columns: Metabolite, Metabolite_Name, Ontology_Class, Ontology_Subclass
 #'
 #' @import tidyverse
-#' @import here
-#' @import ggplot2
-#' @import ggrepel
-#' @import sjPlot
-#' @import RColorBrewer
-#' @import ggpubr
+#' @importFrom here here
+#' @importFrom sjPlot save_plot
+#' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
-#' @import scales
-#' @import usethis
+#' @importFrom scales squish
 #'
 #' @return plot in save object in defined path.
 #'
@@ -44,16 +40,16 @@ lipidChainLengthDistribution <- function (results,
   validObject(results)
 
   data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
-  
+
   if (data.type == "Others") {
     stopifnot(inherits(Other_metadata, "data.frame"))
     validObject(Other_metadata)
   }
-  
+
   save <- match.arg(save, c("pdf", "svg","png"))
 
   if(is.null(path)) {
-    path = here()
+    path = here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
            dir.create(file.path(paste0(path), "results")),
            FALSE)
@@ -73,11 +69,11 @@ lipidChainLengthDistribution <- function (results,
   ## load annotation file
 if (data.type == "Metabolon") {
   data("chemicalMetadata")
-  metabolite.class <- force(chemicalMetadata) 
-  
+  metabolite.class <- force(chemicalMetadata)
+
   metabolite.class <- metabolite.class %>%
     mutate(across(everything(), as.character))
-  
+
   ## define metabolites
   results[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
     results[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]])]
@@ -86,14 +82,14 @@ if (data.type == "Metabolon") {
     rename(c("MetaboliteClass" = "SUPER_PATHWAY",
              "MetaboliteName" = "CHEMICAL_NAME"))
   }
-  
+
   if (data.type == "MH") {
     data("chemicalMetadata_MH")
     metabolite.class <- force(chemicalMetadata_MH)
-    
+
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     results <- results %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
@@ -101,20 +97,20 @@ if (data.type == "Metabolon") {
                "lipidClass" = "ONTOLOGY2_NAME",
                "MetaboliteName" = "METABOLITE_NAME"))
   }
-  
+
   if (data.type == "Others") {
     metabolite.class <- Other_metadata
 
      metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     results <- results %>%
       full_join(metabolite.class, by = "Metabolite") %>%
       rename(c("MetaboliteClass" = "Ontology_Class",
                "lipidClass" = "Ontology_Subclass",
                "MetaboliteName" = "Metabolite_Name"))
-    
+
   }
 
   ## subset chain lengths
@@ -187,9 +183,9 @@ if (data.type == "Metabolon") {
         ),
         axis.title = element_text(size = 12, face = "bold")
       ) +
-      scale_colour_gradientn(colours = rev(brewer.pal(10, "RdYlBu")),
+      scale_colour_gradientn(colours = rev(RColorBrewer::brewer.pal(10, "RdYlBu")),
                              limits = c(-2,2),
-                             oob = squish,
+                             oob = scales::squish,
                              name = 'fold changes') +
       guides(colour = guide_colourbar(barwidth = unit(0.3, "cm"),
                                       ticks.colour = "black",
@@ -209,7 +205,7 @@ if (data.type == "Metabolon") {
     }
     ## save plots
     if (save != "pdf") {
-      save_plot(filename = paste(here(), "chainLengthDistribution", paste0(groups[i], ".", save), sep = "/"),
+      sjPlot::save_plot(filename = paste(here(), "chainLengthDistribution", paste0(groups[i], ".", save), sep = "/"),
                 fig = p,
                 width = fig.width,
                 height = fig.height,

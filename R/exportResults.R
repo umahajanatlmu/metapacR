@@ -7,8 +7,8 @@
 #' @param filename name of the file
 #'
 #' @import tidyverse
-#' @import here
-#' @import condformat
+#' @importFrom here here
+#' @importFrom condformat condformat rule_fill_discrete rule_text_bold condformat2excel
 #'
 #' @return color coded result table in excel formant
 #'
@@ -30,14 +30,14 @@ exportResults <- function(data, path=NULL, filename=NULL) {
                        char = "=")
 
     if(is.null(path)) {
-      path = here()
+      path = here::here()
       ifelse(!dir.exists(file.path(paste0(path), "results")),
              dir.create(file.path(paste0(path), "results")),
              FALSE)
       path = paste(path,"results", sep = "/")
     } else
       path = path
-    
+
     if (is.null(filename)) {
       filename <- "results"
     }
@@ -57,8 +57,8 @@ exportResults <- function(data, path=NULL, filename=NULL) {
       )
     )
     ## format keys
-    keys <- condformat(keys) %>%
-      rule_fill_discrete(
+    keys <- condformat::condformat(keys) %>%
+      condformat::rule_fill_discrete(
         legends,
         colours = c(
           "ratio > 1 and p < 0.01" = "#CC0033",
@@ -73,7 +73,7 @@ exportResults <- function(data, path=NULL, filename=NULL) {
         )
       )
     # export legends
-    condformat2excel(keys,
+    condformat::condformat2excel(keys,
                      paste(path,
                            "results.xlsx", sep = "/"),
                      sheet_name = "legends")
@@ -91,8 +91,8 @@ exportResults <- function(data, path=NULL, filename=NULL) {
         ws <- substr(ws, start = 1, stop = 31)
       }
       ## export results
-      csvFormat <- condformat(csv) %>%
-        rule_fill_discrete(
+      csvFormat <- condformat::condformat(csv) %>%
+        condformat::rule_fill_discrete(
           logFC,
           expression = ifelse(
             logFC > 1 &
@@ -128,10 +128,10 @@ exportResults <- function(data, path=NULL, filename=NULL) {
             "vvlow" = "#3333FF"
           )
         ) %>%
-        rule_text_bold(logFC,
+        condformat::rule_text_bold(logFC,
                        expression = logFC < 0.5 |
                          logFC > 2) %>%
-        rule_fill_discrete(
+        condformat::rule_fill_discrete(
           adj.P.Val,
           expression = ifelse(
             adj.P.Val < 0.1 & adj.P.Val >= 0.05,
@@ -150,7 +150,7 @@ exportResults <- function(data, path=NULL, filename=NULL) {
         )
 
       ## compile results
-      condformat2excel(
+      condformat::condformat2excel(
         csvFormat,
         paste(
           path,

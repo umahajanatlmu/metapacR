@@ -8,9 +8,11 @@ lipidChainLengthCorrelation(
   results,
   path = NULL,
   save = c("pdf", "svg", "png"),
+  data.type = c("MH", "Metabolon", "Others"),
   fig.width = 12,
   fig.height = 9,
-  dpi = 300
+  dpi = 300,
+  Other_metadata = NULL
 )
 }
 \arguments{
@@ -20,11 +22,15 @@ lipidChainLengthCorrelation(
 
 \item{save}{either "pdf", "svg" or "png"}
 
+\item{data.type}{select platform used, c("MH", "Metabolon", "Others")}
+
 \item{fig.width}{plot width not applicable for pdf}
 
 \item{fig.height}{plot height not applicable for pdf}
 
 \item{dpi}{dpi only applicable for png}
+
+\item{Other_metadata}{dataframe with metadata....it must have  columns: Metabolite, Metabolite_Name, Ontology_Class, Ontology_Subclass}
 }
 \value{
 plot as save object in defined path.

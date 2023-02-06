@@ -12,16 +12,12 @@
 #' @param Other_metadata dataframe with metadata....it must have  columns: Metabolite, Metabolite_Name, Ontology_Class, Ontology_Subclass
 #'
 #' @import tidyverse
-#' @import here
-#' @import ggplot2
-#' @import ggrepel
-#' @import sjPlot
-#' @import RColorBrewer
-#' @import ggpubr
+#' @importFrom here here
+#' @importFrom sjPlot save_plot
+#' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
-#' @import ggpmisc
-#' @import usethis
+#' @importFrom ggpmisc stat_fit_glance
 #'
 #' @return plot as save object in defined path.
 #'
@@ -40,16 +36,16 @@ lipidChainLengthCorrelation <- function (results,
   validObject(results)
 
   data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
-  
+
   if (data.type == "Others") {
     stopifnot(inherits(Other_metadata, "data.frame"))
     validObject(Other_metadata)
   }
-  
+
   save <- match.arg(save, c("pdf", "svg","png"))
 
   if(is.null(path)) {
-    path = here()
+    path = here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
            dir.create(file.path(paste0(path), "results")),
            FALSE)
@@ -69,11 +65,11 @@ lipidChainLengthCorrelation <- function (results,
   ## load annotation file
   if (data.type == "Metabolon") {
   data("chemicalMetadata")
-  metabolite.class <- force(chemicalMetadata) 
-  
+  metabolite.class <- force(chemicalMetadata)
+
   metabolite.class <- metabolite.class %>%
     mutate(across(everything(), as.character))
-  
+
   ## define metabolites
   results[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
     results[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]])]
@@ -82,14 +78,14 @@ lipidChainLengthCorrelation <- function (results,
     rename(c("MetaboliteClass" = "SUPER_PATHWAY",
              "MetaboliteName" = "CHEMICAL_NAME"))
   }
-  
+
   if (data.type == "MH") {
     data("chemicalMetadata_MH")
     metabolite.class <- force(chemicalMetadata_MH)
-    
+
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     results <- results %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
@@ -97,20 +93,20 @@ lipidChainLengthCorrelation <- function (results,
                "lipidClass" = "ONTOLOGY2_NAME",
                "MetaboliteName" = "METABOLITE_NAME"))
   }
-  
+
   if (data.type == "Others") {
     metabolite.class <- Other_metadata
 
      metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     results <- results %>%
       full_join(metabolite.class, by = "Metabolite") %>%
       rename(c("MetaboliteClass" = "Ontology_Class",
                "lipidClass" = "Ontology_Subclass",
                "MetaboliteName" = "Metabolite_Name"))
-    
+
   }
 
   ## subset chain lengths
@@ -167,7 +163,7 @@ lipidChainLengthCorrelation <- function (results,
                   formula = y ~ x,
                   se = FALSE,
                   show.legend = FALSE) +
-      stat_fit_glance(method = "lm",
+      ggpmisc::stat_fit_glance(method = "lm",
                       label.x="left",
                       label.y="bottom",
                       method.args = list(formula = y ~ x),
@@ -192,7 +188,7 @@ lipidChainLengthCorrelation <- function (results,
       xlab("Fatty acid chain length") +
       ylab("t-ratio") +
       facet_wrap(~lipid.class, ncol=7) +
-      scale_color_manual(values = brewer.pal(3, "Set1")) +
+      scale_color_manual(values = RColorBrewer::brewer.pal(3, "Set1")) +
       theme(legend.position = "bottom") +
       labs(color="Saturation status")
 
@@ -202,7 +198,7 @@ lipidChainLengthCorrelation <- function (results,
     }
     ## save plots
     if (save != "pdf") {
-      save_plot(filename = paste(here(), "chainLengthCorrelations", paste0(groups[i], ".", save), sep = "/"),
+      sjPlot::save_plot(filename = paste(here(), "chainLengthCorrelations", paste0(groups[i], ".", save), sep = "/"),
                 fig = p,
                 width = fig.width,
                 height = fig.height,

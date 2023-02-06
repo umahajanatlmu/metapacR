@@ -12,15 +12,12 @@
 #' @param Other_metadata dataframe with metadata....it must have  columns: Metabolite, Metabolite_Name, Ontology_Class, Ontology_Subclass
 #'
 #' @import tidyverse
-#' @import here
-#' @import ggplot2
-#' @import ggrepel
-#' @import RColorBrewer
-#' @import ggpubr
+#' @importFrom here here
+#' @importFrom ggrepel geom_text_repel
+#' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
-#' @import sjPlot
-#' @import usethis
+#' @importFrom sjPlot save_plot
 #'
 #' @return plots in save object in defined path
 #'
@@ -34,42 +31,42 @@ volcanoPlot <- function(data,
                          fig.height = 9,
                          dpi = 300,
                          Other_metadata = NULL) {
-  
+
   stopifnot(inherits(data, "data.frame"))
   validObject(data)
-  
+
   save <- match.arg(save, c("pdf", "svg","png"))
-  
+
   data.type <- match.arg(data.type,c("MH", "Metabolon", "Others"))
-  
+
   if (data.type == "Others") {
     stopifnot(inherits(Other_metadata, "data.frame"))
     validObject(Other_metadata)
   }
-  
+
   if(is.null(path)) {
-    path = here()
+    path = here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
            dir.create(file.path(paste0(path), "results")),
            FALSE)
     path = paste(path,"results", sep = "/")
   } else
     path = path
-  
+
   if (save == "pdf"){
     pdf(paste(path, "volcanoPlots.pdf", sep = "/"),
         onefile = TRUE)
   } else if (save != "pdf") {
     dir.create(paste(here(), "volcanoPlots", sep = "/"))
   }
-  
+
   if (data.type == "Metabolon") {
     data("chemicalMetadata")
-    metabolite.class <- force(chemicalMetadata) 
-    
+    metabolite.class <- force(chemicalMetadata)
+
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
       data[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]])]
@@ -78,14 +75,14 @@ volcanoPlot <- function(data,
       rename(c("MetaboliteClass" = "SUPER_PATHWAY",
                "MetaboliteName" = "CHEMICAL_NAME"))
   }
-  
+
   if (data.type == "MH") {
     data("chemicalMetadata_MH")
     metabolite.class <- force(chemicalMetadata_MH)
-    
+
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     data <- data %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
@@ -93,34 +90,34 @@ volcanoPlot <- function(data,
                "lipidClass" = "ONTOLOGY2_NAME",
                "MetaboliteName" = "METABOLITE_NAME"))
   }
-  
+
   if (data.type == "Others") {
     metabolite.class <- Other_metadata
-    
+
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     data <- data %>%
       full_join(metabolite.class, by = "Metabolite") %>%
       rename(c("MetaboliteClass" = "Ontology_Class",
                "lipidClass" = "Ontology_Subclass",
                "MetaboliteName" = "Metabolite_Name"))
-    
+
   }
-  
+
   ## prepare volcano data
   datVolcano <- data %>%
     drop_na(MetaboliteClass) %>%
     mutate(foldChanges = log2(logFC))
-  
+
   groups <- unique(datVolcano$contrast)
-  
+
   ## colors
   colorsOntologyOne <-
     data.frame(
       MetaboliteClass = unique(datVolcano$MetaboliteClass),
-      color = brewer.pal(length(unique(
+      color = RColorBrewer::brewer.pal(length(unique(
         datVolcano$MetaboliteClass
       )), "Paired")
     )
@@ -133,13 +130,13 @@ volcanoPlot <- function(data,
   datVolcano$color[datVolcano$MetaboliteClass %in%
                      colorsOntologyOne$MetaboliteClass] <-
     as.character(colorsOntologyOne$color)[matchColumnColors]
-  
+
   ## plot volcano plots
-  
+
   for (i in seq_along(na.omit(groups))) {
-    
+
     filteredData <- datVolcano[datVolcano$contrast %in% groups[i],]
-    
+
     ## plot
     p <-
       filteredData %>%
@@ -151,10 +148,10 @@ volcanoPlot <- function(data,
         pch = 21
       ) +
       ggtitle(groups[i]) +
-      geom_text_repel(data = head(filteredData, 5),
+      ggrepel::geom_text_repel(data = head(filteredData, 5),
                       aes(label = Metabolite),
                       min.segment.length = 0) +
-      geom_text_repel(data = tail(filteredData, 5),
+      ggrepel::geom_text_repel(data = tail(filteredData, 5),
                       aes(label = MetaboliteName),
                       min.segment.length = 0) +
       theme_bw() +
@@ -172,15 +169,15 @@ volcanoPlot <- function(data,
       labs(fill = "Metabololites category",
            x = "Relative Abundance",
            y = "p value (-log10)")
-    
+
     if (save == "pdf") {
       ## print
       print(p)
     }
-    
+
     ## save plots
     if (save != "pdf") {
-      save_plot(filename = paste(here(), "volcanoPlots", paste0(groups[i], ".", save), sep = "/"),
+      sjPlot::save_plot(filename = paste(here(), "volcanoPlots", paste0(groups[i], ".", save), sep = "/"),
                 fig = p,
                 width = fig.width,
                 height = fig.height,

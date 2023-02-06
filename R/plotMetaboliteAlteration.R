@@ -14,15 +14,11 @@
 #' @param Other_metadata dataframe with metadata....it must have  columns: Metabolite, Metabolite_Name, Ontology_Class, Ontology_Subclass
 #'
 #' @import tidyverse
-#' @import here
-#' @import ggplot2
-#' @import ggrepel
-#' @import RColorBrewer
-#' @import ggpubr
+#' @importFrom here here
+#' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
-#' @import sjPlot
-#' @import usethis
+#' @importFrom sjPlot save_plot
 #'
 #' @return save object in defined path.
 #'
@@ -38,21 +34,21 @@ plotMetaboliteAlteration <- function(data,
                                      fig.height = 9,
                                      dpi = 300,
                                      Other_metadata = NULL) {
-  
+
   stopifnot(inherits(data, "data.frame"))
   validObject(data)
-  
+
   save <- match.arg(save, c("pdf", "svg","png"))
-  
+
   data.type <- match.arg(data.type,c("MH", "Metabolon", "Others"))
-  
+
   if (data.type == "Others") {
     stopifnot(inherits(Other_metadata, "data.frame"))
     validObject(Other_metadata)
   }
-  
+
   if(is.null(path)) {
-    path = here()
+    path = here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
            dir.create(file.path(paste0(path), "results")),
            FALSE)
@@ -66,14 +62,14 @@ plotMetaboliteAlteration <- function(data,
   } else if (save != "pdf") {
     dir.create(paste(here(), "metabolite_alterationPlots", sep = "/"))
   }
-  
+
   if (data.type == "Metabolon") {
     data("chemicalMetadata")
-    metabolite.class <- force(chemicalMetadata) 
-    
+    metabolite.class <- force(chemicalMetadata)
+
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
       data[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]])]
@@ -82,14 +78,14 @@ plotMetaboliteAlteration <- function(data,
       rename(c("MetaboliteClass" = "SUPER_PATHWAY",
                "MetaboliteName" = "CHEMICAL_NAME"))
   }
-  
+
   if (data.type == "MH") {
     data("chemicalMetadata_MH")
     metabolite.class <- force(chemicalMetadata_MH)
-    
+
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     data <- data %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
@@ -97,22 +93,22 @@ plotMetaboliteAlteration <- function(data,
                "lipidClass" = "ONTOLOGY2_NAME",
                "MetaboliteName" = "METABOLITE_NAME"))
   }
-  
+
   if (data.type == "Others") {
     metabolite.class <- Other_metadata
-    
+
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     data <- data %>%
       full_join(metabolite.class, by = "Metabolite") %>%
       rename(c("MetaboliteClass" = "Ontology_Class",
                "lipidClass" = "Ontology_Subclass",
                "MetaboliteName" = "Metabolite_Name"))
-    
+
   }
-  
+
   ## prepare distibution data
   dat <- data %>%
     filter(adj.P.Val < cutoff) %>%
@@ -127,16 +123,16 @@ plotMetaboliteAlteration <- function(data,
     mutate(FreqClass = ifelse(trend == "down", -1*FreqClass, FreqClass)) %>%
     ungroup() %>%
     arrange(MetaboliteClass)
-  
+
   groups <- unique(dat$contrast)
-  
-  
+
+
   ## plot distribution plots
-  
+
   for (i in groups) {
-    
+
     filteredData <- dat[dat$contrast %in% i,]
-    
+
     ## plot
     p <- ggplot(filteredData,aes(x= MetaboliteClass,
                                  y= FreqClass,
@@ -179,7 +175,7 @@ plotMetaboliteAlteration <- function(data,
     }
     ## save plots
     if (save != "pdf") {
-      save_plot(filename = paste(here(), "metabolite_alterationPlots", paste0(groups[i], ".", save), sep = "/"),
+      sjPlot::save_plot(filename = paste(here(), "metabolite_alterationPlots", paste0(groups[i], ".", save), sep = "/"),
                 fig = p,
                 width = fig.width,
                 height = fig.height,
@@ -200,12 +196,15 @@ plotMetaboliteAlteration <- function(data,
       dir.create(paste(here(), "metabolite_alterationPlots_lipids", sep = "/"))
     }
     ## prepare distibution data
-    
+
     if (data.type == "Metabolon") {
       dat <- data %>%
         drop_na(MetaboliteClass) %>%
         mutate(foldChanges = log2(logFC)) %>%
         filter(MetaboliteClass == "Complex lipids") %>%
+        mutate(lipidClass = ifelse(grepl("^TAG", Metabolite),
+                                   gsub("TAG.*", "TAG", Metabolite),
+                                   gsub("[(].*", "", Metabolite))) %>%
         select(contrast, lipidClass, logFC) %>%
         mutate(trend = ifelse(log2(logFC) > 1, "up",
                               ifelse(log2(logFC) <= -1, "down", "unchanged"))) %>%
@@ -220,9 +219,6 @@ plotMetaboliteAlteration <- function(data,
         drop_na(MetaboliteClass) %>%
         mutate(foldChanges = log2(logFC)) %>%
         filter(grepl("Complex lipids", MetaboliteClass)) %>%
-        mutate(lipidClass = ifelse(grepl("^TAG", Metabolite),
-                                   gsub("TAG.*", "TAG", Metabolite),
-                                   gsub("[(].*", "", Metabolite))) %>%
         select(contrast, lipidClass, logFC) %>%
         mutate(trend = ifelse(log2(logFC) > 1, "up",
                               ifelse(log2(logFC) <= -1, "down", "unchanged"))) %>%
@@ -232,15 +228,15 @@ plotMetaboliteAlteration <- function(data,
         mutate(FreqClass = ifelse(trend == "down", -1*FreqClass, FreqClass)) %>%
         ungroup() %>%
         arrange(lipidClass)
-    
+
     groups <- unique(dat$contrast)
-    
+
     ## plot distribution plots
-    
+
     for (i in groups) {
-      
+
       filteredData <- dat[dat$contrast %in% i,]
-      
+
       ## plot
       ## plot
       p <- ggplot(filteredData,aes(x= lipidClass,
@@ -293,7 +289,7 @@ plotMetaboliteAlteration <- function(data,
       }
       ## save plots
       if (save != "pdf") {
-        save_plot(filename = paste(here(), "metabolite_alterationPlots_lipids", paste0(groups[i], ".", save), sep = "/"),
+        sjPlot::save_plot(filename = paste(here(), "metabolite_alterationPlots_lipids", paste0(groups[i], ".", save), sep = "/"),
                   fig = p,
                   width = fig.width,
                   height = fig.height,

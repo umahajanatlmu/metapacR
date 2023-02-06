@@ -7,14 +7,12 @@
 #' @param markers list of markers to plots
 #'
 #' @import ggplot2
-#' @import RColorBrewer
-#' @import ggpubr
+#' @importFrom RColorBrewer brewer.pal
 #' @import utils
 #' @import stats
 #' @import graphics
 #' @import grDevices
-#' @import ggpubr
-#' @import rstatix
+#' @importFrom ggpubr stat_compare_means
 #'
 #' @return violin plot
 #'
@@ -94,8 +92,8 @@ plotSplitViolin <- function(dataList,
       ggplot(aes(x=metabolite,
                  y=value, fill=.data[[grouping.variable]])) +
       .splitViolin() +
-      stat_compare_means(aes(group = .data[[grouping.variable]]), label = "p.signif", paired = TRUE) +
-      scale_fill_manual(values = brewer.pal(2, "Set1")[1:2]) +
+      ggpubr::stat_compare_means(aes(group = .data[[grouping.variable]]), label = "p.signif", paired = TRUE) +
+      scale_fill_manual(values = RColorBrewer::brewer.pal(2, "Set1")[1:2]) +
       theme_bw() +
       theme(
         panel.border = element_rect(colour = "black", fill=NA, size=1),
@@ -120,8 +118,8 @@ plotSplitViolin <- function(dataList,
 }
 
 
-GeomSplitViolin <- ggproto("GeomSplitViolin",
-                           GeomViolin,
+GeomSplitViolin <- ggplot2::ggproto("GeomSplitViolin",
+                           ggplot2::GeomViolin,
                            draw_group = function(self,
                                                  data, ...,
                                                  draw_quantiles = NULL) {

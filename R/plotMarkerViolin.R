@@ -8,8 +8,7 @@
 #' @param n.markers number of markers to plots
 #'
 #' @import ggplot2
-#' @import RColorBrewer
-#' @import ggpubr
+#' @importFrom RColorBrewer brewer.pal
 #' @import utils
 #' @import stats
 #' @import graphics
@@ -89,7 +88,7 @@ plotMarkerViolin <- function(dataList,
                 width = 0.2,
                 alpha = 0.2,
                 show.legend = FALSE) +
-      scale_fill_manual(values = brewer.pal(length(unique(gData[[grouping.variable]])), "Set1")) +
+      scale_fill_manual(values = RColorBrewer::brewer.pal(length(unique(gData[[grouping.variable]])), "Set1")) +
       theme_bw() +
       theme(
         panel.border = element_rect(colour = "black", fill=NA, size=1),

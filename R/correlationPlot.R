@@ -10,8 +10,8 @@
 #' @param path  saving path
 #'
 #' @import tidyverse
-#' @import Hmisc
-#' @import pheatmap
+#' @importFrom Hmisc rcorr
+#' @importFrom pheatmap pheatmap
 #' @import graphics
 #' @import grDevices
 #' @import here
@@ -57,7 +57,7 @@ correlationPlot <- function (dataList,
     select_if(~!all(is.na(.)))
 
   ## make correlation matrix
-  corrMat <- rcorr(as.matrix(data))
+  corrMat <- Hmisc::rcorr(as.matrix(data))
 
   ## define matrix colors
   macolor = colorRampPalette(c("navyblue", "white", "red"))(100)
@@ -68,7 +68,7 @@ correlationPlot <- function (dataList,
   row_names <- rownames(M)
 
   ## plot pheatmap
-  p <- pheatmap(M,
+  p <- pheatmap::pheatmap(M,
                 color = macolor,
                 silent = TRUE)
 
@@ -81,7 +81,7 @@ correlationPlot <- function (dataList,
   tc <- tc['clust_membership']
 
   ## plot heatmap
-  p <- pheatmap(M,
+  p <- pheatmap::pheatmap(M,
                 color = rev(macolor),
                 clustering_method = "complete",
                 annotation_row = tc,

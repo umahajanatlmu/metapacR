@@ -13,17 +13,13 @@
 #' @param dpi dpi only applicable for png
 #'
 #' @import tidyverse
-#' @import here
-#' @import ggplot2
-#' @import ggrepel
-#' @import RColorBrewer
-#' @import ggpubr
+#' @importFrom here here
+#' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
-#' @import sjPlot
-#' @import KEGGREST
+#' @importFrom sjPlot save_plot
+#' @importFrom KEGGREST keggLink keggGet
 #' @import stats
-#' @import usethis
 #'
 #' @return data.frame onject with enrichement.results and plots as save object in defined path.
 #'
@@ -43,13 +39,13 @@ enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
 
-  species <- match.arg(species)
-  save <- match.arg(save)
+  species <- match.arg(species, c("hsa", "mmu"))
+  save <- match.arg(save, c("pdf", "svg", "png"))
 
 
   enrichment.results <- data.frame()
   if(is.null(ref.path)) {
-    ref.path = here()
+    ref.path = here::here()
     ifelse(!dir.exists(file.path(paste0(ref.path), "results")),
            dir.create(file.path(paste0(ref.path), "results")),
            FALSE)
@@ -76,7 +72,7 @@ enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
   if (file.exists(paste(ref.path,"keggDB.rds", sep = "/")) == FALSE) {
 
     ## reference kegg dataset building
-    keggReferences <-  keggLink("pathway", species)
+    keggReferences <-  KEGGREST::keggLink("pathway", species)
     referencesPathway <- unique(keggReferences[1:length(keggReferences)])
     referencesPathway <- gsub("path:", "", referencesPathway)
 
@@ -90,15 +86,15 @@ enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
 
       ## selected pathway
       pathway <- referencesPathway[rp]
-      pathwayName <- keggGet(pathway)[[1]]$NAME
+      pathwayName <- KEGGREST::keggGet(pathway)[[1]]$NAME
 
       ## list reference compounds
-      listReferenceComp <- suppressWarnings(keggGet(pathway)[[1]]$COMPOUND)
+      listReferenceComp <- suppressWarnings(KEGGREST::keggGet(pathway)[[1]]$COMPOUND)
       compoundID <- names(listReferenceComp)
       nCompound  <- length(compoundID)
 
       ## list reference genes
-      listReferenceGenes <- keggGet(pathway)[[1]]$GENE
+      listReferenceGenes <- KEGGREST::keggGet(pathway)[[1]]$GENE
       genes <- gsub(";.*", "",listReferenceGenes)
       genes <- genes[is.na(as.numeric(genes))]
 
@@ -426,7 +422,7 @@ enrichmentScore.KEGG <- function(species= c("hsa", "mmu"),
       }
       ## save results
       if (save != "pdf") {
-        save_plot(
+        sjPlot::save_plot(
           paste(ref.path, "KEGG.enrichmentScore",paste0("barplot_",groups[i],".", save), sep = "/"),
           fig = p,
           width = fig.width,

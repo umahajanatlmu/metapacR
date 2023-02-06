@@ -7,11 +7,10 @@
 #' @param path saving path
 #'
 #' @import tidyverse
-#' @import here
-#' @import ggplot2
-#' @import RColorBrewer
-#' @import ggpubr
-#' @import rstatix
+#' @importFrom here here
+#' @importFrom RColorBrewer brewer.pal
+#' @importFrom ggpubr stat_pvalue_manual
+#' @importFrom rstatix pairwise_t_test add_xy_position
 #' @import stats
 #' @import graphics
 #' @import grDevices
@@ -34,7 +33,7 @@ boxPlots <- function(dataList,
   }
 
   if (is.null(path)) {
-    path = here()
+    path = here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
            dir.create(file.path(paste0(path), "results")),
            FALSE)
@@ -107,8 +106,8 @@ boxPlots <- function(dataList,
         as.formula(paste0("`", i,"`", "~", paste0(group)))
 
       stat <- plot.Dat %>%
-        pairwise_t_test(formula, p.adjust.method = "BH") %>%
-        add_xy_position(
+        rstatix::pairwise_t_test(formula, p.adjust.method = "BH") %>%
+        rstatix::add_xy_position(
           x = paste0(group),
           fun = "max",
           dodge = 1,
@@ -132,7 +131,7 @@ boxPlots <- function(dataList,
           alpha = 0.3,
           show.legend = TRUE
         ) +
-        scale_fill_manual(values = brewer.pal(length(unique(
+        scale_fill_manual(values = RColorBrewer::brewer.pal(length(unique(
           plot.Dat[[group]])), "Set1")) +
         theme_bw() +
         theme(
@@ -147,7 +146,7 @@ boxPlots <- function(dataList,
         theme(axis.ticks.x = element_blank()) +
         theme(legend.position = "bottom",
               legend.box="vertical") +
-        stat_pvalue_manual(
+        ggpubr::stat_pvalue_manual(
           stat,
           label = "p.adj.signif",
           tip.length = 0.01,

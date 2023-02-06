@@ -14,15 +14,12 @@
 #' @param Other_metadata dataframe with metadata....it must have  columns: Metabolite, Metabolite_Name, Ontology_Class, Ontology_Subclass
 #'
 #' @import tidyverse
-#' @import here
-#' @import ggplot2
-#' @import ggrepel
-#' @import RColorBrewer
-#' @import ggpubr
+#' @importFrom here here
+#' @importFrom ggrepel geom_text_repel
+#' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
-#' @import sjPlot
-#' @import usethis
+#' @importFrom sjPlot save_plot
 #'
 #' @export
 
@@ -36,21 +33,21 @@ distributionPlot <- function (data,
                               fig.height = 9,
                               dpi = 300,
                               Other_metadata = NULL) {
-  
+
   stopifnot(inherits(data, "data.frame"))
   validObject(data)
-  
+
   data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
-  
+
   if (data.type == "Others") {
     stopifnot(inherits(Other_metadata, "data.frame"))
     validObject(Other_metadata)
   }
-  
+
   save <- match.arg(save, c("pdf", "svg","png"))
-  
+
   if(is.null(path)) {
-    path = here()
+    path = here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
            dir.create(file.path(paste0(path), "results")),
            FALSE)
@@ -64,16 +61,16 @@ distributionPlot <- function (data,
   } else if (save != "pdf") {
     dir.create(paste(here(), "distributionPlots", sep = "/"))
   }
-  
+
   #metabolite.class <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
   #use_data(metabolite.class, overwrite = TRUE)
   if (data.type == "Metabolon") {
   data("chemicalMetadata")
-  metabolite.class <- force(chemicalMetadata) 
-  
+  metabolite.class <- force(chemicalMetadata)
+
   metabolite.class <- metabolite.class %>%
     mutate(across(everything(), as.character))
-  
+
   ## define metabolites
   data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
     data[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]])]
@@ -82,14 +79,14 @@ distributionPlot <- function (data,
     rename(c("MetaboliteClass" = "SUPER_PATHWAY",
              "MetaboliteName" = "CHEMICAL_NAME"))
   }
-  
+
   if (data.type == "MH") {
     data("chemicalMetadata_MH")
     metabolite.class <- force(chemicalMetadata_MH)
-    
+
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     data <- data %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
@@ -97,35 +94,35 @@ distributionPlot <- function (data,
                "lipidClass" = "ONTOLOGY2_NAME",
                "MetaboliteName" = "METABOLITE_NAME"))
   }
-  
+
   if (data.type == "Others") {
     metabolite.class <- Other_metadata
 
      metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     data <- data %>%
       full_join(metabolite.class, by = "Metabolite") %>%
       rename(c("MetaboliteClass" = "Ontology_Class",
                "lipidClass" = "Ontology_Subclass",
                "MetaboliteName" = "Metabolite_Name"))
-    
+
   }
-  
-  
+
+
   ## prepare distibution data
   dat <- data %>%
     drop_na(MetaboliteClass) %>%
     mutate(foldChanges = log2(logFC))
-  
+
   groups <- unique(dat$contrast)
-  
+
   ## colors
   colorsOntologyOne <-
     data.frame(
       MetaboliteClass = unique(dat$MetaboliteClass),
-      color = colorRampPalette(brewer.pal(9, "Set1"))(length(
+      color = colorRampPalette(RColorBrewer::brewer.pal(9, "Set1"))(length(
         unique(dat$MetaboliteClass)))
     )
   ## match colors
@@ -137,13 +134,13 @@ distributionPlot <- function (data,
   dat$color[dat$MetaboliteClass %in%
               colorsOntologyOne$MetaboliteClass] <-
     as.character(colorsOntologyOne$color)[matchColumnColors]
-  
+
   ## plot distribution plots
-  
+
   for (i in seq_along(na.omit(groups))) {
-    
+
     filteredData <- dat[dat$contrast %in% groups[i],]
-    
+
     ## plot
     p <- ggplot(filteredData,
                 aes(x = Metabolite,
@@ -170,7 +167,7 @@ distributionPlot <- function (data,
             axis.ticks.x = element_blank()) +
       geom_hline(yintercept = -log10(cutoff), linetype='dotted') +
       geom_hline(yintercept = -log10(cutoff*5), linetype='dotted') +
-      geom_text_repel(aes(label = ifelse(filteredData$adj.P.Val < cutoff,
+      ggrepel::geom_text_repel(aes(label = ifelse(filteredData$adj.P.Val < cutoff,
                                          filteredData$MetaboliteName, NA)),
                       min.segment.length = 0,
                       size = 2,
@@ -183,7 +180,7 @@ distributionPlot <- function (data,
     }
     ## save plots
     if (save != "pdf") {
-      save_plot(filename = paste(here(), "distributionPlots", paste0(groups[i], ".", save), sep = "/"),
+      sjPlot::save_plot(filename = paste(here(), "distributionPlots", paste0(groups[i], ".", save), sep = "/"),
                 fig = p,
                 width = fig.width,
                 height = fig.height,
@@ -213,22 +210,22 @@ distributionPlot <- function (data,
                                    gsub("TAG.*", "TAG", Metabolite),
                                    gsub("[(].*", "", Metabolite)))
     } else
-      
+
       dat <- dat %>%
         drop_na(MetaboliteClass) %>%
         mutate(foldChanges = log2(logFC)) %>%
         filter(grepl("Complex lipids", MetaboliteClass))
-      
-      
-      
-    
+
+
+
+
     groups <- unique(dat$contrast)
-    
+
     ## colors
     colorsOntologyOne <-
       data.frame(
         lipidClass = unique(dat$lipidClass),
-        color = colorRampPalette(brewer.pal(9, "Set1"))(length(
+        color = colorRampPalette(RColorBrewer::brewer.pal(9, "Set1"))(length(
           unique(dat$lipidClass)))
       )
     ## match colors
@@ -240,13 +237,13 @@ distributionPlot <- function (data,
     dat$color[dat$lipidClass %in%
                 colorsOntologyOne$lipidClass] <-
       as.character(colorsOntologyOne$color)[matchColumnColors]
-    
+
     ## plot distribution plots
-    
+
     for (i in seq_along(na.omit(groups))) {
-      
+
       filteredData <- dat[dat$contrast %in% groups[i],]
-      
+
       ## plot
       p <- ggplot(filteredData,
                   aes(x = Metabolite,
@@ -273,7 +270,7 @@ distributionPlot <- function (data,
               axis.ticks.x = element_blank()) +
         geom_hline(yintercept = -log10(cutoff), linetype='dotted') +
         geom_hline(yintercept = -log10(cutoff*5), linetype='dotted') +
-        geom_text_repel(aes(label = ifelse(filteredData$adj.P.Val < cutoff,
+        ggrepel::geom_text_repel(aes(label = ifelse(filteredData$adj.P.Val < cutoff,
                                            filteredData$MetaboliteName, NA)),
                         min.segment.length = 0,
                         size = 2,
@@ -286,7 +283,7 @@ distributionPlot <- function (data,
       }
       ## save plots
       if (save != "pdf") {
-        save_plot(filename = paste(here(), "distributionPlots_lipids", paste0(groups[i], ".", save), sep = "/"),
+        sjPlot::save_plot(filename = paste(here(), "distributionPlots_lipids", paste0(groups[i], ".", save), sep = "/"),
                   fig = p,
                   width = fig.width,
                   height = fig.height,

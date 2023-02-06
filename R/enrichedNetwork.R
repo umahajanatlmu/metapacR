@@ -14,20 +14,17 @@
 #' @param fig.height plot height not applicable for pdf
 #'
 #' @import tidyverse
-#' @import here
-#' @import ggplot2
-#' @import ggrepel
-#' @import RColorBrewer
-#' @import ggpubr
+#' @importFrom here here
+#' @importFrom ggrepel geom_text_repel
+#' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
-#' @import sjPlot
-#' @import KEGGREST
+#' @importFrom sjPlot save_plot
+#' @importFrom KEGGREST keggLink
 #' @import stats
-#' @import FELLA
+#' @importFrom FELLA buildGraphFromKEGGREST buildDataFromGraph loadKEGGdata getCom enrich generateResultsGraph getPscores generateResultsTable
 #' @import igraph
-#' @import scales
-#' @import usethis
+#' @importFrom scales squish
 #'
 #' @return results of enrichment network and network plots as save object in defined path.
 #' The object contains the following:\itemize{
@@ -51,16 +48,16 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
 
-  species <- match.arg(species)
+  species <- match.arg(species, c("hsa", "mmu"))
   network.method <- match.arg(network.method)
-  save <- match.arg(save)
+  save <- match.arg(save, c("pdf", "svg","png"))
 
   enrichment.results <- data.frame()
 
   plot.pathway.impact <- list()
 
   if(is.null(ref.path)) {
-    ref.path = here()
+    ref.path = here::here()
     ifelse(!dir.exists(file.path(paste0(ref.path), "results")),
            dir.create(file.path(paste0(ref.path), "results")),
            FALSE)
@@ -99,7 +96,7 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
 
   ## identify pathways associated with obtained metabolites
 
-  keggTest <-keggLink("pathway",sort(unique(pathDat$keggID)))
+  keggTest <-KEGGREST::keggLink("pathway",sort(unique(pathDat$keggID)))
   rownames <- names(keggTest)
   keggTest <- as.data.frame(gsub("path:map","",keggTest))
   rownames<- gsub("^.*?:","",rownames)
@@ -108,7 +105,7 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
 
   ## identify reference pathways wrt species
 
-  keggRef <- keggLink("pathway", species)
+  keggRef <- KEGGREST::keggLink("pathway", species)
   # rownamesRef <- names(keggRef)  ## gene ID
   keggRef <- as.data.frame(gsub(paste0("path:",species),"",keggRef))
   # rownamesRef <- gsub("^.*?:","",rownamesRef) ## gene ID
@@ -128,7 +125,7 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
 
 
   ## filter overview pathways
-  graph <- buildGraphFromKEGGREST(organism = species,
+  graph <- FELLA::buildGraphFromKEGGREST(organism = species,
                                   filter.path = NULL)
 
   ## Cannot be overwritten
@@ -136,7 +133,7 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
   unlink(tmpdir, recursive = TRUE)
 
   ## build data from graph
-  buildDataFromGraph(
+  FELLA::buildDataFromGraph(
     keggdata.graph = graph,
     databaseDir = tmpdir,
     internalDir = FALSE,
@@ -151,24 +148,24 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
   }
 
   ## get associated pathways
-  entrez2ec <- keggLink("enzyme", species)
-  entrez2path <- keggLink("pathway", species)
+  entrez2ec <- KEGGREST::keggLink("enzyme", species)
+  entrez2path <- KEGGREST::keggLink("pathway", species)
 
   ## perform FELLA
-  fellaData <- loadKEGGdata(databaseDir = tmpdir,
+  fellaData <- FELLA::loadKEGGdata(databaseDir = tmpdir,
                             internalDir = FALSE,
                             loadMatrix = network.method)
 
   ## get FELLA community
 
   ## compound
-  idCpd <- getCom(fellaData, level = 5,
+  idCpd <- FELLA::getCom(fellaData, level = 5,
                   format = "id") %>% names
   ## reaction
-  idRx <- getCom(fellaData, level = 4,
+  idRx <- FELLA::getCom(fellaData, level = 4,
                  format = "id") %>% names
   ## enzymes
-  idEc <- getCom(fellaData, level = 3,
+  idEc <- FELLA::getCom(fellaData, level = 3,
                  format = "id") %>% names
 
   groups <- unique(pathDatFella$contrast)
@@ -202,20 +199,20 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
 
     ## generateResultsGraph
 
-    g <- generateResultsGraph(object = analysis,
+    g <- FELLA::generateResultsGraph(object = analysis,
                               data = fellaData,
                               method = network.method)
     ## define undirected
-    unionGraphUndir <- as.undirected(g, mode = "collapse")
+    unionGraphUndir <- igraph::as.undirected(g, mode = "collapse")
     ## create igraph obj
-    clp <- cluster_edge_betweenness(unionGraphUndir)
+    clp <- igraph::cluster_edge_betweenness(unionGraphUndir)
 
     ## obtain matrix properties
-    hubscore <- hub.score(g)$vector
-    authscore <- authority.score(g)$vector
-    eigenvalue <- eigen_centrality(g)$vector
-    graph.strength <- graph.strength(g)
-    centrality <- degree(g) # degree centality
+    hubscore <- igraph::hub.score(g)$vector
+    authscore <- igraph::authority.score(g)$vector
+    eigenvalue <- igraph::eigen_centrality(g)$vector
+    graph.strength <- igraph::graph.strength(g)
+    centrality <- igraph::degree(g) # degree centality
     ## generate matrix table
     gDf <- as.data.frame(
       list(
@@ -230,10 +227,10 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
     ## define rownames
     gDf$keggPath <- row.names(gDf)
     ## add p scores statistics
-    pscores <- getPscores(object = analysis,
+    pscores <- FELLA::getPscores(object = analysis,
                           method = network.method)
     ## generateResultsTable
-    table <- generateResultsTable(object = analysis,
+    table <- FELLA::generateResultsTable(object = analysis,
                                   data = fellaData,
                                   method = network.method)
     ## p.adjust holm
@@ -249,7 +246,7 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
 
     ## lattice of annotated networks
     clust <- data.frame(cl = clp$membership)
-    rownames(clust) <- names(V(unionGraphUndir))
+    rownames(clust) <- names(igraph::V(unionGraphUndir))
     clust$desc <- table.plot$KEGG.name[match(rownames(clust), table.plot$keggPath)]
 
     ## coalesce cluster names
@@ -263,7 +260,7 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
     clust$desc <- sub(pat, '\\1', clust$desc)
     clust$desc <- gsub(":", "\n", clust$desc)
 
-    colors <- colorRampPalette(brewer.pal(9,"Set1"))(length(clust$cl))
+    colors <- colorRampPalette(RColorBrewer::brewer.pal(9,"Set1"))(length(clust$cl))
     colors <- paste0(colors, "50")
     Group <- gl(n= length(clust$cl), 1,
                 labels = clust$desc[clust$cl])
@@ -291,7 +288,7 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
          unionGraphUndir,
          alpha = 0.5,
          mark.border="black",
-         vertex.size = (V(unionGraphUndir)$input + 0.75) * 5,
+         vertex.size = (igraph::V(unionGraphUndir)$input + 0.75) * 5,
          vertex.label = NA,
          mark.col = mark.col,
          main = groups[i]
@@ -331,7 +328,7 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
         ),
         axis.title = element_text(size = 12, face = "bold")
       )  +
-      scale_fill_gradientn(colours = rev(brewer.pal(10, "RdYlBu")),
+      scale_fill_gradientn(colours = rev(RColorBrewer::brewer.pal(10, "RdYlBu")),
                            limits = c(0,8),
                            oob = scales::squish,
                            name = 'fold changes') +
@@ -342,7 +339,7 @@ enrichedNetwork <- function(species= c("hsa", "mmu"),
            y = "p value (-log10)",
            fill = "p value",
            size = "Pathway size") +
-      geom_text_repel(data = subset(table.plot,
+      ggrepel::geom_text_repel(data = subset(table.plot,
                                     centrality >= quantile(centrality, 0.75)[[1]]),
                       aes(label = KEGG.name))
 

@@ -26,19 +26,15 @@
 #' @param dpi dpi only applicable for png
 #'
 #' @import tidyverse
-#' @import here
-#' @import ggplot2
-#' @import ggrepel
-#' @import RColorBrewer
-#' @import ggpubr
+#' @importFrom here here
+#' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
-#' @import sjPlot
-#' @import KEGGREST
+#' @importFrom sjPlot save_plot
+#' @importFrom KEGGREST keggGet keggLink
 #' @import stats
-#' @import reshape2
-#' @import scales
-#' @import usethis
+#' @importFrom reshape2 dcast
+#' @importFrom scales squish
 #'
 #' @return output in defined path
 #'
@@ -62,7 +58,7 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
   save <- match.arg(save)
 
   if(is.null(ref.path)) {
-    ref.path = here()
+    ref.path = here::here()
     ifelse(!dir.exists(file.path(paste0(ref.path), "results")),
            dir.create(file.path(paste0(ref.path), "results")),
            FALSE)
@@ -102,7 +98,7 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
 
   ## identify pathways associated with obtained metabolites
 
-  keggTest <-keggLink("pathway",sort(unique(pathDat$keggID)))
+  keggTest <- KEGGREST::keggLink("pathway",sort(unique(pathDat$keggID)))
   rownames <- names(keggTest)
   keggTest <- as.data.frame(gsub("path:map","",keggTest))
   rownames<- gsub("^.*?:","",rownames)
@@ -111,7 +107,7 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
 
   ## identify reference pathways wrt species
 
-  keggRef <- keggLink("pathway", species)
+  keggRef <- KEGGREST::keggLink("pathway", species)
   # rownamesRef <- names(keggRef)  ## gene ID
   keggRef <- as.data.frame(gsub(paste0("path:",species),"",keggRef))
   # rownamesRef <- gsub("^.*?:","",rownamesRef) ## gene ID
@@ -134,7 +130,7 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
     select(contrast, keggPath, direction) %>%
     drop_na() %>%
     mutate(count = n()) %>%
-    dcast(contrast + keggPath ~ direction, value.var="count") %>%
+    reshape2::dcast(contrast + keggPath ~ direction, value.var="count") %>%
     replace(is.na(.),0) %>%
     ##  more than 15 metabolites in common
     filter((positive + negative) > common.mets) %>%
@@ -147,7 +143,7 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
   annotation <- data.frame()
   for (i in seq_along(unique(pathDatDas$keggPath))) {
     ## select kegg pathway name
-    keggPath <- keggGet(pathDatDas$keggPath[i])
+    keggPath <- KEGGREST::keggGet(pathDatDas$keggPath[i])
     ## add name to annotations
     annotation[i,"keggPath"] <- unname(keggPath[[1]]$ENTRY)
     annotation[i,"keggName"] <- unname(gsub("\\ - .*","",keggPath[[1]]$NAME))
@@ -219,9 +215,9 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
         ),
         axis.title = element_text(size = 12, face = "bold")
       ) +
-      scale_fill_gradientn(colours = rev(brewer.pal(10, "RdYlBu")),
+      scale_fill_gradientn(colours = rev(RColorBrewer::brewer.pal(10, "RdYlBu")),
                            limits = c(-2,2),
-                           oob = squish,
+                           oob = scales::squish,
                            name = 'fold changes') +
       guides(fill = guide_colourbar(barwidth = unit(0.3, "cm"),
                                     ticks.colour = "black",
@@ -233,7 +229,7 @@ diffAbundanceScore <- function(species=c("hsa", "mmu"),
     }
     ## save results
     if (save != "pdf") {
-      save_plot(
+      sjPlot::save_plot(
         paste(ref.path, "diffAbundenceScore",paste0("das_",groups[j],".",save), sep = "/"),
         fig = p,
         width = 22,

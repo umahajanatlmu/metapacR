@@ -11,9 +11,10 @@
 #'
 #' @import tidyverse
 #' @import utils
-#' @import emmeans
-#' @import nlme
+#' @importFrom emmeans emmeans ref_grid
+#' @importFrom nlme lme
 #' @import stats
+#' @import graphics
 #'
 #' @return Analyses results in list object.
 #'   The object contains the following:\itemize{
@@ -136,8 +137,8 @@ normalizeDat <- function (dataList,
 
       ## perform modeling for annova
       ##-----------------------------------------------------------------
-      anova.grid <- ref_grid(model)
-      anova.emmeans <- emmeans(model, stratifier)
+      anova.grid <- emmeans::ref_grid(model)
+      anova.emmeans <- emmeans::emmeans(model, stratifier)
       anova.model <- pairs(anova.emmeans)
       anova.results <- anova.model %>%
         as.data.frame() %>%
@@ -178,15 +179,15 @@ normalizeDat <- function (dataList,
 
       ## perform modeling
       ##-----------------------------------------------------------------\
-      model <- lme(formula,
+      model <- nlme::lme(formula,
                    random = random.effect,
                    data = data,
                    na.action = na.exclude)
 
       ## perform modeling for annova
       ##-----------------------------------------------------------------
-      anova.grid <- ref_grid(model)
-      anova.emmeans <- emmeans(model, stratifier)
+      anova.grid <- emmeans::ref_grid(model)
+      anova.emmeans <- emmeans::emmeans(model, stratifier)
       anova.model <- pairs(anova.emmeans)
       anova.results <- anova.model %>%
         as.data.frame() %>%

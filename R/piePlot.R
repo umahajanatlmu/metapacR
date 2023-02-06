@@ -14,15 +14,11 @@
 #' @param Other_metadata dataframe with metadata....it must have  columns: Metabolite, Metabolite_Name, Ontology_Class, Ontology_Subclass
 #'
 #' @import tidyverse
-#' @import here
-#' @import ggplot2
-#' @import ggrepel
-#' @import RColorBrewer
-#' @import ggpubr
+#' @importFrom here here
+#' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
-#' @import sjPlot
-#' @import usethis
+#' @importFrom sjPlot save_plot
 #'
 #' @return output in save format in defined path
 #'
@@ -45,14 +41,14 @@ piePlot <- function (data,
   save <- match.arg(save, c("pdf", "svg","png"))
 
   data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
-  
+
   if (data.type == "Others") {
     stopifnot(inherits(Other_metadata, "data.frame"))
     validObject(Other_metadata)
   }
 
   if(is.null(path)) {
-    path = here()
+    path = here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
            dir.create(file.path(paste0(path), "results")),
            FALSE)
@@ -69,11 +65,11 @@ piePlot <- function (data,
 
   if (data.type == "Metabolon") {
   data("chemicalMetadata")
-  metabolite.class <- force(chemicalMetadata) 
-  
+  metabolite.class <- force(chemicalMetadata)
+
   metabolite.class <- metabolite.class %>%
     mutate(across(everything(), as.character))
-  
+
   ## define metabolites
   data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
     data[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]])]
@@ -82,14 +78,14 @@ piePlot <- function (data,
     rename(c("MetaboliteClass" = "SUPER_PATHWAY",
              "MetaboliteName" = "CHEMICAL_NAME"))
   }
-  
+
   if (data.type == "MH") {
     data("chemicalMetadata_MH")
     metabolite.class <- force(chemicalMetadata_MH)
-    
+
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     data <- data %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
@@ -97,20 +93,20 @@ piePlot <- function (data,
                "lipidClass" = "ONTOLOGY2_NAME",
                "MetaboliteName" = "METABOLITE_NAME"))
   }
-  
+
   if (data.type == "Others") {
     metabolite.class <- Other_metadata
 
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
-    
+
     ## define metabolites
     data <- data %>%
       full_join(metabolite.class, by = "Metabolite") %>%
       rename(c("MetaboliteClass" = "Ontology_Class",
                "lipidClass" = "Ontology_Subclass",
                "MetaboliteName" = "Metabolite_Name"))
-    
+
   }
 
   ## prepare data
@@ -119,7 +115,7 @@ piePlot <- function (data,
     drop_na(MetaboliteClass) %>%
     group_by(contrast, MetaboliteClass) %>%
     summarise(Freq = length(MetaboliteClass)) %>%
-    arrange(MetaboliteClass) %>% 
+    arrange(MetaboliteClass) %>%
     ungroup()
 
   groups <- unique(datPie$contrast)
@@ -128,7 +124,7 @@ piePlot <- function (data,
   colorsOntologyOne <-
     data.frame(
       MetaboliteClass = unique(datPie$MetaboliteClass),
-      color = colorRampPalette(brewer.pal(9, "Set1"))(length(
+      color = colorRampPalette(RColorBrewer::brewer.pal(9, "Set1"))(length(
         unique(datPie$MetaboliteClass)))
     )
   ## match colors
@@ -175,7 +171,7 @@ piePlot <- function (data,
     }
 
     if (save != "pdf") {
-      save_plot(filename = paste(here(), "piePlots", paste0(groups[i], ".", save), sep = "/"),
+      sjPlot::save_plot(filename = paste(here(), "piePlots", paste0(groups[i], ".", save), sep = "/"),
                 fig = p,
                 width = fig.width,
                 height = fig.height,
@@ -207,16 +203,16 @@ piePlot <- function (data,
       group_by(contrast, lipid.class) %>%
       summarise(Freq = length(lipid.class)) %>%
       arrange(lipid.class) %>%
-      ungroup() 
-    } else 
+      ungroup()
+    } else
       datPie.lipid <- data %>%
         filter(adj.P.Val < cutoff) %>%
         drop_na(MetaboliteClass) %>%
         filter(grepl("Complex lipids", MetaboliteClass)) %>%
-      group_by(contrast, lipid.class) %>%
-      summarise(Freq = length(lipid.class)) %>%
-      arrange(lipid.class) %>%
-      ungroup() 
+        group_by(contrast, lipid.class) %>%
+        summarise(Freq = length(lipid.class)) %>%
+        arrange(lipid.class) %>%
+        ungroup()
 
 
     groups <- unique(datPie.lipid$contrast)
@@ -225,7 +221,7 @@ piePlot <- function (data,
     colorsOntologyOne <-
       data.frame(
         lipid.class = unique(datPie.lipid$lipid.class),
-        color = colorRampPalette(brewer.pal(9, "Set1"))(length(
+        color = colorRampPalette(RColorBrewer::brewer.pal(9, "Set1"))(length(
           unique(datPie.lipid$lipid.class)))
       )
     ## match colors
@@ -273,7 +269,7 @@ piePlot <- function (data,
 
       ## save plots
       if (save != "pdf") {
-        save_plot(filename = paste(here(), "pieplot_lipids", paste0(groups[i], ".", save), sep = "/"),
+        sjPlot::save_plot(filename = paste(here(), "pieplot_lipids", paste0(groups[i], ".", save), sep = "/"),
                   fig = p,
                   width = fig.width,
                   height = fig.height,

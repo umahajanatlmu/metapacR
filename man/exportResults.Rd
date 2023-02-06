@@ -4,12 +4,14 @@
 \alias{exportResults}
 \title{exportResults}
 \usage{
-exportResults(data, path = NULL)
+exportResults(data, path = NULL, filename = NULL)
 }
 \arguments{
 \item{data}{log fold changes data generated from normalizeDat function}
 
 \item{path}{saving path of the data}
+
+\item{filename}{name of the file}
 }
 \value{
 color coded result table in excel formant

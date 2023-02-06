@@ -6,13 +6,11 @@
 #' @param plotting.variable plotting grouping variable..should be 1
 #'
 #' @import tidyverse
-#' @import ropls
-#' @import umap
-#' @import Rtsne
-#' @import factoextra
-#' @import ggplot2
-#' @import RColorBrewer
-#' @import ggpubr
+#' @importFrom ropls opls
+#' @importFrom umap umap
+#' @importFrom Rtsne Rtsne
+#' @importFrom RColorBrewer brewer.pal
+#' @importFrom ggpubr ggarrange
 #' @import utils
 #' @import stats
 #' @import graphics
@@ -127,7 +125,7 @@ compareDiamReduction <- function (dataList,
       ),
       axis.title = element_text(size = 12, face = "bold")
     ) +
-    scale_color_manual(values = brewer.pal(nVar,
+    scale_color_manual(values = RColorBrewer::brewer.pal(nVar,
                                            "Set1")) +
     theme(legend.position = "right") +
     ggtitle("PCA")
@@ -136,7 +134,7 @@ compareDiamReduction <- function (dataList,
   # perform opls
   ##----------------------------------------------------------------
   ## perform opls
-  opls <-  opls(dataNumeric,
+  opls <-  ropls::opls(dataNumeric,
                 scaleC = "none",
                 y = metadata.data[[group]],
                 log10L = FALSE,
@@ -175,7 +173,7 @@ compareDiamReduction <- function (dataList,
       ),
       axis.title = element_text(size = 12, face = "bold")
     ) +
-    scale_color_manual(values = brewer.pal(nVar,"Set1")) +
+    scale_color_manual(values = RColorBrewer::brewer.pal(nVar,"Set1")) +
     theme(legend.position = "right") +
     ggtitle(opls@typeC) +
     xlab(paste("t1 =", opls@modelDF[1,1]*100, "%", "[between groups variation] ", sprintf('\u2192'))) +
@@ -202,7 +200,7 @@ compareDiamReduction <- function (dataList,
   print("Performing t-SNE....")
   # perform t-SNE plus PCA
   ##----------------------------------------------------------------
-  rtsne.pca <- Rtsne(dataNumeric)
+  rtsne.pca <- Rtsne::Rtsne(dataNumeric)
 
   ## plot rtsne
   plot.dat.rtsne.pca <- as.data.frame(rtsne.pca$Y)
@@ -230,7 +228,7 @@ compareDiamReduction <- function (dataList,
       ),
       axis.title = element_text(size = 12, face = "bold")
     ) +
-    scale_color_manual(values = brewer.pal(nVar,
+    scale_color_manual(values = RColorBrewer::brewer.pal(nVar,
                                            "Set1")) +
     theme(legend.position = "right") +
     ggtitle("PCA + tSNE")
@@ -266,7 +264,7 @@ compareDiamReduction <- function (dataList,
       ),
       axis.title = element_text(size = 12, face = "bold")
     ) +
-    scale_color_manual(values = brewer.pal(nVar,
+    scale_color_manual(values = RColorBrewer::brewer.pal(nVar,
                                            "Set1")) +
     theme(legend.position = "right") +
     ggtitle("tSNE")
@@ -274,7 +272,7 @@ compareDiamReduction <- function (dataList,
   print("Performing UMAP....")
   # perform umap
   ##----------------------------------------------------------------
-  umap <- umap(dataNumeric)
+  umap <- umap::umap(dataNumeric)
 
   ## plot rtsne
   plot.dat.umap <- as.data.frame(umap$layout)
@@ -300,12 +298,12 @@ compareDiamReduction <- function (dataList,
       ),
       axis.title = element_text(size = 12, face = "bold")
     ) +
-    scale_color_manual(values = brewer.pal(nVar,
+    scale_color_manual(values = RColorBrewer::brewer.pal(nVar,
                                            "Set1")) +
     theme(legend.position = "right") +
     ggtitle("UMAP")
 
-  p <- ggarrange(p_pca,
+  p <- ggpubr::ggarrange(p_pca,
                  p_opls,
                  p_rtsne ,
                  p_rtsne.pca,
