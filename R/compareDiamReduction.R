@@ -316,12 +316,12 @@ compareDiamReduction <- function (dataList,
                  legend = "bottom")
 
   return(list(plot = p,
-              pca = pca, 
+              pca = pca,
               opls = opls,
               tsne = rtsne,
               tsne_pca= rtsne.pca,
               kmeans=kmeans,
-              umap = plot=p_umap))
+              umap = p_umap))
 
 }
 
