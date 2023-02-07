@@ -138,7 +138,7 @@ findMarkers <- function(results,
 
     for (p in unique(roc.results.cutoff$contrast)) {
       dist <- roc.results.cutoff %>%
-        filter(contrast == p) %>%
+        dplyr::filter(contrast %in% p) %>%
         arrange(desc(auc)) %>%
         slice(1:nmarkers) %>%
         mutate(
@@ -338,7 +338,7 @@ findMarkers <- function(results,
 
     p.heatmap <- pheatmap::pheatmap(n.data.heatmap,
       scale = "row",
-      color = colorRampPalette(rev(brewer.pal(10, "RdYlBu")))(100),
+      color = colorRampPalette(rev(RColorBrewer::brewer.pal(10, "RdYlBu")))(100),
       cluster_rows = TRUE,
       cluster_cols = TRUE,
       show_rownames = FALSE,
