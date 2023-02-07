@@ -26,7 +26,7 @@ plotSplitViolin <- function(dataList,
 
   if (is.null(grouping.variable)) {
     stop("group variable is missing....please provide atleast one grouping variable")
-  } else if (length(grouping.variables) != 1) {
+  } else if (length(grouping.variable) != 1) {
     stop("multiple group variables available....provide only one group variable")
   }
 
