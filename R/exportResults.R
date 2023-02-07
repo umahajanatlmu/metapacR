@@ -16,7 +16,7 @@
 
 exportResults <- function(data, path = NULL, filename = NULL) {
   stopifnot(inherits(data, "data.frame"))
-  validObject(dataList)
+  validObject(data)
 
   ## create result tables groups
   groups <- unique(data$contrast)
