@@ -71,7 +71,7 @@ findMarkers <- function(results,
   ## ----------------------------------------------------------------
   select.columns <- group
   metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns,
-    drop = FALSE
+                                 drop = FALSE
   ]
 
   ## define factors
@@ -207,9 +207,9 @@ findMarkers <- function(results,
 
     ## row dendrogram
     mat.row <- results %>%
-      filter(Metabolite %in% selected.metabolites$metabolite) %>%
+      dplyr::filter(Metabolite %in% selected.metabolites$metabolite) %>%
       mutate(contrast = sub(" - .*", "", contrast)) %>%
-      filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
+      dplyr::filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
       dplyr::select(contrast, Metabolite, logFC) %>%
       pivot_wider(names_from = contrast, values_from = logFC) %>%
       column_to_rownames("Metabolite") %>%
@@ -228,9 +228,9 @@ findMarkers <- function(results,
 
     ## cloumn dendrogram
     mat.col <- results %>%
-      filter(Metabolite %in% selected.metabolites$metabolite) %>%
+      dplyr::filter(Metabolite %in% selected.metabolites$metabolite) %>%
       mutate(contrast = sub(" - .*", "", contrast)) %>%
-      filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
+      dplyr::filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
       dplyr::select(contrast, Metabolite, logFC) %>%
       pivot_wider(names_from = Metabolite, values_from = logFC) %>%
       column_to_rownames("contrast") %>%
@@ -248,14 +248,14 @@ findMarkers <- function(results,
 
     p.dot <- results %>%
       mutate(contrast = sub(" - .*", "", contrast)) %>%
-      filter(Metabolite %in% selected.metabolites$metabolite) %>%
+      dplyr::filter(Metabolite %in% selected.metabolites$metabolite) %>%
       mutate(Metabolite = factor(Metabolite,
-        levels = clust.row$labels[clust.row$order]
+                                 levels = clust.row$labels[clust.row$order]
       )) %>%
       mutate(contrast = factor(contrast,
-        levels = clust.col$labels[clust.col$order]
+                               levels = clust.col$labels[clust.col$order]
       )) %>%
-      filter(
+      dplyr::filter(
         adj.P.Val < p.value.cutoff,
         logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)
       ) %>%
@@ -312,7 +312,7 @@ findMarkers <- function(results,
       group_by(contrast) %>%
       arrange(desc(auc)) %>%
       slice(1:nmarkers) %>%
-      filter(auc > auc.threshould) %>%
+      dplyr::filter(auc > auc.threshould) %>%
       ungroup() %>%
       select(metabolite)
 
@@ -337,14 +337,14 @@ findMarkers <- function(results,
       list(group = panel.col)
 
     p.heatmap <- pheatmap::pheatmap(n.data.heatmap,
-      scale = "row",
-      color = colorRampPalette(rev(RColorBrewer::brewer.pal(10, "RdYlBu")))(100),
-      cluster_rows = TRUE,
-      cluster_cols = TRUE,
-      show_rownames = FALSE,
-      show_colnames = FALSE,
-      annotation_row = c.data.heatmap,
-      annotation_colors = combo.cols
+                                    scale = "row",
+                                    color = colorRampPalette(rev(RColorBrewer::brewer.pal(10, "RdYlBu")))(100),
+                                    cluster_rows = TRUE,
+                                    cluster_cols = TRUE,
+                                    show_rownames = FALSE,
+                                    show_colnames = FALSE,
+                                    annotation_row = c.data.heatmap,
+                                    annotation_colors = combo.cols
     )
   } else {
     p.heatmap <- NULL
@@ -354,8 +354,8 @@ findMarkers <- function(results,
 
   for (ll in unique(roc.results$contrast)) {
     roc.results.cutoff.list <- roc.results %>%
-      filter(contrast == ll) %>%
-      filter(auc > auc.threshould) %>%
+      dplyr::filter(contrast == ll) %>%
+      dplyr::filter(auc > auc.threshould) %>%
       arrange(desc(auc)) %>%
       select(metabolite)
 
