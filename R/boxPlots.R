@@ -84,7 +84,7 @@ boxPlots <- function(dataList,
 
   ## convert to numeric
   data <- data %>%
-    select_if(names(.) == paste0(group) | sapply(., is.numeric)) %>%
+    #select_if(names(.) == paste0(group) | sapply(., is.numeric)) %>%
     mutate_all(~ ifelse(is.nan(.), NA, .)) %>%
     select_if(~ !all(is.na(.)))
 
