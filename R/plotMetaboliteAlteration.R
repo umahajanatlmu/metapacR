@@ -119,14 +119,14 @@ plotMetaboliteAlteration <- function(data,
 
   ## prepare distibution data
   dat <- data %>%
-    filter(adj.P.Val < cutoff) %>%
+    dplyr::filter(adj.P.Val < cutoff) %>%
     drop_na(MetaboliteClass) %>%
     mutate(foldChanges = log2(logFC)) %>%
     select(contrast, MetaboliteClass, logFC) %>%
     mutate(trend = ifelse(log2(logFC) > 1, "up",
       ifelse(log2(logFC) <= -1, "down", "unchanged")
     )) %>%
-    filter(trend != "unchanged") %>%
+    dplyr::filter(trend != "unchanged") %>%
     group_by(contrast, MetaboliteClass, trend) %>%
     summarise(FreqClass = length(trend)) %>%
     mutate(FreqClass = ifelse(trend == "down", -1 * FreqClass, FreqClass)) %>%
@@ -219,7 +219,7 @@ plotMetaboliteAlteration <- function(data,
       dat <- data %>%
         drop_na(MetaboliteClass) %>%
         mutate(foldChanges = log2(logFC)) %>%
-        filter(MetaboliteClass == "Complex lipids") %>%
+        dplyr::filter(MetaboliteClass == "Complex lipids") %>%
         mutate(lipidClass = ifelse(grepl("^TAG", Metabolite),
           gsub("TAG.*", "TAG", Metabolite),
           gsub("[(].*", "", Metabolite)
@@ -228,7 +228,7 @@ plotMetaboliteAlteration <- function(data,
         mutate(trend = ifelse(log2(logFC) > 1, "up",
           ifelse(log2(logFC) <= -1, "down", "unchanged")
         )) %>%
-        filter(trend != "unchanged") %>%
+        dplyr::filter(trend != "unchanged") %>%
         group_by(contrast, lipidClass, trend) %>%
         summarise(FreqClass = length(trend)) %>%
         mutate(FreqClass = ifelse(trend == "down", -1 * FreqClass, FreqClass)) %>%
@@ -238,12 +238,12 @@ plotMetaboliteAlteration <- function(data,
       dat <- data %>%
         drop_na(MetaboliteClass) %>%
         mutate(foldChanges = log2(logFC)) %>%
-        filter(grepl("Complex lipids", MetaboliteClass)) %>%
+        dplyr::filter(grepl("Complex lipids", MetaboliteClass)) %>%
         select(contrast, lipidClass, logFC) %>%
         mutate(trend = ifelse(log2(logFC) > 1, "up",
           ifelse(log2(logFC) <= -1, "down", "unchanged")
         )) %>%
-        filter(trend != "unchanged") %>%
+        dplyr::filter(trend != "unchanged") %>%
         group_by(contrast, lipidClass, trend) %>%
         summarise(FreqClass = length(trend)) %>%
         mutate(FreqClass = ifelse(trend == "down", -1 * FreqClass, FreqClass)) %>%
