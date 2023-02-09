@@ -226,7 +226,7 @@ distributionPlot <- function(data,
       dat <- dat %>%
         drop_na(MetaboliteClass) %>%
         mutate(foldChanges = log2(logFC)) %>%
-        filter(MetaboliteClass == "Complex lipids") %>%
+        dplyr::filter(MetaboliteClass == "Complex lipids") %>%
         mutate(lipidClass = ifelse(grepl("^TAG", Metabolite),
           gsub("TAG.*", "TAG", Metabolite),
           gsub("[(].*", "", Metabolite)
@@ -235,7 +235,7 @@ distributionPlot <- function(data,
       dat <- dat %>%
         drop_na(MetaboliteClass) %>%
         mutate(foldChanges = log2(logFC)) %>%
-        filter(grepl("Complex lipids", MetaboliteClass))
+        dplyr::filter(grepl("Complex lipids", MetaboliteClass))
     }
 
 
