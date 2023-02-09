@@ -1,0 +1,1315 @@
+MET_CHEM_NO,UNIQUE_ANALYTE_ID,METABOLITE_NAME,ONTOLOGY2_NAME,ONTOLOGY1_NAME,CAS_UID,DICT_STRUCTURE_ELUCIDATION_ID,KEGG_ID
+18100043,10043,Arginine,"Amino acids, basic",Amino acids,CAS-74-79-3,1,C00062
+18100051,10051,beta-Carotene,Carotenoids,"Vitamins, cofactors and related",CAS-7235-40-7,1,C02094
+18100056,10056,Canthaxanthin,Alimentary,Microbiome or alimentary,CAS-514-78-3,1,C08583
+18100058,10058,Cryptoxanthin,Alimentary,Microbiome or alimentary,CAS-472-70-8,1,C08591
+18100072,10072,"gamma-Tocopherol (additional: 2,3-Dimethyl-5-phytylquinol, beta-Tocopherol)",Tocopherols and related,"Vitamins, cofactors and related",CAS-54-28-4,1,C02483
+18100120,10120,"Coenzyme Q10, oxidized",Redox-carrier and related,"Vitamins, cofactors and related",CAS-303-98-0,1,C11378
+18100140,10140,"Sorbitol (additional: Galactitol, Mannitol)",Polyols,Carbohydrates and related,CAS-50-70-4,1,C00794
+18100156,10156,Aspartate (additional: Iminodiacetic acid),"Amino acids, acidic",Amino acids,CAS-56-84-8,1,C00049
+18100159,10159,Citrulline,Urea cycle and related,Amino acids related,CAS-372-75-8,1,C00327
+18100212,10212,"Glucose-6-phosphate (additional: Fructose-6-phosphate, myo-Inositol-1-phosphate, myo-Inositol-2-phosphate, myo-Inositol-4-phosphate)",Glycolysis/Gluconeogenesis,Energy metabolism and related,CAS-56-73-5,1,C00092
+18100225,10225,Pantothenic acid,Acyl-carriers and related,"Vitamins, cofactors and related","CAS-79-83-4 , CAS-137-08-6",1,C00864
+18100230,10230,Taurine,"Amino acids, S-containing",Amino acids,CAS-107-35-7,1,C00245
+18100230,10230,Taurine,"Amino acids, S-containing",Amino acids,CAS-107-35-7,1,C00245
+18100275,10275,Salicylic acid,Miscellaneous,Miscellaneous,CAS-69-72-7,1,C00805
+18100281,10281,"Coenzyme Q9, oxidized",Redox-carrier and related,"Vitamins, cofactors and related",CAS-303-97-9,1,C01967
+18100289,10289,Cortisol,Steroids and related,"Hormones, signal substances and related",CAS-50-23-7,1,C00735
+18100289,10289,Cortisol,Steroids and related,"Hormones, signal substances and related",CAS-50-23-7,1,C00735
+18100292,10292,Cholic acid,Primary bile acids,Bile acids,CAS-81-25-4,1,C00695
+18100295,10295,Glucuronic acid,Sugar acids,Carbohydrates and related,"CAS-528-16-5 , CAS-6556-12-3",1,C00191
+18100307,10307,Pregnenolone sulfate,Steroids and related,"Hormones, signal substances and related",CAS-1247-64-9,1,C18044
+18100321,10321,Creatinine,Creatine metabolism,Amino acids related,CAS-60-27-5,1,C00791
+18100325,10325,Creatine,Creatine metabolism,Amino acids related,CAS-57-00-1,1,C00300
+18100327,10327,Kynurenic acid,Tryptophan metabolism,Amino acids related,CAS-492-27-3,1,C01717
+18100328,10328,Nicotinamide,Redox-carrier and related,"Vitamins, cofactors and related",CAS-98-92-0,1,C00153
+18100397,10397,Glycochenodeoxycholic acid (additional: Glycodeoxycholic acid),Primary bile acids,Bile acids,CAS-640-79-9,1,C05466
+18100397,10397,Glycochenodeoxycholic acid (additional: Glycodeoxycholic acid),Primary bile acids,Bile acids,CAS-640-79-9,1,C05466
+18100401,10401,"Cholesterol, free",Cholesterol and related,"Complex lipids, fatty acids and related",CAS-57-88-5,1,C00187
+18100401,10401,"Cholesterol, free",Cholesterol and related,"Complex lipids, fatty acids and related",CAS-57-88-5,1,C00187
+18100402,10402,Cholesterylester C16:0,Cholesterylesters,"Complex lipids, fatty acids and related",CAS-601-34-3,1,C11251
+18100404,10404,Cholesterylester C18:1,Cholesterylesters,"Complex lipids, fatty acids and related",CAS-303-43-5,1,C14641
+18100405,10405,Cholesterylester C18:2,Cholesterylesters,"Complex lipids, fatty acids and related",CAS-604-33-1,1,C15441
+18100406,10406,Cholesterylester C20:4,Cholesterylesters,"Complex lipids, fatty acids and related",CAS-604-34-2,1,C02530
+18100406,10406,Cholesterylester C20:4,Cholesterylesters,"Complex lipids, fatty acids and related",CAS-604-34-2,1,C02530
+18100407,10407,Uridine,Pyrimidine metabolism,Nucleobases and related,CAS-58-96-8,1,C00299
+18100413,10413,Glycocholic acid,Primary bile acids,Bile acids,CAS-475-31-0,1,C01921
+18100416,10416,Taurochenodeoxycholic acid (additional: Taurodeoxycholic acid),Primary bile acids,Bile acids,CAS-516-35-8,1,C05465
+18100482,10482,Tetradecanoylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-25597-07-3,1,NA
+18100483,10483,Hexadecanoylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-2364-67-2,1,C02990
+18100484,10484,Octadecanoylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-1976-27-8,1,NA
+18100498,10498,Oleoylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-13962-05-5,1,NA
+18100499,10499,Dodecanoylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-25518-54-1,1,NA
+18100499,10499,Dodecanoylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-25518-54-1,1,NA
+18100500,10500,Hexadecenoylcarnitine,Fatty acid oxidation,Energy metabolism and related,NA,2,NA
+18100501,10501,Hydroxyhexadecenoylcarnitine,Fatty acid oxidation,Energy metabolism and related,NA,2,NA
+18100502,10502,Hydroxyhexadecanoylcarnitine,Fatty acid oxidation,Energy metabolism and related,NA,2,NA
+18105125,10125,Carnitine,Fatty acid oxidation,Energy metabolism and related,CAS-541-15-1,1,C00318
+18105175,10175,Choline,Fatty acid oxidation/synthesis,Energy metabolism and related,CAS-123-41-1,1,C00114
+18105305,10305,"N,N-Dimethylarginine (ADMA)","Other hormones, signal substances and related","Hormones, signal substances and related",CAS-30315-93-6,1,C03626
+18105331,10331,Kynurenine,Tryptophan metabolism,Amino acids related,CAS-2922-83-0,1,C00328
+18105394,10394,"Guanosine monophosphate, cyclic (cGMP)","Other hormones, signal substances and related","Hormones, signal substances and related",CAS-7665-99-8,1,C00942
+18105418,15418,Trimethylamine-N-oxide (TMAO),Microbiome,Microbiome or alimentary,CAS-1184-78-7,1,C01104
+18105421,10421,2-Methylserine,Amino acid conjugates,Amino acids related,CAS-5424-29-3,1,C02115
+18105422,10422,Pipecolic acid,Amino acid metabolites,Amino acids related,CAS-3105-95-1,1,C00408
+18105423,10423,Proline betaine,Methyl cycle,Amino acids related,CAS-471-87-4,1,C10172
+18105426,10426,Methionine sulfoxide,Amino acid metabolites,Amino acids related,CAS-62697-73-8,1,NA
+18105428,10428,Furoylglycine,Alimentary,Microbiome or alimentary,CAS-5657-19-2,1,NA
+18105429,10429,1-Methylhistidine (additional: 3-Methylhistidine),Amino acid conjugates,Amino acids related,"CAS-332-80-9 , CAS-15507-76-3",1,C01152
+18105433,10433,epsilon-Acetyllysine,Amino acid conjugates,Amino acids related,CAS-692-04-6,1,NA
+18105434,10434,5-Hydroxy-3-indoleacetic acid (5-HIAA),Serotonin and serotonin metabolism,"Hormones, signal substances and related",CAS-54-16-0,1,NA
+18105440,10440,Ergothioneine,Alimentary,Microbiome or alimentary,CAS-497-30-3,1,C05570
+18105443,10443,5-Methylcytidine,Pyrimidine metabolism,Nucleobases and related,"CAS-2140-61-6 , CAS-6829-31-8",1,C03997
+18105444,10444,Phenylacetylglutamine,Amino acid conjugates,Amino acids related,CAS-28047-15-6,1,C04148
+18105445,10445,1-Methyladenosine,Purine metabolism,Nucleobases and related,CAS-15763-06-1,1,C02494
+18105446,10446,N-Acetylcytidine,Pyrimidine metabolism,Nucleobases and related,CAS-3768-18-1,1,NA
+18105448,10448,7-Methylguanosine,Purine metabolism,Nucleobases and related,CAS-20244-86-4,1,C20674
+18105450,10450,Biliverdin,Heme metabolism,Miscellaneous,CAS-114-25-0,1,C00500
+18105451,10451,Betaine,Methyl cycle,Amino acids related,CAS-107-43-7,1,C00719
+18105452,10452,O-Acetylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-3040-38-8,1,C02571
+18105454,10454,Carnosine,Dipeptides,Amino acids related,CAS-305-84-0,1,C00386
+18105493,10493,Propionylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-17298-37-2,1,C03017
+18105494,10494,Butyrylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-30951-11-2,1,C02862
+18105495,10495,Hexanoylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-6418-78-6,1,NA
+18105496,10496,Octanoylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-25243-95-2,1,C02838
+18105497,10497,Dodecanoylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-25518-54-1,1,NA
+18105497,10497,Dodecanoylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-25518-54-1,1,NA
+18105506,10506,Tiglylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-64191-86-2,2,NA
+18105507,10507,Valerylcarnitine (additional: Isovalerylcarnitine),Fatty acid oxidation,Energy metabolism and related,NA,1,C20826
+18105508,10508,Malonylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-853728-01-5,3,NA
+18105509,10509,Methylmalonylcarnitine,Fatty acid oxidation,Energy metabolism and related,NA,2,NA
+18105510,10510,Hydroxypentanoylcarnitine,Fatty acid oxidation,Energy metabolism and related,NA,2,NA
+18105511,10511,Unknown polar (18105511),Unknown polar,Unknown,NA,4,NA
+18105512,10512,Octenoylcarnitine,Fatty acid oxidation,Energy metabolism and related,NA,2,NA
+18105513,10513,Decenoylcarnitine,Fatty acid oxidation,Energy metabolism and related,NA,2,NA
+18105514,10514,Decanoylcarnitine,Fatty acid oxidation,Energy metabolism and related,CAS-1492-27-9,1,NA
+18105515,10515,Tetradecadienoylcarnitine,Fatty acid oxidation,Energy metabolism and related,NA,2,NA
+18105516,10516,Tetradecenoylcarnitine,Fatty acid oxidation,Energy metabolism and related,NA,2,NA
+18105517,10517,Hydroxytetradecanoylcarnitine,Fatty acid oxidation,Energy metabolism and related,NA,2,NA
+28100002,20002,"Glycerolipids, total",Fatty alcohols,"Complex lipids, fatty acids and related",NA,1,C00093
+28100003,20003,Palmitic acid (C16:0),"Fatty acids, saturated","Complex lipids, fatty acids and related",CAS-57-10-3,1,C00249
+28100004,20004,"Linoleic acid (C18:cis[9,12]2)","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related",CAS-60-33-3,1,C01595
+28100005,20005,"Linolenic acid (C18:cis[9,12,15]3)","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related",CAS-463-40-1,1,C03242
+28100006,20006,Oleic acid (C18:cis[9]1),"Fatty acids, mono-unsaturated","Complex lipids, fatty acids and related",CAS-112-80-1,1,C00712
+28100007,20007,Stearic acid (C18:0),"Fatty acids, saturated","Complex lipids, fatty acids and related",CAS-57-11-4,1,C01530
+28100011,20011,"Arachidonic acid (C20:cis[5,8,11,14]4)","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related","CAS-506-32-1 , CAS-6610-25-9",1,C00219
+28100012,20012,"Eicosapentaenoic acid (C20:cis[5,8,11,14,17]5)","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related",CAS-10417-94-4,1,C06428
+28100012,20012,"Eicosapentaenoic acid (C20:cis[5,8,11,14,17]5)","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related",CAS-10417-94-4,1,C06428
+28100015,20015,"Docosahexaenoic acid (C22:cis[4,7,10,13,16,19]6)","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related","CAS-6217-54-5 , CAS-6217-54-5",1,C06429
+28100018,20018,alpha-Tocopherol,Tocopherols and related,"Vitamins, cofactors and related",CAS-59-02-9,1,C02477
+28100019,20019,"Cholesterol, total",Cholesterol and related,"Complex lipids, fatty acids and related",CAS-57-88-5,1,C00187
+28100021,20021,beta-Sitosterol,Alimentary,Microbiome or alimentary,CAS-83-46-5,1,C01753
+28100026,20026,Palmitoleic acid (C16:cis[9]1),"Fatty acids, mono-unsaturated","Complex lipids, fatty acids and related",CAS-373-49-9,1,C08362
+28100041,20041,2-Hydroxypalmitic acid (C16:0),"Fatty acids, saturated","Complex lipids, fatty acids and related",CAS-764-67-0,1,NA
+28100044,20044,"Phosphoglycerides, total",Phospholipid metabolites,"Complex lipids, fatty acids and related",NA,1,NA
+28100045,20045,"Galactolipids, total",Glycolipids,"Complex lipids, fatty acids and related",NA,1,C02686
+28100052,20052,Lignoceric acid (C24:0),"Fatty acids, saturated","Complex lipids, fatty acids and related",CAS-557-59-5,1,C08320
+28100053,20053,Campesterol,Alimentary,Microbiome or alimentary,CAS-474-62-4,1,C01789
+28100056,20056,Hexadecanol,Fatty alcohols,"Complex lipids, fatty acids and related",CAS-36653-82-4,1,C00823
+28100067,20067,Heptadecenoic acid (C17:cis[10]1),"Fatty acids, mono-unsaturated","Complex lipids, fatty acids and related",CAS-29743-97-3,1,C16536
+28100068,20068,Heptadecanoic acid (C17:0),"Fatty acids, saturated","Complex lipids, fatty acids and related",CAS-506-12-7,1,NA
+28100069,20069,Eicosanoic acid (C20:0),"Fatty acids, saturated","Complex lipids, fatty acids and related",CAS-506-30-9,1,C06425
+28100070,20070,Eicosaenoic acid (C20:cis[11]1),"Fatty acids, mono-unsaturated","Complex lipids, fatty acids and related",CAS-5561-99-9,1,NA
+28100072,20072,Tricosanoic acid (C23:0),"Fatty acids, saturated","Complex lipids, fatty acids and related","CAS-2433-96-7 , CAS-2433-96-7",1,NA
+28100086,20086,Phospholipids,Phospholipid metabolites,"Complex lipids, fatty acids and related",NA,1,C00865
+28100095,20095,Lauric acid (C12:0),"Fatty acids, saturated","Complex lipids, fatty acids and related",CAS-143-07-7,1,C02679
+28100099,20099,Unknown lipid (28100099),Unknown lipid,Unknown,NA,4,NA
+28100105,20105,Myristic acid (C14:0),"Fatty acids, saturated","Complex lipids, fatty acids and related",CAS-544-63-8,1,C06424
+28100107,20107,6-Aminohexanoic acid,Miscellaneous,Miscellaneous,CAS-60-32-2,1,C02378
+28100122,20122,"Glucolipids, total",Glycolipids,"Complex lipids, fatty acids and related",NA,1,NA
+28100148,20148,"2-Phosphatidyl-myo-inositols, total",Phosphatidylinositols,"Complex lipids, fatty acids and related",NA,1,C01194
+28100152,20152,Behenic acid (C22:0),"Fatty acids, saturated","Complex lipids, fatty acids and related",CAS-112-85-6,1,C08281
+28100158,20158,"4-Hydroxysphinganine (t18:0, Phytosphingosine), total",Sphingolipids,"Complex lipids, fatty acids and related",CAS-554-62-1,1,C12144
+28100159,20159,Nervonic acid (C24:cis[15]1),"Fatty acids, mono-unsaturated","Complex lipids, fatty acids and related",CAS-506-37-6,1,C08323
+28100428,20428,Urea,Urea cycle and related,Amino acids related,CAS-57-13-6,1,C00086
+28100470,20470,Isopalmitic acid (C16:0),"Fatty acids, branched","Complex lipids, fatty acids and related","CAS-5129-60-2 , CAS-32844-67-0",1,NA
+28100474,20474,14-Methylhexadecanoic acid,"Fatty acids, branched","Complex lipids, fatty acids and related",CAS-5918-29-6,1,C01607
+28100477,20050,"gamma-Linolenic acid (C18:cis[6,9,12]3)","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related",CAS-506-26-3,1,C06426
+28100482,20482,"dihomo-gamma-Linolenic acid (C20:cis[8,11,14]3)","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related",CAS-1783-84-2,1,C03242
+28100489,20489,"3-O-Methylsphingosine (d18:1) (additional: Sphingolipids, erythro-Sphingosine (d18:1), threo-Sphingosine (d18:1))",Sphingolipids,"Complex lipids, fatty acids and related",NA,2,C00319
+28100490,20490,"Docosapentaenoic acid (C22:cis[4,7,10,13,16]5)","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related",CAS-25182-74-5,1,C16513
+28100491,20491,threo-Sphingosine (d18:1) (additional: Sphingolipids),Sphingolipids,"Complex lipids, fatty acids and related",NA,1,C00319
+28100493,20493,"Docosapentaenoic acid (C22:cis[7,10,13,16,19]5)","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related",CAS-24880-45-3,1,C16513
+28100494,20494,"5-O-Methylsphingosine (d18:1) (additional: Sphingolipids, erythro-Sphingosine (d18:1), threo-Sphingosine (d18:1))",Sphingolipids,"Complex lipids, fatty acids and related",NA,2,C00319
+28100495,20495,erythro-Sphingosine (d18:1) (additional: Sphingolipids),Sphingolipids,"Complex lipids, fatty acids and related",CAS-123-78-4,1,C00319
+28100497,20497,Erucic acid (C22:cis[13]1),"Fatty acids, mono-unsaturated","Complex lipids, fatty acids and related",CAS-112-86-7,1,C08316
+28100519,20519,"conjugated Linoleic acid (C18:trans[9,11]2) (additional: conjugated Linoleic acid (C18:cis[9]trans[11]2))","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related",CAS-1839-11-8,1,NA
+28100521,20521,"Cholesta-2,4,6-triene",Cholesterol and related,"Complex lipids, fatty acids and related",NA,1,NA
+28100522,20522,Cholestenol No 02,Cholesterol and related,"Complex lipids, fatty acids and related",NA,3,C01189
+28100672,20012,"Eicosapentaenoic acid (C20:cis[5,8,11,14,17]5)","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related",CAS-10417-94-4,1,C06428
+28100672,20012,"Eicosapentaenoic acid (C20:cis[5,8,11,14,17]5)","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related",CAS-10417-94-4,1,C06428
+28100676,20676,Unknown lipid (28100676),Unknown lipid,Unknown,NA,4,NA
+28100852,20852,"Phosphatidylserines, total",Phosphatidylserines,"Complex lipids, fatty acids and related",NA,1,C02737
+28100972,20972,Unknown lipid (28100972),Unknown lipid,Unknown,NA,4,NA
+28101194,21194,"Phosphatidyl-myo-inositols, total",Phosphatidylinositols,"Complex lipids, fatty acids and related",NA,1,NA
+28101283,21283,Unknown lipid (28101283),Unknown lipid,Unknown,NA,4,NA
+28101287,21287,Unknown lipid (28101287),Unknown lipid,Unknown,NA,4,NA
+28101289,21289,erythro-Dihydrosphingosine (d18:0),Sphingolipids,"Complex lipids, fatty acids and related","CAS-764-22-7 , CAS-15639-50-6",1,C00836
+28101294,21294,Unknown lipid (28101294),Unknown lipid,Unknown,NA,4,NA
+28101310,21310,Unknown lipid (28101310),Unknown lipid,Unknown,NA,4,NA
+28101321,21321,erythro-Dihydrosphingosine (d16:0),Sphingolipids,"Complex lipids, fatty acids and related",NA,1,NA
+28101323,21323,"Cholesta-2,4-dien",Cholesterol and related,"Complex lipids, fatty acids and related",NA,2,NA
+28101326,21326,Caffeine,Alimentary,Microbiome or alimentary,CAS-58-08-2,1,C07481
+28101329,21312,Unknown lipid (28101329),Unknown lipid,Unknown,NA,4,NA
+28101367,21367,Unknown lipid (28101367),Unknown lipid,Unknown,NA,4,NA
+28101389,21389,15-Methylhexadecanoic acid,"Fatty acids, branched","Complex lipids, fatty acids and related",NA,2,C01607
+28101391,21391,erythro-Sphingosine-1-phosphate (d18:1),Sphingolipids,"Complex lipids, fatty acids and related",CAS-26993-30-6,1,NA
+28101396,21396,Unknown lipid (28101396),Unknown lipid,Unknown,NA,4,NA
+28101399,21399,Unknown lipid (28101399),Unknown lipid,Unknown,NA,4,NA
+28101443,21443,Unknown lipid (28101443),Unknown lipid,Unknown,NA,4,NA
+28101485,21485,"1-Hydroxy-2-amino-(cis,trans)-3,5-octadecadiene (from sphingolipids)",Sphingolipids,"Complex lipids, fatty acids and related",NA,2,NA
+28101485,21485,"1-Hydroxy-2-amino-(cis,trans)-3,5-octadecadiene (from sphingolipids)",Sphingolipids,"Complex lipids, fatty acids and related",NA,2,NA
+28101548,21548,Unknown lipid (28101548),Unknown lipid,Unknown,NA,4,NA
+28101552,21552,Unknown lipid (28101552),Unknown lipid,Unknown,NA,4,NA
+28101619,21619,Unknown lipid (28101619),Unknown lipid,Unknown,NA,4,NA
+28101620,21485,"1-Hydroxy-2-amino-(cis,trans)-3,5-octadecadiene (from sphingolipids)",Sphingolipids,"Complex lipids, fatty acids and related",NA,2,NA
+28101620,21485,"1-Hydroxy-2-amino-(cis,trans)-3,5-octadecadiene (from sphingolipids)",Sphingolipids,"Complex lipids, fatty acids and related",NA,2,NA
+28101621,21621,Unknown lipid (28101621),Unknown lipid,Unknown,NA,4,NA
+28101697,21697,Unknown lipid (28101697),Unknown lipid,Unknown,NA,4,NA
+28101699,21699,Unknown lipid (28101699),Unknown lipid,Unknown,NA,4,NA
+28101701,21701,5-O-Methylsphingosine (d16:1),Sphingolipids,"Complex lipids, fatty acids and related",NA,2,NA
+28101705,21705,"Docosatetraenoic acid (C22:cis[7,10,13,16]4)","Fatty acids, poly-unsaturated","Complex lipids, fatty acids and related",CAS-2091-25-0,1,C16527
+28101721,21704,Unknown lipid (28101721),Unknown lipid,Unknown,NA,4,NA
+38100002,30002,Pyruvate (additional: Phosphoenolpyruvate (PEP)),Glycolysis/Gluconeogenesis,Energy metabolism and related,CAS-127-17-3,1,C00022
+38100003,30003,Alanine,"Amino acids, neutral",Amino acids,CAS-56-41-7,1,C00041
+38100004,30004,Glycine,"Amino acids, neutral",Amino acids,CAS-56-40-6,1,C00037
+38100005,30005,Fumarate,Citrate cycle,Energy metabolism and related,CAS-110-17-8,1,C00122
+38100006,30006,Threonine,"Amino acids, neutral",Amino acids,CAS-72-19-5,1,C05519
+38100007,30007,Malate,Citrate cycle,Energy metabolism and related,"CAS-617-48-1 , CAS-6915-15-7",1,C00149
+38100008,30008,Methionine,"Amino acids, S-containing",Amino acids,CAS-63-68-3,1,C00073
+38100009,30009,"5-Oxoproline (additional: Folic acid, Glutamate, Glutamine)",Amino acid metabolites,Amino acids related,CAS-98-79-3,1,C00504
+38100010,30010,Cysteine (additional: Cystine),"Amino acids, S-containing",Amino acids,CAS-52-90-4,1,C00097
+38100012,3012,Citrate,Citrate cycle,Energy metabolism and related,CAS-77-92-9,1,C00158
+38100013,30013,Lysine,"Amino acids, basic",Amino acids,"CAS-56-87-1 , CAS-39665-12-8",1,C00047
+38100014,30014,myo-Inositol,Polyols,Carbohydrates and related,CAS-87-89-8,1,C00137
+38100016,30016,Tryptophan,"Amino acids, aromatic",Amino acids,"CAS-54-12-6 , CAS-73-22-3",1,C00078
+38100016,30016,Tryptophan,"Amino acids, aromatic",Amino acids,"CAS-54-12-6 , CAS-73-22-3",1,C00078
+38100016,30016,Tryptophan,"Amino acids, aromatic",Amino acids,"CAS-54-12-6 , CAS-73-22-3",1,C00078
+38100019,30019,Ribose,Nucleobase related saccharides,Carbohydrates and related,"CAS-50-69-1 , CAS-24259-59-4",1,C00121
+38100021,30021,Maltose,Disaccharides,Carbohydrates and related,CAS-69-79-4,1,C00208
+38100028,30028,Mannose,Monosaccharides,Carbohydrates and related,CAS-3458-28-4,1,C00159
+38100032,30032,alpha-Ketoglutarate,Citrate cycle,Energy metabolism and related,CAS-328-50-7,1,C00026
+38100034,30034,Fructose,Glycolysis/Gluconeogenesis,Energy metabolism and related,"CAS-57-48-7 , CAS-7660-25-5",1,C00795
+38100036,30036,Glucose,Monosaccharides,Carbohydrates and related,"CAS-50-99-7 , CAS-492-62-6",1,C00031
+38100038,30038,Glycerol,Lipid precursors,"Complex lipids, fatty acids and related",CAS-56-81-5,1,C00116
+38100044,30044,Maltotriose,Trisaccharides,Carbohydrates and related,CAS-1109-28-0,1,C01835
+38100045,30045,Glutamine,"Amino acids, basic",Amino acids,"CAS-56-85-9 , CAS-585-21-7",1,C00064
+38100046,30046,"Ornithine (additional: Arginine, Citrulline)",Urea cycle and related,Amino acids related,CAS-70-26-8,1,C00077
+38100051,30051,Phosphate (inorganic and from organic phosphates),Miscellaneous,Miscellaneous,CAS-14265-44-2,1,C02174
+38100052,30052,Serine,"Amino acids, neutral",Amino acids,CAS-56-45-1,1,C00065
+38100053,30053,Glycerol-3-phosphate,Lipid precursors,"Complex lipids, fatty acids and related",CAS-57-03-4,1,C00093
+38100054,30054,Erythrol,Polyols,Carbohydrates and related,CAS-149-32-6,1,C00503
+38100070,30070,Valine,"Amino acids, branched chain",Amino acids,"CAS-72-18-4 , CAS-7004-03-7",1,C00183
+38100072,30072,Aspartate,"Amino acids, acidic",Amino acids,CAS-56-84-8,1,C00049
+38100073,30073,Phenylalanine,"Amino acids, aromatic",Amino acids,CAS-63-91-2,1,C00079
+38100074,30074,Isoleucine,"Amino acids, branched chain",Amino acids,CAS-73-32-5,1,C00407
+38100075,30075,Leucine,"Amino acids, branched chain",Amino acids,CAS-61-90-5,1,C00123
+38100076,30076,Glycerate,Glycolysis/Gluconeogenesis,Energy metabolism and related,CAS-473-81-4,1,C00258
+38100078,30078,Asparagine,"Amino acids, basic",Amino acids,"CAS-70-47-3 , CAS-5794-13-8",1,C00152
+38100078,30078,Asparagine,"Amino acids, basic",Amino acids,"CAS-70-47-3 , CAS-5794-13-8",1,C00152
+38100079,30079,Proline,"Amino acids, neutral",Amino acids,CAS-147-85-3,1,C00148
+38100079,30079,Proline,"Amino acids, neutral",Amino acids,CAS-147-85-3,1,C00148
+38100080,30080,Benzoic acid,Miscellaneous,Miscellaneous,CAS-65-85-0,1,C00180
+38100083,30083,Threonic acid,Ascorbic acid and related,"Vitamins, cofactors and related","CAS-3909-12-4 , CAS-7306-96-9",1,C01620
+38100085,30085,Lactate,Glycolysis/Gluconeogenesis,Energy metabolism and related,"CAS-50-21-5 , CAS-113-21-3",1,C00256
+38100086,30086,Succinate,Citrate cycle,Energy metabolism and related,CAS-110-15-6,1,C00042
+38100086,30086,Succinate,Citrate cycle,Energy metabolism and related,CAS-110-15-6,1,C00042
+38100088,30088,Glutamate,"Amino acids, acidic",Amino acids,"CAS-56-86-0 , CAS-617-65-2",1,C00064
+38100088,30088,Glutamate,"Amino acids, acidic",Amino acids,"CAS-56-86-0 , CAS-617-65-2",1,C00064
+38100110,3110,Galactonic acid,Sugar acids,Carbohydrates and related,"CAS-576-36-3 , CAS-13382-27-9",1,C00880
+38100114,30114,Glycolate,Miscellaneous,Miscellaneous,CAS-79-14-1,1,C03547
+38100115,30115,Quinic acid (additional: Chlorogenic acid (CGA)),Alimentary,Microbiome or alimentary,CAS-77-95-2,1,C00296
+38100127,30127,Ribonic acid,Sugar acids,Carbohydrates and related,CAS-17812-24-7,1,C01685
+38100154,30154,Glucose-1-phosphate (additional: Glucose),Glycogen metabolism,Carbohydrates and related,"CAS-27133-73-9 , CAS-28875-57-2",1,C00031
+38100160,30160,Tyrosine,"Amino acids, aromatic",Amino acids,CAS-60-18-4,1,C00082
+38100168,30168,Sedoheptulose-7-phosphate (additional: Sedoheptulose),Pentose phosphate pathway,Energy metabolism and related,CAS-2646-35-7,1,NA
+38100335,30335,Unknown polar (38100335),Unknown polar,Unknown,NA,4,NA
+38100389,30389,Unknown polar (38100389),Unknown polar,Unknown,NA,4,NA
+38100393,30393,3-Hydroxybutyrate,Ketone bodies,Energy metabolism and related,"CAS-300-85-6 , CAS-625-71-8",1,C01089
+38100437,30437,trans-4-Hydroxyproline,Collagen metabolism,Amino acids related,CAS-51-35-4,1,C01157
+38100463,30463,"1,5-Anhydrosorbitol",Polyols,Carbohydrates and related,CAS-154-58-5,1,C07326
+38100466,30466,Histidine,"Amino acids, basic",Amino acids,"CAS-71-00-1 , CAS-4998-57-6",1,C00135
+38100466,30466,Histidine,"Amino acids, basic",Amino acids,"CAS-71-00-1 , CAS-4998-57-6",1,C00135
+38100495,31833,Ketoleucine,Amino acid metabolites,Amino acids related,CAS-816-66-0,1,NA
+38100508,30597,Uric acid,Purine metabolism,Nucleobases and related,CAS-69-93-2,1,C00366
+38100537,30537,Threitol,Polyols,Carbohydrates and related,"CAS-149-32-6 , CAS-7493-90-5",1,C16884
+38100546,30546,Taurine,"Amino acids, S-containing",Amino acids,CAS-107-35-7,1,C00245
+38100546,30546,Taurine,"Amino acids, S-containing",Amino acids,CAS-107-35-7,1,C00245
+38100547,30547,3-Hydroxyindole (additional: 3-Indoxylsulfate),Tryptophan metabolism,Amino acids related,CAS-480-93-3,1,NA
+38100553,30553,Indole-3-acetic acid,Microbiome,Microbiome or alimentary,CAS-87-51-4,1,C00954
+38100610,30610,Sulfate (additional: Sulfamate),Miscellaneous,Miscellaneous,CAS-14808-79-8,1,C00059
+38100619,30619,Hypoxanthine (additional: Inosine),Purine metabolism,Nucleobases and related,CAS-68-94-0,1,C00262
+38100620,30620,scyllo-Inositol,Polyols,Carbohydrates and related,CAS-488-59-5,1,C06153
+38100625,30625,Xanthine,Purine metabolism,Nucleobases and related,CAS-69-89-6,1,C00385
+38100753,31677,Cystine,"Amino acids, S-containing",Amino acids,CAS-56-89-3,1,C00491
+38101135,31135,beta-Alanine (additional: Pantothenic acid),Amino acid metabolites,Amino acids related,"CAS-107-95-9 , CAS-28854-76-4",1,C00099
+38101137,31137,Unknown polar (38101137),Unknown polar,Unknown,NA,4,NA
+38101809,30563,Pseudouridine,Pyrimidine metabolism,Nucleobases and related,"CAS-1445-07-4 , CAS-1445-07-4",2,C02067
+38101829,31829,Unknown polar (38101829),Unknown polar,Unknown,NA,4,NA
+38101832,31832,2-Hydroxybutyrate,"Energy metabolism, miscellaneous",Energy metabolism and related,CAS-565-70-8,1,C05984
+38101840,31840,Mannosamine,Aminosugars,Carbohydrates and related,CAS-2636-92-2,1,C03570
+38101841,31841,Glucosamine,Aminosugars,Carbohydrates and related,CAS-3416-24-8,1,C00329
+38101933,31933,Unknown polar (38101933),Unknown polar,Unknown,NA,4,NA
+38101937,31937,Sarcosine,Methyl cycle,Amino acids related,CAS-107-97-1,1,C00213
+38101980,31980,"N,N-Dimethylglycine",Methyl cycle,Amino acids related,CAS-1118-68-9,1,C01026
+38102042,32042,Unknown polar (38102042),Unknown polar,Unknown,NA,4,C07591
+38102122,32122,3-Deoxyglucosone,Monosaccharides,Carbohydrates and related,"CAS-4084-27-9 , CAS-4084-27-9",1,NA
+38102195,32195,Ketoisoleucine,Amino acid metabolites,Amino acids related,CAS-1460-34-0,1,NA
+38102397,32397,Isocitrate,Citrate cycle,Energy metabolism and related,CAS-30810-51-6,1,C00311
+38102399,32399,Unknown polar (38102399),Unknown polar,Unknown,NA,4,NA
+38102453,32453,Fructosamine,Aminosugars,Carbohydrates and related,CAS-4429-04-3,2,NA
+58100003,50003,Indole-3-lactic acid,Tryptophan metabolism,Amino acids related,CAS-1821-52-9,3,NA
+58100006,10294,"Hexoses (additional: Glucose, myo-Inositol)",Monosaccharides,Carbohydrates and related,NA,1,C00984
+58100021,50021,Dehydroepiandrosterone sulfate (additional: Testosterone-17-sulfate),Steroids and related,"Hormones, signal substances and related",CAS-651-48-9,2,C04555
+58100022,50022,Hippuric acid,Microbiome,Microbiome or alimentary,CAS-495-69-2,1,C01586
+58100025,50025,Indole-3-propionic acid,Microbiome,Microbiome or alimentary,CAS-830-96-6,3,NA
+58100028,10332,3-Indoxylsulfate,Microbiome,Microbiome or alimentary,CAS-487-94-5,1,C17086
+58100029,50029,Cresol sulfate,Microbiome,Microbiome or alimentary,NA,2,C01467
+58100029,50029,Cresol sulfate,Microbiome,Microbiome or alimentary,NA,2,C01467
+58100053,50053,Ribose (additional: Pentoses),Nucleobase related saccharides,Carbohydrates and related,"CAS-50-69-1 , CAS-24259-59-4",3,C00117
+58100106,50106,Allantoin,Purine metabolism,Nucleobases and related,CAS-97-59-6,3,C01551
+58100333,50261,Unknown polar (58100333),Unknown polar,Unknown,NA,4,NA
+58100967,50967,Unknown polar (58100967),Unknown polar,Unknown,NA,4,NA
+58100968,50968,Unknown polar (58100968),Unknown polar,Unknown,NA,4,NA
+58100969,50969,Unknown polar (58100969),Unknown polar,Unknown,NA,4,NA
+58100970,50970,Androsterone sulfate (additional: Dihydrotestosterone sulfate),Steroids and related,"Hormones, signal substances and related",NA,1,C04555
+58100971,50971,6:2 Fluorotelomer sulfonate,Miscellaneous,Miscellaneous,CAS-27619-97-2,1,NA
+58100972,50972,Unknown polar (58100972),Unknown polar,Unknown,NA,4,NA
+58100973,50973,Unknown polar (58100973),Unknown polar,Unknown,NA,4,NA
+58100974,50974,Unknown polar (58100974),Unknown polar,Unknown,NA,4,NA
+58100975,50975,Unknown polar (58100975),Unknown polar,Unknown,NA,4,NA
+58100976,50976,Unknown polar (58100976),Unknown polar,Unknown,NA,4,NA
+58105029,50748,Unknown polar (58105029),Unknown polar,Unknown,NA,4,NA
+58105122,55122,Unknown polar (58105122),Unknown polar,Unknown,NA,4,NA
+58105124,55124,Unknown polar (58105124),Unknown polar,Unknown,NA,4,NA
+58105127,50019,Unknown polar (58105127),Unknown polar,Unknown,NA,4,NA
+58105137,50083,Unknown polar (58105137),Unknown polar,Unknown,NA,4,NA
+58105147,50309,Unknown polar (58105147),Unknown polar,Unknown,NA,4,NA
+58105167,55167,Unknown polar (58105167),Unknown polar,Unknown,NA,4,NA
+58105187,55187,Unknown polar (58105187),Unknown polar,Unknown,NA,4,NA
+58105201,55201,Unknown polar (58105201),Unknown polar,Unknown,NA,4,NA
+58105208,55208,Unknown polar (58105208),Unknown polar,Unknown,NA,4,NA
+58105452,55452,Unknown polar (58105452),Unknown polar,Unknown,NA,4,NA
+58105453,50134,Unknown polar (58105453),Unknown polar,Unknown,NA,4,NA
+58105463,55463,Unknown polar (58105463),Unknown polar,Unknown,NA,4,NA
+58105465,55057,Unknown polar (58105465),Unknown polar,Unknown,NA,4,NA
+58105481,50874,Unknown polar (58105481),Unknown polar,Unknown,NA,4,NA
+58105489,50383,Unknown polar (58105489),Unknown polar,Unknown,NA,4,NA
+58105491,55006,Unknown polar (58105491),Unknown polar,Unknown,NA,4,NA
+58105501,50888,Unknown polar (58105501),Unknown polar,Unknown,NA,4,NA
+58105597,50044,Unknown polar (58105597),Unknown polar,Unknown,NA,4,NA
+58105649,10364,Unknown polar (58105649),Unknown polar,Unknown,NA,4,NA
+58105651,55651,Unknown polar (58105651),Unknown polar,Unknown,NA,4,NA
+58105653,55653,Unknown polar (58105653),Unknown polar,Unknown,NA,4,NA
+58105655,55655,Unknown polar (58105655),Unknown polar,Unknown,NA,4,NA
+58105656,50967,Unknown polar (58105656),Unknown polar,Unknown,NA,4,NA
+58105657,55657,Unknown polar (58105657),Unknown polar,Unknown,NA,4,NA
+58105658,55658,Unknown polar (58105658),Unknown polar,Unknown,NA,4,NA
+58105659,55659,Unknown polar (58105659),Unknown polar,Unknown,NA,4,NA
+58105660,55660,Unknown polar (58105660),Unknown polar,Unknown,NA,4,NA
+58105661,55661,Unknown polar (58105661),Unknown polar,Unknown,NA,4,NA
+58105662,55662,Unknown polar (58105662),Unknown polar,Unknown,NA,4,NA
+58105663,55663,Unknown polar (58105663),Unknown polar,Unknown,NA,4,NA
+58105666,50972,Unknown polar (58105666),Unknown polar,Unknown,NA,4,NA
+58105667,55667,Unknown polar (58105667),Unknown polar,Unknown,NA,4,NA
+58105669,50973,Unknown polar (58105669),Unknown polar,Unknown,NA,4,NA
+58105670,55467,Unknown polar (58105670),Unknown polar,Unknown,NA,4,NA
+58105671,55671,Unknown polar (58105671),Unknown polar,Unknown,NA,4,NA
+58105672,55672,Unknown polar (58105672),Unknown polar,Unknown,NA,4,NA
+58105673,55673,Unknown polar (58105673),Unknown polar,Unknown,NA,4,NA
+58105674,55674,Unknown polar (58105674),Unknown polar,Unknown,NA,4,NA
+58105675,55675,Unknown polar (58105675),Unknown polar,Unknown,NA,4,NA
+58105676,55676,Unknown polar (58105676),Unknown polar,Unknown,NA,4,NA
+68100001,60001,Lysophosphatidylcholine (C18:2),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",NA,2,C04233
+68100002,60002,Lysophosphatidylethanolamine (C22:5),Lysophosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,3,C04233
+68100003,60003,Lysophosphatidylcholine (C16:0),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",CAS-17364-16-8,2,C04233
+68100005,60005,Lysophosphatidylcholine (C18:1),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",CAS-19420-56-5,2,C04233
+68100006,60037,Lysophosphatidylcholine (C18:0),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",CAS-19420-57-6,2,C04233
+68100006,60037,Lysophosphatidylcholine (C18:0),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",CAS-19420-57-6,2,C04233
+68100007,60007,"Sphingomyelin (d18:2,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,3,C00550
+68100008,60046,"Sphingomyelin (d18:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,3,C00550
+68100008,60046,"Sphingomyelin (d18:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,3,C00550
+68100009,60009,"Sphingomyelin (d18:2,C18:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,3,C00550
+68100010,60010,"Phosphatidylcholine (C16:1,C18:2)",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C00157
+68100011,60011,"Phosphatidylcholine (C16:0,C22:6) (additional: Phosphatidylcholine (C18:2,C20:4))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C00157
+68100012,60012,Phosphatidylcholine (C38:5),Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C00157
+68100013,60013,"Phosphatidylcholine (C16:0,C18:2)",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C00157
+68100014,60014,"Phosphatidylcholine (C18:1,C18:2) (additional: Phosphatidylcholine (C16:0,C20:3))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C00157
+68100015,60015,Ethanolamine plasmenyl (C39:5) (additional: Choline plasmalogen (C36:5)),"Ether lipids, ethanolamines","Complex lipids, fatty acids and related",NA,2,C05973
+68100016,60016,"Phosphatidylcholine (C16:0,C16:0)",Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-63-89-8,3,C00157
+68100017,60017,Choline ether lipid (C36:3),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,2,C00350
+68100018,60018,"Choline plasmenyl (18:0-vinyl,C20:4)","Ether lipids, cholines","Complex lipids, fatty acids and related",CAS-97802-56-7,3,C04441
+68100019,60019,"Phosphatidylcholine (C18:0,C20:4)",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C00157
+68100020,60020,Unknown lipid (68100020),Unknown lipid,Unknown,NA,4,NA
+68100021,60021,"Sphingomyelin (d18:1,C24:1) (additional: Sphingomyelin (d18:2,C24:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,2,C00550
+68100022,60022,"Sphingomyelin (d18:1,C23:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,3,C00550
+68100025,60025,"Ceramide (d18:1,C24:1) (additional: Ceramide (d18:2,C24:0))",Ceramides,"Complex lipids, fatty acids and related",CAS-104404-17-3,3,C00195
+68100026,60026,"Diacylglycerol (C18:1,C18:2)",Diacylglycerols,"Complex lipids, fatty acids and related",NA,2,C00165
+68100027,60027,"Ceramide (d18:1,C24:0)",Ceramides,"Complex lipids, fatty acids and related",CAS-104404-17-3,3,C00195
+68100027,60027,"Ceramide (d18:1,C24:0)",Ceramides,"Complex lipids, fatty acids and related",CAS-104404-17-3,3,C00195
+68100028,60028,Unknown lipid (68100028),Unknown lipid,Unknown,NA,4,NA
+68100029,60029,"Triacylglycerol (C18:2,C18:2)",Triacylglycerols,"Complex lipids, fatty acids and related",NA,2,C00422
+68100030,60030,"Triacylglycerol (C16:0,C18:2)",Triacylglycerols,"Complex lipids, fatty acids and related",NA,3,C00422
+68100031,60031,"Triacylglycerol (C16:0,C18:1,C18:2)",Triacylglycerols,"Complex lipids, fatty acids and related",NA,3,C00422
+68100032,60032,"Triacylglycerol (C18:1,C18:2)",Triacylglycerols,"Complex lipids, fatty acids and related",NA,2,C00422
+68100033,60033,Unknown lipid (68100033),Unknown lipid,Unknown,NA,4,NA
+68100035,60035,"Cholesterylester, total",Cholesterylesters,"Complex lipids, fatty acids and related",NA,3,NA
+68100036,60036,Lysophosphatidylcholine (C17:0),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",NA,2,C04233
+68100040,60040,Lysophosphatidylcholine (C20:4),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C04233
+68100040,60040,Lysophosphatidylcholine (C20:4),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C04233
+68100041,60041,"Triacylglycerol (C16:0,C16:1)",Triacylglycerols,"Complex lipids, fatty acids and related",NA,3,C00422
+68100042,60040,Lysophosphatidylcholine (C20:4),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C04233
+68100042,60040,Lysophosphatidylcholine (C20:4),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C04233
+68100043,60043,"Triacylglycerol (C18:2,C18:3)",Triacylglycerols,"Complex lipids, fatty acids and related",NA,3,C00422
+68100047,60047,Ethanolamine plasmenyl (C39:4) (additional: Choline plasmenyl (C36:4)),"Ether lipids, ethanolamines","Complex lipids, fatty acids and related",NA,2,C05973
+68100048,60048,"Phosphatidylcholine (C16:0,C20:5)",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C00157
+68100049,60049,"Phosphatidylcholine (C16:0,C20:4) (additional: Phosphatidylcholine (C18:2,C18:2))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C00157
+68100050,60050,"Phosphatidylcholine (C18:0,C18:2)",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C00157
+68100051,60051,"Phosphatidylcholine (C18:0,C18:1)",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C00157
+68100052,60052,"Sphingomyelin (d18:2,C24:1) (additional: Sphingomyelin (d18:1,C24:2))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,2,C00550
+68100053,60053,"Phosphatidylcholine (C18:0,C20:3) (additional: Phosphatidylcholine (C20:1,C18:2), Phosphatidylcholine (C20:2,C18:1))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C00157
+68100054,60054,"Sphingomyelin (d18:1,C24:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,2,C00550
+68100055,60055,"Phosphatidylcholine (C18:0,C22:6)",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,3,C00157
+68100056,60056,Unknown lipid (68100056),Unknown lipid,Unknown,NA,4,NA
+68100057,60057,"Triacylglycerol (C16:0,C18:1,C18:3) (additional: Triacylglycerol (C16:0,C18:2,C18:2), Triacylglycerol (C16:1,C18:1,C18:2))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,3,C00422
+68100058,60058,"Triacylglycerol (C18:1,C18:2,C18:3) (additional: Triacylglycerol (C16:0,C18:1,C20:5), Triacylglycerol (C16:0,C18:2,C20:4))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,2,C00422
+68100059,60059,Unknown lipid (68100059),Unknown lipid,Unknown,NA,4,NA
+68100060,60060,Unknown lipid (68100060),Unknown lipid,Unknown,NA,4,NA
+68100418,60418,Unknown lipid (68100418),Unknown lipid,Unknown,NA,4,NA
+68100427,60427,"Phosphatidylcholine hydroperoxide (C18:0,C18:2-OOH)",Lipid hydroperoxides,"Complex lipids, fatty acids and related",NA,2,NA
+68100430,60430,Unknown lipid (68100430),Unknown lipid,Unknown,NA,4,NA
+68100433,60433,Unknown lipid (68100433),Unknown lipid,Unknown,NA,4,NA
+68100436,60436,Lysophosphatidylcholine (C18:0),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",CAS-19420-57-6,2,C04233
+68100436,60436,Lysophosphatidylcholine (C18:0),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",CAS-19420-57-6,2,C04233
+68100440,60440,Unknown lipid (68100440),Unknown lipid,Unknown,NA,4,NA
+68100442,60442,Unknown lipid (68100442),Unknown lipid,Unknown,NA,4,NA
+68100917,60917,Unknown lipid (68100917),Unknown lipid,Unknown,NA,4,NA
+68101209,61211,"Sphingomyelin (d17:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,2,C00550
+68101209,61211,"Sphingomyelin (d17:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,2,C00550
+68101209,61211,"Sphingomyelin (d17:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,2,C00550
+68101210,60296,Lysophosphatidylethanolamine (C18:2),Lysophosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,2,C04233
+68101210,60296,Lysophosphatidylethanolamine (C18:2),Lysophosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,2,C04233
+68101211,61211,"Sphingomyelin (d17:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,2,C00550
+68101211,61211,"Sphingomyelin (d17:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,2,C00550
+68101211,61211,"Sphingomyelin (d17:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,2,C00550
+68101212,63100044,"Sphingomyelin (d18:2,C17:0) (additional: Sphingomyelin (d17:1,C18:1), Sphingomyelin (d17:2,C18:0), Sphingomyelin (d18:1,C17:1))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,2,C00550
+68101213,62200083,"Sphingomyelin (d17:1,C18:0) (additional: Sphingomyelin (d16:0,C19:1), Sphingomyelin (d16:1,C19:0), Sphingomyelin (d17:0,C18:1), Sphingomyelin (d18:1,C17:0), Sphingomyelin (d19:1,C16:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,2,C00550
+68101473,NA,"Octadecatrienoic acid (C18:3), free",Free fatty acids,"Complex lipids, fatty acids and related",NA,1,C06426
+68101474,NA,"Octadecadienoic acid (C18:2), free",Free fatty acids,"Complex lipids, fatty acids and related",NA,1,C04056
+68101475,NA,"Octadecenoic acid (C18:1), free",Free fatty acids,"Complex lipids, fatty acids and related",NA,1,C00712
+68101476,NA,"Octadecanoic acid (C18:0), free",Free fatty acids,"Complex lipids, fatty acids and related",NA,1,C01530
+68101478,NA,"Eicosadienoic acid (C20:2), free",Free fatty acids,"Complex lipids, fatty acids and related",NA,1,C16525
+68101480,NA,Monoacylglycerol (C22:2),Monoacylglycerols,"Complex lipids, fatty acids and related",NA,1,C01885
+68101481,NA,Monoacylglycerol (C22:1),Monoacylglycerols,"Complex lipids, fatty acids and related",NA,1,C01885
+68101482,NA,Monoacylglycerol (C22:0),Monoacylglycerols,"Complex lipids, fatty acids and related",NA,1,C01885
+68101483,NA,Monoacylglycerol (C24:0),Monoacylglycerols,"Complex lipids, fatty acids and related",NA,1,C01885
+68101484,NA,Lysophosphatidylethanolamine (C16:0),Lysophosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C04233
+68101485,NA,Monoacylglycerol (C26:0),Monoacylglycerols,"Complex lipids, fatty acids and related",NA,1,C01885
+68101486,NA,Lysophosphatidylethanolamine (C18:1),Lysophosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C04233
+68101487,NA,Lysophosphatidylethanolamine (C18:0),Lysophosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C04233
+68101487,NA,Lysophosphatidylethanolamine (C18:0),Lysophosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C04233
+68101488,NA,Lysophosphatidylcholine (C16:1),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C04233
+68101489,NA,Lysophosphatidylethanolamine (C20:4),Lysophosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C04233
+68101490,NA,Lysophosphatidylcholine (C18:3),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C04233
+68101491,NA,Lysophosphatidylethanolamine (C22:6),Lysophosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C04233
+68101492,NA,Lysophosphatidylcholine (C20:3),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C04233
+68101493,NA,Lysophosphatidylcholine (C22:6),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C04233
+68101494,NA,Lysophosphatidylcholine (C22:5),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C04233
+68101495,NA,Ceramide (C38:3),Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+68101496,NA,"Diacylglycerol (C34:2) (additional: Diacylglycerol (C16:0,C18:2), Diacylglycerol (C16:1,C18:1))",Diacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00166
+68101497,NA,"Ceramide (C38:1) (additional: Ceramide (d16:1,C22:0), Ceramide (d18:1,C20:0))",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+68101499,NA,"Ceramide (C39:1) (additional: Ceramide (d16:1,C23:0), Ceramide (d17:1,C22:0))",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+68101500,NA,"Diacylglycerol (C36:5) (additional: Diacylglycerol (C16:0,C20:5), Diacylglycerol (C16:1,C20:4), Diacylglycerol (C18:2,C18:3))",Diacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00165
+68101501,NA,"Ceramide (C40:2) (additional: Ceramide (d16:1,C24:1), Ceramide (d18:2,C22:0))",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+68101502,NA,"Diacylglycerol (C36:2) (additional: Diacylglycerol (C18:1,C18:1))",Diacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00168
+68101503,NA,"Ceramide (C40:1) (additional: Ceramide (d18:1,C22:0))",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+68101504,NA,"Diacylglycerol (C36:1) (additional: Diacylglycerol (C16:1,C20:0), Diacylglycerol (C18:0,C18:1))",Diacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00165
+68101505,NA,"Ceramide (C40:0) (additional: Ceramide (d18:0,C22:0))",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+68101506,NA,Diacylglycerol (C36:0),Diacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00167
+68101507,NA,"Ceramide (C41:3) (additional: Ceramide (d18:2,C23:1))",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+68101508,NA,"Ceramide (C41:2) (additional: Ceramide (d17:1,C24:1), Ceramide (d18:2,C23:0))",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+68101509,NA,"Ceramide (C41:1) (additional: Ceramide (d17:1,C24:0), Ceramide (d18:1,C23:0))",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+68101511,NA,"Ceramide (C42:4) (additional: Ceramide (d18:2,C24:2))",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+68101512,NA,Diacylglycerol (C38:2),Diacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00165
+68101513,NA,Diacylglycerol (C38:1),Diacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00170
+68101514,NA,"Ceramide (C42:0) (additional: Ceramide (d18:0,C24:0))",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+68101515,NA,Diacylglycerol (C38:0),Diacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00169
+68101517,NA,"Sphingomyelin (C32:2) (additional: Sphingomyelin (d18:2,C14:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101518,NA,"Ethanolamine ether lipid (C32:2) (additional: Ethanolamine plasmenyl (16:0-vinyl,C16:1))","Ether lipids, ethanolamines","Complex lipids, fatty acids and related",NA,1,C05973
+68101519,NA,"Sphingomyelin (C32:1) (additional: Sphingomyelin (d16:1,C16:0), Sphingomyelin (d18:1,C14:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101521,NA,"Sphingomyelin (C33:0) (additional: Sphingomyelin (d18:0,C15:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101522,NA,"Choline plasmanyl (C30:0) (additional: Choline plasmanyl (14:0-alkyl,C16:0))","Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C04438
+68101523,NA,"Ethanolamine ether lipid (C34:3) (additional: Ethanolamine plasmenyl (16:0-vinyl,C18:2))","Ether lipids, ethanolamines","Complex lipids, fatty acids and related",NA,1,C05973
+68101524,NA,"Ethanolamine ether lipid (C34:2) (additional: Ethanolamine plasmenyl (16:0-vinyl,C18:1))","Ether lipids, ethanolamines","Complex lipids, fatty acids and related",NA,1,C05973
+68101525,NA,"Sphingomyelin (C34:0) (additional: Sphingomyelin (d18:0,C16:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101526,NA,"Phosphatidylcholine (C30:0) (additional: Phosphatidylcholine (C12:0,C18:0), Phosphatidylcholine (C14:0,C16:0))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101527,NA,Choline ether lipid (C32:2),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101528,NA,"Choline ether lipid (C32:1) (additional: Choline plasmenyl (16:0-vinyl,C16:0), Phosphatidylethanolamine (C16:0,C18:1))","Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101529,NA,"Phosphatidylethanolamine (C34:0) (additional: Phosphatidylethanolamine (C16:0,C18:0))",Phosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C00350
+68101530,NA,"Ethanolamine ether lipid (C36:5) (additional: Ethanolamine plasmanyl (16:0-alkyl,C20:5), Ethanolamine plasmenyl (16:0-vinyl,C20:4))","Ether lipids, ethanolamines","Complex lipids, fatty acids and related",NA,1,C05973
+68101531,NA,"Ethanolamine ether lipid (C36:4) (additional: Ethanolamine plasmenyl (18:0-vinyl,C18:3), Ethanolamine plasmenyl (18:1-vinyl,C18:2))","Ether lipids, ethanolamines","Complex lipids, fatty acids and related",NA,1,C05973
+68101532,NA,Hexosylceramide (C36:2),Glycolipids,"Complex lipids, fatty acids and related",NA,1,C04737
+68101533,NA,"Sphingomyelin (C36:3) (additional: Sphingomyelin (d18:2,C18:1))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101534,NA,Phosphatidylcholine (C32:3),Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101535,NA,"Ethanolamine ether lipid (C36:3) (additional: Ethanolamine plasmenyl (18:0-vinyl,C18:2), Ethanolamine plasmenyl (18:1-vinyl,C18:1))","Ether lipids, ethanolamines","Complex lipids, fatty acids and related",NA,1,C05973
+68101536,NA,"Phosphatidylcholine (C32:2) (additional: Phosphatidylcholine (C14:0,C18:2))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101538,NA,"Sphingomyelin (C36:1) (additional: Sphingomyelin (d16:1,C20:0), Sphingomyelin (d18:1,C18:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101539,NA,"Phosphatidylcholine (C32:1) (additional: Phosphatidylcholine (C14:0,C18:1), Phosphatidylcholine (C16:0,C16:1))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101540,NA,"Sphingomyelin (C36:0) (additional: Sphingomyelin (d18:0,C18:0), Sphingomyelin (d19:0,C17:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101541,NA,"Choline ether lipid (C34:3) (additional: Phosphatidylethanolamine (C18:1,C18:2), Phosphatidylethanolamine (C36:3))","Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101542,NA,"Choline ether lipid (C34:2) (additional: Phosphatidylethanolamine (C18:0,C18:2), Phosphatidylethanolamine (C36:2))","Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101543,NA,"Choline ether lipid (C34:1) (additional: Phosphatidylethanolamine (C18:0,C18:1), Phosphatidylethanolamine (C36:1))","Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101545,NA,"Choline plasmanyl (C34:0) (additional: Phosphatidylethanolamine (C18:0,C18:0), Phosphatidylethanolamine (C36:0))","Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C04439
+68101546,NA,Unknown lipid (68101546),Unknown lipid,Unknown,NA,4,NA
+68101548,NA,"Ethanolamine ether lipid (C38:6) (additional: Ethanolamine plasmenyl (16:0-vinyl,C22:5), Ethanolamine plasmenyl (18:1-vinyl,C20:4))","Ether lipids, ethanolamines","Complex lipids, fatty acids and related",NA,1,C05973
+68101549,NA,"Ethanolamine ether lipid (C38:5) (additional: Ethanolamine plasmanyl (18:0-alkyl,C20:5), Ethanolamine plasmenyl (18:0-vinyl,C20:4))","Ether lipids, ethanolamines","Complex lipids, fatty acids and related",NA,1,C05973
+68101550,NA,"Phosphatidylcholine (C34:4) (additional: Phosphatidylcholine (C14:0,C20:4))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101551,NA,"Ethanolamine ether lipid (C38:4) (additional: Ethanolamine plasmanyl (16:0-alkyl,C22:4), Ethanolamine plasmanyl (18:0-alkyl,C20:4), Ethanolamine plasmenyl (18:0-vinyl,C20:3))","Ether lipids, ethanolamines","Complex lipids, fatty acids and related",NA,1,C05973
+68101552,NA,"Sphingomyelin (C38:2) (additional: Sphingomyelin (d18:2,C20:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101553,NA,"Sphingomyelin (C38:1) (additional: Sphingomyelin (d16:1,C22:0), Sphingomyelin (d18:1,C20:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101554,NA,"Phosphatidylcholine (C34:1) (additional: Phosphatidylcholine (C16:0,C18:1))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101555,NA,"Sphingomyelin (C38:0) (additional: Sphingomyelin (d16:0,C22:0), Sphingomyelin (d18:0,C20:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101556,NA,"Phosphatidylcholine (C34:0) (additional: Phosphatidylcholine (C16:0,C18:0))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101557,NA,"Phosphatidylethanolamine (C38:6) (additional: Phosphatidylethanolamine (C16:0,C22:6))",Phosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C00350
+68101560,NA,Phosphatidylglycerol (C36:5),Phosphatidylglycerols,"Complex lipids, fatty acids and related",NA,1,C00344
+68101561,NA,"Choline ether lipid (C36:3) (additional: Phosphatidylethanolamine (C18:0,C20:3))","Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101562,NA,"Sphingomyelin (C39:2) (additional: Sphingomyelin (d16:2,C23:0), Sphingomyelin (d18:2,C21:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101564,NA,"Sphingomyelin (C39:1) (additional: Sphingomyelin (d16:1,C23:0), Sphingomyelin (d17:1,C22:0), Sphingomyelin (d18:1,C21:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101565,NA,Triacylglycerol (C46:3),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101566,NA,Unknown lipid (68101566),Unknown lipid,Unknown,NA,4,NA
+68101567,NA,"Choline ether lipid (C36:1) (additional: Ethanolamine plasmenyl (18:1-vinyl,C22:6), Phosphatidylcholine (C17:0,C18:1))","Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101568,NA,Phosphatidylglycerol (C36:2),Phosphatidylglycerols,"Complex lipids, fatty acids and related",NA,1,C00344
+68101570,NA,Choline plasmanyl (C36:0) (additional: Choline plasmanyl (C36:0-alkyl)),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C04440
+68101571,NA,Phosphatidylglycerol (C36:1),Phosphatidylglycerols,"Complex lipids, fatty acids and related",NA,1,C00344
+68101572,NA,"Phosphatidylcholine (C36:6) (additional: Phosphatidylcholine (C14:0,C22:6))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101573,NA,"Sphingomyelin (C40:2) (additional: Phosphatidylcholine (C18:1,C18:2), Sphingomyelin (d16:1,C24:1), Sphingomyelin (d18:2,C22:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101574,NA,"Sphingomyelin (C40:1) (additional: Phosphatidylcholine (C18:0,C18:2), Sphingomyelin (d16:1,C24:0), Sphingomyelin (d18:1,C22:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101575,NA,"Sphingomyelin (C40:0) (additional: Phosphatidylcholine (C18:0,C18:1), Sphingomyelin (d18:0,C22:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101576,NA,"Phosphatidylethanolamine (C40:7) (additional: Phosphatidylethanolamine (C18:1,C22:6))",Phosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C00350
+68101577,NA,Triacylglycerol (C47:1),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101580,NA,Phosphatidylglycerol (C38:6),Phosphatidylglycerols,"Complex lipids, fatty acids and related",NA,1,C00344
+68101581,NA,"Sphingomyelin (C41:3) (additional: Sphingomyelin (d18:2,C23:1))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101582,NA,"Choline ether lipid (C38:3) (additional: Phosphatidylcholine (C17:0,C20:3))","Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101583,NA,"Sphingomyelin (C41:2) (additional: Sphingomyelin (d17:1,C24:1), Sphingomyelin (d18:1,C23:1), Sphingomyelin (d18:2,C23:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101584,NA,Triacylglycerol (C48:4),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101585,NA,Choline ether lipid (C38:2),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101586,NA,Triacylglycerol (C48:3),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101587,NA,Choline ether lipid (C38:1),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101588,NA,"Phosphatidylcholine (C38:7) (additional: Phosphatidylcholine (C18:2,C20:5))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101589,NA,Choline plasmanyl (C38:0) (additional: Choline plasmanyl (C38:0-alkyl)),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C04440
+68101590,NA,"Sphingomyelin (C42:4) (additional: Phosphatidylcholine (C38:5), Sphingomyelin (d18:2,C24:2))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101591,NA,"Phosphatidylcholine (C38:1) (additional: Phosphatidylcholine (C18:0,C20:1), Phosphatidylcholine (C18:1,C20:0))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101593,NA,Phosphatidylcholine (C38:0),Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101594,NA,Choline ether lipid (C40:6) (additional: Phosphatidylethanolamine (C42:6)),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101595,NA,Phosphatidylglycerol (C40:7),Phosphatidylglycerols,"Complex lipids, fatty acids and related",NA,1,C00344
+68101596,NA,Choline ether lipid (C40:5),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101597,NA,Choline ether lipid (C40:4),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101598,NA,"Sphingomyelin (C43:3) (additional: Sphingomyelin (d16:1,C27:2), Sphingomyelin (d18:2,C25:1))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101599,NA,"Triacylglycerol (C50:5) (additional: Triacylglycerol (C14:0,C18:2,C18:3))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101600,NA,Choline ether lipid (C40:3),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101601,NA,"Sphingomyelin (C43:2) (additional: Sphingomyelin (d17:1,C26:1), Sphingomyelin (d18:1,C25:1), Sphingomyelin (d19:1,C24:1))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101602,NA,"Triacylglycerol (C50:4) (additional: Triacylglycerol (C14:0,C18:1,C18:3), Triacylglycerol (C14:0,C18:2,C18:2), Triacylglycerol (C16:0,C16:1,C18:3), Triacylglycerol (C16:1,C16:1,C18:2))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101603,NA,Choline ether lipid (C40:2),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101604,NA,"Sphingomyelin (C43:1) (additional: Sphingomyelin (d19:0,C24:1), Sphingomyelin (d19:1,C24:0), Sphingomyelin (d20:1,C23:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101605,NA,"Triacylglycerol (C50:3) (additional: Triacylglycerol (C14:0,C18:1,C18:2), Triacylglycerol (C16:0,C16:1,C18:2))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101606,NA,"Phosphatidylcholine (C40:8) (additional: Phosphatidylcholine (C18:2,C22:6))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101607,NA,Choline ether lipid (C40:1),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101608,NA,"Triacylglycerol (C50:2) (additional: Triacylglycerol (C14:0,C18:1,C18:1), Triacylglycerol (C16:0,C16:0,C18:2), Triacylglycerol (C16:0,C16:1,C18:1))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101609,NA,"Phosphatidylcholine (C40:7) (additional: Phosphatidylcholine (C18:1,C22:6), Phosphatidylcholine (C18:2,C22:5))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101611,NA,"Phosphatidylcholine (C40:5) (additional: Phosphatidylcholine (C18:0,C22:5))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101612,NA,"Phosphatidylcholine (C40:4) (additional: Phosphatidylcholine (C18:0,C22:4), Phosphatidylcholine (C20:0,C20:4))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101613,NA,Sphingomyelin (C44:3),Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101614,NA,"Phosphatidylcholine (C40:3) (additional: Phosphatidylcholine (C20:0,C20:3))",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101615,NA,"Sphingomyelin (C44:2) (additional: Sphingomyelin (d19:1,C25:1))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101616,NA,"Triacylglycerol (C51:4) (additional: Triacylglycerol (C15:0,C18:1,C18:3), Triacylglycerol (C15:0,C18:2,C18:2), Triacylglycerol (C16:1,C17:0,C18:3))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101617,NA,Phosphatidylcholine (C40:2),Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101618,NA,Sphingomyelin (C44:1),Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+68101619,NA,"Triacylglycerol (C51:3) (additional: Triacylglycerol (C15:0,C18:1,C18:2))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101620,NA,Phosphatidylcholine (C40:1),Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101621,NA,"Triacylglycerol (C51:2) (additional: Triacylglycerol (C15:0,C18:1,C18:1))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101622,NA,"Triacylglycerol (C51:1) (additional: Triacylglycerol (C16:0,C17:0,C18:1))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101623,NA,"Triacylglycerol (C51:0) (additional: Triacylglycerol (C15:0,C16:0,C20:0), Triacylglycerol (C16:0,C17:0,C18:0), Triacylglycerol (C52:7))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101624,NA,Choline ether lipid (C42:5),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101625,NA,Triacylglycerol (C52:6),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101626,NA,Choline ether lipid (C42:4),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101627,NA,Choline ether lipid (C42:3),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101628,NA,Choline ether lipid (C42:2),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101629,NA,Phosphatidylinositol (C36:5),Phosphatidylinositols,"Complex lipids, fatty acids and related",NA,1,C01194
+68101630,NA,Phosphatidylinositol (C36:4),Phosphatidylinositols,"Complex lipids, fatty acids and related",NA,1,C01194
+68101631,NA,"Triacylglycerol (C52:2) (additional: Triacylglycerol (C16:0,C18:1,C18:1))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101632,60826,Phosphatidylcholine (C42:5),Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,2,C00157
+68101633,NA,Phosphatidylcholine (C42:4),Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101634,NA,Phosphatidylcholine (C42:3),Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101635,NA,Phosphatidylcholine (C42:2),Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C00157
+68101636,NA,Triacylglycerol (C53:3),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101637,NA,Triacylglycerol (C53:2),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101638,NA,Triacylglycerol (C53:1),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101639,NA,Choline ether lipid (C44:6),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101640,NA,Triacylglycerol (C54:7),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101641,NA,Choline ether lipid (C44:5),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101642,NA,Choline ether lipid (C44:4),"Ether lipids, cholines","Complex lipids, fatty acids and related",NA,1,C00350
+68101643,NA,Triacylglycerol (C54:5),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101644,NA,Phosphatidylinositol (C38:6),Phosphatidylinositols,"Complex lipids, fatty acids and related",NA,1,C00344
+68101645,NA,"Triacylglycerol (C54:4) (additional: Triacylglycerol (C18:1,C18:1,C18:2))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101646,NA,Phosphatidylinositol (C38:5),Phosphatidylinositols,"Complex lipids, fatty acids and related",NA,1,C00344
+68101647,NA,"Triacylglycerol (C54:3) (additional: Triacylglycerol (C18:1,C18:1,C18:1))",Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101648,NA,Phosphatidylinositol (C38:4),Phosphatidylinositols,"Complex lipids, fatty acids and related",NA,1,C00344
+68101649,NA,Phosphatidylinositol (C38:3),Phosphatidylinositols,"Complex lipids, fatty acids and related",NA,1,C00344
+68101650,NA,Triacylglycerol (C55:4),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101651,NA,Triacylglycerol (C55:3),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101652,NA,Triacylglycerol (C55:2),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101653,NA,Triacylglycerol (C56:9),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101655,NA,Triacylglycerol (C56:8),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101656,NA,Triacylglycerol (C56:7),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101657,NA,Triacylglycerol (C56:6),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101658,NA,Triacylglycerol (C56:5),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101659,NA,Phosphatidylinositol (C40:6),Phosphatidylinositols,"Complex lipids, fatty acids and related",NA,1,C00344
+68101660,NA,Triacylglycerol (C56:4),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101661,NA,Triacylglycerol (C58:10) (additional: Triacylglycerol (C57:3)),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101662,NA,Triacylglycerol (C58:9) (additional: Triacylglycerol (C57:2)),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00422
+68101663,NA,Diacylglycerol (C39:0),Diacylglycerols,"Complex lipids, fatty acids and related",NA,1,C00172
+68101664,NA,Unknown lipid (68101664),Unknown lipid,Unknown,NA,4,NA
+68101665,NA,Diacylglycerol ether lipid (C36:4),"Ether lipids, glycerides","Complex lipids, fatty acids and related",NA,1,C00165
+379990003,370003,Sphingosine (d16:1),Sphingolipids,"Complex lipids, fatty acids and related",NA,1,C00319
+379990007,370007,Sphingadienine (d18:2),Sphingolipids,"Complex lipids, fatty acids and related",NA,1,NA
+379990009,370009,Sphingosine (d18:1),Sphingolipids,"Complex lipids, fatty acids and related",CAS-123-78-4,1,C00319
+379990012,370011,Sphinganine (d18:0),Sphingolipids,"Complex lipids, fatty acids and related",CAS-764-22-7,1,C00836
+379990015,370015,Sphingosine-1-phosphate (d16:1),Sphingolipids,"Complex lipids, fatty acids and related",NA,1,NA
+379990016,370016,Sphingosine-1-phosphate (d17:1),Sphingolipids,"Complex lipids, fatty acids and related",NA,1,NA
+379990017,370017,Sphingadienine-1-phosphate (d18:2),Sphingolipids,"Complex lipids, fatty acids and related",NA,1,NA
+379990018,370018,Sphingosine-1-phosphate (d18:1),Sphingolipids,"Complex lipids, fatty acids and related",CAS-26993-30-6,1,NA
+379990019,370019,Sphinganine-1-phosphate (d18:0),Sphingolipids,"Complex lipids, fatty acids and related",CAS-19794-97-9,1,NA
+379990019,370019,Sphinganine-1-phosphate (d18:0),Sphingolipids,"Complex lipids, fatty acids and related",CAS-19794-97-9,1,NA
+379990020,370019,Sphinganine-1-phosphate (d18:0),Sphingolipids,"Complex lipids, fatty acids and related",CAS-19794-97-9,1,NA
+379990020,370019,Sphinganine-1-phosphate (d18:0),Sphingolipids,"Complex lipids, fatty acids and related",CAS-19794-97-9,1,NA
+578100101,570101,Proline,"Amino acids, neutral",Amino acids,CAS-147-85-3,1,C00148
+578100101,570101,Proline,"Amino acids, neutral",Amino acids,CAS-147-85-3,1,C00148
+578100121,570121,Tryptophan,"Amino acids, aromatic",Amino acids,"CAS-54-12-6 , CAS-73-22-3",1,C00078
+578100121,570121,Tryptophan,"Amino acids, aromatic",Amino acids,"CAS-54-12-6 , CAS-73-22-3",1,C00078
+578100121,570121,Tryptophan,"Amino acids, aromatic",Amino acids,"CAS-54-12-6 , CAS-73-22-3",1,C00078
+578100133,570133,Histidine,"Amino acids, basic",Amino acids,"CAS-71-00-1 , CAS-4998-57-6",1,C00135
+578100133,570133,Histidine,"Amino acids, basic",Amino acids,"CAS-71-00-1 , CAS-4998-57-6",1,C00135
+578100402,570402,Lysophosphatidylethanolamine (C18:0),Lysophosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C04233
+578100402,570402,Lysophosphatidylethanolamine (C18:0),Lysophosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C04233
+578100404,570404,Lysophosphatidylethanolamine (C18:2),Lysophosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C04233
+578100404,570404,Lysophosphatidylethanolamine (C18:2),Lysophosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C04233
+578100603,570603,"Sphingomyelin (d17:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+578100603,570603,"Sphingomyelin (d17:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+578100603,570603,"Sphingomyelin (d17:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+578100607,570607,"Sphingomyelin (d18:2,C17:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+578100608,570608,"Sphingomyelin (d18:1,C17:0) (additional: Sphingomyelin (d17:1,C18:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+578100624,570624,"Sphingomyelin (d18:1,C23:1) (additional: Sphingomyelin (d17:1,C24:1), Sphingomyelin (d18:2,C23:0))",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+578100716,570716,"Phosphatidylethanolamine (C18:0,C22:6)",Phosphatidylethanolamines,"Complex lipids, fatty acids and related",NA,1,C00350
+578100812,570812,"Ceramide (d18:1,C24:0)",Ceramides,"Complex lipids, fatty acids and related",CAS-104404-17-3,1,C00195
+578100812,570812,"Ceramide (d18:1,C24:0)",Ceramides,"Complex lipids, fatty acids and related",CAS-104404-17-3,1,C00195
+578100822,570822,"Ceramide (d18:2,C24:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+100289990003,280003,FFA_Myristic acid (C14:0),Free fatty acids,"Complex lipids, fatty acids and related",CAS-544-63-8,1,C06424
+100289990004,280004,FFA_Myristoleic acid (C14:cis[9]1),Free fatty acids,"Complex lipids, fatty acids and related",CAS-544-64-9,1,C08322
+100289990005,280005,FFA_Palmitic acid (C16:0),Free fatty acids,"Complex lipids, fatty acids and related",CAS-57-10-3,1,C00249
+100289990007,280007,FFA_Palmitoleic acid (C16:cis[9]1),Free fatty acids,"Complex lipids, fatty acids and related",CAS-373-49-9,1,C08362
+100289990008,280008,FFA_Stearic acid (C18:0),Free fatty acids,"Complex lipids, fatty acids and related",CAS-57-11-4,1,C01530
+100289990009,280009,FFA_Elaidic acid (C18:trans[9]1),Free fatty acids,"Complex lipids, fatty acids and related",CAS-112-79-8,1,C01712
+100289990012,280012,FFA_Oleic acid (C18:cis[9]1),Free fatty acids,"Complex lipids, fatty acids and related",CAS-112-80-1,1,C00712
+100289990013,280013,FFA_cis-Vaccenic acid (C18:cis[11]1),Free fatty acids,"Complex lipids, fatty acids and related",NA,1,C21944
+100289990014,280014,"FFA_Linoleic acid (C18:cis[9,12]2)",Free fatty acids,"Complex lipids, fatty acids and related",CAS-60-33-3,1,C01595
+100289990017,280017,"FFA_Linolenic acid (C18:cis[9,12,15]3)",Free fatty acids,"Complex lipids, fatty acids and related",CAS-463-40-1,1,C06427
+100289990019,280019,FFA_Eicosaenoic acid (C20:cis[11]1),Free fatty acids,"Complex lipids, fatty acids and related",CAS-5561-99-9,1,NA
+100289990030,280030,"FFA_Eicosapentaenoic acid (C20:cis[5,8,11,14,17]5)",Free fatty acids,"Complex lipids, fatty acids and related",CAS-10417-94-4,1,C06428
+100289990035,280035,"FFA_Docosahexaenoic acid (C22:cis[4,7,10,13,16,19]6)",Free fatty acids,"Complex lipids, fatty acids and related","CAS-6217-54-5 , CAS-6217-54-5",1,C06429
+100289990036,280036,"FFA_Docosapentaenoic acid (C22:cis[7,10,13,16,19]5)",Free fatty acids,"Complex lipids, fatty acids and related",CAS-24880-45-3,1,C16513
+200289990003,280003,TAG_Myristic acid (C14:0),Triacylglycerols,"Complex lipids, fatty acids and related",CAS-544-63-8,1,C06424
+200289990004,280004,TAG_Myristoleic acid (C14:cis[9]1),Triacylglycerols,"Complex lipids, fatty acids and related",CAS-544-64-9,1,C08322
+200289990005,280005,TAG_Palmitic acid (C16:0),Triacylglycerols,"Complex lipids, fatty acids and related",CAS-57-10-3,1,C00249
+200289990006,280006,TAG_Hexadecenoic acid (C16:trans[9]1),Triacylglycerols,"Complex lipids, fatty acids and related",CAS-373-49-9,1,C08362
+200289990007,280007,TAG_Palmitoleic acid (C16:cis[9]1),Triacylglycerols,"Complex lipids, fatty acids and related",CAS-373-49-9,1,C08362
+200289990008,280008,TAG_Stearic acid (C18:0),Triacylglycerols,"Complex lipids, fatty acids and related",CAS-57-11-4,1,C01530
+200289990009,280009,TAG_Elaidic acid (C18:trans[9]1),Triacylglycerols,"Complex lipids, fatty acids and related",CAS-112-79-8,1,C01712
+200289990012,280012,TAG_Oleic acid (C18:cis[9]1),Triacylglycerols,"Complex lipids, fatty acids and related",CAS-112-80-1,1,C00712
+200289990013,280013,TAG_cis-Vaccenic acid (C18:cis[11]1),Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C21944
+200289990014,280014,"TAG_Linoleic acid (C18:cis[9,12]2)",Triacylglycerols,"Complex lipids, fatty acids and related",CAS-60-33-3,1,C01595
+200289990015,280015,"TAG_gamma-Linolenic acid (C18:cis[6,9,12]3)",Triacylglycerols,"Complex lipids, fatty acids and related",CAS-506-26-3,1,C06426
+200289990017,280017,"TAG_Linolenic acid (C18:cis[9,12,15]3)",Triacylglycerols,"Complex lipids, fatty acids and related",CAS-463-40-1,1,C06427
+200289990019,280019,TAG_Eicosaenoic acid (C20:cis[11]1),Triacylglycerols,"Complex lipids, fatty acids and related",CAS-5561-99-9,1,NA
+200289990020,280020,TAG_conjugated Linoleic acid (C18:cis[9]trans[11]2),Triacylglycerols,"Complex lipids, fatty acids and related",CAS-2540-56-9,1,NA
+200289990023,280023,"TAG_Eicosadienoic acid (C20:cis[11,14]2)",Triacylglycerols,"Complex lipids, fatty acids and related",NA,1,C16525
+200289990025,280025,"TAG_dihomo-gamma-Linolenic acid (C20:cis[8,11,14]3)",Triacylglycerols,"Complex lipids, fatty acids and related",CAS-1783-84-2,1,C03242
+200289990027,280027,"TAG_Arachidonic acid (C20:cis[5,8,11,14]4)",Triacylglycerols,"Complex lipids, fatty acids and related","CAS-506-32-1 , CAS-6610-25-9",1,C00219
+200289990030,280030,"TAG_Eicosapentaenoic acid (C20:cis[5,8,11,14,17]5)",Triacylglycerols,"Complex lipids, fatty acids and related",CAS-10417-94-4,1,C06428
+200289990033,280033,"TAG_Docosatetraenoic acid (C22:cis[7,10,13,16]4)",Triacylglycerols,"Complex lipids, fatty acids and related",CAS-2091-25-0,1,C16527
+200289990034,280034,"TAG_Docosapentaenoic acid (C22:cis[4,7,10,13,16]5)",Triacylglycerols,"Complex lipids, fatty acids and related",CAS-25182-74-5,1,C16513
+200289990035,280035,"TAG_Docosahexaenoic acid (C22:cis[4,7,10,13,16,19]6)",Triacylglycerols,"Complex lipids, fatty acids and related","CAS-6217-54-5 , CAS-6217-54-5",1,C06429
+200289990036,280036,"TAG_Docosapentaenoic acid (C22:cis[7,10,13,16,19]5)",Triacylglycerols,"Complex lipids, fatty acids and related",CAS-24880-45-3,1,C16513
+300289990004,280004,DAG_Myristoleic acid (C14:cis[9]1),Diacylglycerols,"Complex lipids, fatty acids and related",CAS-544-64-9,1,C08322
+400289990004,280004,MAG_Myristoleic acid (C14:cis[9]1),Monoacylglycerols,"Complex lipids, fatty acids and related",CAS-544-64-9,1,C04233
+500289990004,280004,PE_Myristoleic acid (C14:cis[9]1),Phosphatidylethanolamines,"Complex lipids, fatty acids and related",CAS-544-64-9,1,C08322
+500289990005,280005,PE_Palmitic acid (C16:0),Phosphatidylethanolamines,"Complex lipids, fatty acids and related",CAS-57-10-3,1,C00249
+500289990008,280008,PE_Stearic acid (C18:0),Phosphatidylethanolamines,"Complex lipids, fatty acids and related",CAS-57-11-4,1,C01530
+500289990012,280012,PE_Oleic acid (C18:cis[9]1),Phosphatidylethanolamines,"Complex lipids, fatty acids and related",CAS-112-80-1,1,C00712
+500289990014,280014,"PE_Linoleic acid (C18:cis[9,12]2)",Phosphatidylethanolamines,"Complex lipids, fatty acids and related",CAS-60-33-3,1,C01595
+500289990027,280027,"PE_Arachidonic acid (C20:cis[5,8,11,14]4)",Phosphatidylethanolamines,"Complex lipids, fatty acids and related","CAS-506-32-1 , CAS-6610-25-9",1,C00219
+500289990035,280035,"PE_Docosahexaenoic acid (C22:cis[4,7,10,13,16,19]6)",Phosphatidylethanolamines,"Complex lipids, fatty acids and related","CAS-6217-54-5 , CAS-6217-54-5",1,C06429
+500289990036,280036,"PE_Docosapentaenoic acid (C22:cis[7,10,13,16,19]5)",Phosphatidylethanolamines,"Complex lipids, fatty acids and related",CAS-24880-45-3,1,C16513
+600289990004,280004,PI_Myristoleic acid (C14:cis[9]1),Phosphatidylinositols,"Complex lipids, fatty acids and related",CAS-544-64-9,1,C08322
+600289990005,280005,PI_Palmitic acid (C16:0),Phosphatidylinositols,"Complex lipids, fatty acids and related",CAS-57-10-3,1,C00249
+600289990008,280008,PI_Stearic acid (C18:0),Phosphatidylinositols,"Complex lipids, fatty acids and related",CAS-57-11-4,1,C01530
+600289990014,280014,"PI_Linoleic acid (C18:cis[9,12]2)",Phosphatidylinositols,"Complex lipids, fatty acids and related",CAS-60-33-3,1,C01595
+600289990025,280025,"PI_dihomo-gamma-Linolenic acid (C20:cis[8,11,14]3)",Phosphatidylinositols,"Complex lipids, fatty acids and related",CAS-1783-84-2,1,C03242
+600289990027,280027,"PI_Arachidonic acid (C20:cis[5,8,11,14]4)",Phosphatidylinositols,"Complex lipids, fatty acids and related","CAS-506-32-1 , CAS-6610-25-9",1,C00219
+800289990003,280003,PC_Myristic acid (C14:0),Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-544-63-8,1,C06424
+800289990004,280004,PC_Myristoleic acid (C14:cis[9]1),Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-544-64-9,1,C08322
+800289990005,280005,PC_Palmitic acid (C16:0),Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-57-10-3,1,C00249
+800289990007,280007,PC_Palmitoleic acid (C16:cis[9]1),Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-373-49-9,1,C08362
+800289990008,280008,PC_Stearic acid (C18:0),Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-57-11-4,1,C01530
+800289990009,280009,PC_Elaidic acid (C18:trans[9]1),Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-112-79-8,1,C01712
+800289990010,280010,PC_trans-Vaccenic acid (C18:trans[11]1),Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-693-72-1,1,NA
+800289990012,280012,PC_Oleic acid (C18:cis[9]1),Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-112-80-1,1,C00712
+800289990013,280013,PC_cis-Vaccenic acid (C18:cis[11]1),Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C21944
+800289990014,280014,"PC_Linoleic acid (C18:cis[9,12]2)",Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-60-33-3,1,C01595
+800289990015,280015,"PC_gamma-Linolenic acid (C18:cis[6,9,12]3)",Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-506-26-3,1,C06426
+800289990017,280017,"PC_Linolenic acid (C18:cis[9,12,15]3)",Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-463-40-1,1,C03242
+800289990019,280019,PC_Eicosaenoic acid (C20:cis[11]1),Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-5561-99-9,1,NA
+800289990020,280020,PC_conjugated Linoleic acid (C18:cis[9]trans[11]2),Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-2540-56-9,1,NA
+800289990023,280023,"PC_Eicosadienoic acid (C20:cis[11,14]2)",Phosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C16525
+800289990025,280025,"PC_dihomo-gamma-Linolenic acid (C20:cis[8,11,14]3)",Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-1783-84-2,1,C03242
+800289990026,280026,"PC_Eicosatrienoic acid (C20:[11,14,17]3)",Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-20590-32-3,1,C16522
+800289990027,280027,"PC_Arachidonic acid (C20:cis[5,8,11,14]4)",Phosphatidylcholines,"Complex lipids, fatty acids and related","CAS-506-32-1 , CAS-6610-25-9",1,C00219
+800289990030,280030,"PC_Eicosapentaenoic acid (C20:cis[5,8,11,14,17]5)",Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-10417-94-4,1,C06428
+800289990033,280033,"PC_Docosatetraenoic acid (C22:cis[7,10,13,16]4)",Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-2091-25-0,1,C16527
+800289990034,280034,"PC_Docosapentaenoic acid (C22:cis[4,7,10,13,16]5)",Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-25182-74-5,1,C16513
+800289990035,280035,"PC_Docosahexaenoic acid (C22:cis[4,7,10,13,16,19]6)",Phosphatidylcholines,"Complex lipids, fatty acids and related","CAS-6217-54-5 , CAS-6217-54-5",1,C06429
+800289990036,280036,"PC_Docosapentaenoic acid (C22:cis[7,10,13,16,19]5)",Phosphatidylcholines,"Complex lipids, fatty acids and related",CAS-24880-45-3,1,C16513
+900289990003,280003,LPC_Myristic acid (C14:0),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",CAS-544-63-8,1,C04230
+900289990005,280005,LPC_Palmitic acid (C16:0),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",CAS-57-10-3,1,C00249
+900289990008,280008,LPC_Stearic acid (C18:0),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",CAS-57-11-4,1,C01530
+900289990012,280012,LPC_Oleic acid (C18:cis[9]1),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",CAS-112-80-1,1,C00712
+900289990013,280013,LPC_cis-Vaccenic acid (C18:cis[11]1),Lysophosphatidylcholines,"Complex lipids, fatty acids and related",NA,1,C21944
+900289990014,280014,"LPC_Linoleic acid (C18:cis[9,12]2)",Lysophosphatidylcholines,"Complex lipids, fatty acids and related",CAS-60-33-3,1,C01595
+900289990027,280027,"LPC_Arachidonic acid (C20:cis[5,8,11,14]4)",Lysophosphatidylcholines,"Complex lipids, fatty acids and related","CAS-506-32-1 , CAS-6610-25-9",1,C00219
+1000329990027,320027,Unknown lipid (1000329990027),Unknown lipid,Unknown,NA,4,NA
+1100339990001,330001,Unknown lipid (1100339990001),Unknown lipid,Unknown,NA,4,NA
+1100339990002,330002,Unknown lipid (1100339990002),Unknown lipid,Unknown,NA,4,NA
+1100339990003,330003,"SM_Sphingomyelin (d18:1,C14:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990004,330004,"SM_Sphingomyelin (d18:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990006,330006,"SM_Sphingomyelin (d18:1,C18:0)",Sphingomyelins,"Complex lipids, fatty acids and related",CAS-85187-10-6,1,C00550
+1100339990007,330007,"SM_Sphingomyelin (d18:1,C18:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990008,330008,"SM_Sphingomyelin (d18:1,C19:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990009,330009,"SM_Sphingomyelin (d18:1,C20:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990010,330010,"SM_Sphingomyelin (d18:1,C20:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990011,330011,"SM_Sphingomyelin (d18:1,C21:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990012,330012,"SM_Sphingomyelin (d18:1,C22:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990013,330013,"SM_Sphingomyelin (d18:1,C22:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990014,330014,"SM_Sphingomyelin (d18:1,C23:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990015,330015,"SM_Sphingomyelin (d18:1,C23:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990016,330016,"SM_Sphingomyelin (d18:1,C24:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990017,330017,"SM_Sphingomyelin (d18:1,C24:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990018,330018,"SM_Sphingomyelin (d18:1,C24:2)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990019,330019,"SM_Sphingomyelin (d18:2,C14:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990020,330020,"SM_Sphingomyelin (d18:2,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990021,330021,"SM_Sphingomyelin (d18:2,C18:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990022,330022,"SM_Sphingomyelin (d18:2,C18:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990022,330022,"SM_Sphingomyelin (d18:2,C18:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990023,330023,"SM_Sphingomyelin (d18:2,C19:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990024,330024,"SM_Sphingomyelin (d18:2,C20:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990024,330024,"SM_Sphingomyelin (d18:2,C20:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990025,330025,"SM_Sphingomyelin (d18:2,C20:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990026,330026,"SM_Sphingomyelin (d18:2,C21:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990027,330027,"SM_Sphingomyelin (d18:2,C22:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990028,330028,"SM_Sphingomyelin (d18:2,C22:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990029,330029,"SM_Sphingomyelin (d18:2,C23:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990029,330029,"SM_Sphingomyelin (d18:2,C23:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990030,330030,"SM_Sphingomyelin (d18:2,C23:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990031,330031,"SM_Sphingomyelin (d18:2,C24:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990032,330032,"SM_Sphingomyelin (d18:2,C24:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990033,330033,"SM_Sphingomyelin (d18:2,C24:2)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990033,330033,"SM_Sphingomyelin (d18:2,C24:2)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990034,330034,"SM_Sphingomyelin (d16:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990035,330035,"SM_Sphingomyelin (d16:1,C18:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990036,330036,"SM_Sphingomyelin (d16:1,C18:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990037,330037,"SM_Sphingomyelin (d16:1,C20:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990038,330038,"SM_Sphingomyelin (d16:1,C21:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990039,330039,"SM_Sphingomyelin (d16:1,C22:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990040,330040,"SM_Sphingomyelin (d16:1,C22:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990041,330041,"SM_Sphingomyelin (d16:1,C23:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990042,330042,"SM_Sphingomyelin (d16:1,C24:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990043,330043,"SM_Sphingomyelin (d16:1,C24:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990044,330044,"SM_Sphingomyelin (d17:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990045,330045,"SM_Sphingomyelin (d17:1,C18:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990046,330046,"SM_Sphingomyelin (d17:1,C20:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990047,330047,"SM_Sphingomyelin (d17:1,C22:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990048,330048,"SM_Sphingomyelin (d17:1,C23:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990049,330049,"SM_Sphingomyelin (d17:1,C24:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990050,330050,"SM_Sphingomyelin (d17:1,C24:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990051,330051,"SM_Sphingomyelin (d18:1,C25:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990052,330052,"SM_Sphingomyelin (d18:1,C26:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990053,330053,"SM_Sphingomyelin (d18:1,C18:2)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990054,330054,"SM_Sphingomyelin (d18:1,C20:2)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990055,330055,"SM_Sphingomyelin (d18:1,C22:2)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990056,330056,"SM_Sphingomyelin (d18:1,C26:2)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990057,330057,"SM_Sphingomyelin (d18:2,C17:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990058,330058,"SM_Sphingomyelin (d18:2,C26:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990059,330059,"SM_Sphingomyelin (d18:2,C26:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990061,330061,"SM_Sphingomyelin (d18:2,C20:2)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990062,330062,"SM_Sphingomyelin (d18:2,C22:2)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990063,330063,"SM_Sphingomyelin (d18:2,C26:2)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990064,330064,"SM_Sphingomyelin (d16:1,C17:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990065,330065,"SM_Sphingomyelin (d16:1,C20:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990066,330066,"SM_Sphingomyelin (d16:1,C23:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990069,330069,"SM_Sphingomyelin (d16:1,C22:2)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990070,330070,"SM_Sphingomyelin (d16:1,C24:2)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990071,330071,"SM_Sphingomyelin (d19:1,C18:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990072,330072,"SM_Sphingomyelin (d19:1,C20:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990073,330073,"SM_Sphingomyelin (d19:1,C22:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990074,330074,"SM_Sphingomyelin (d19:1,C24:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990076,330076,"SM_Sphingomyelin (d20:1,C24:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990078,330078,"SM_Sphingomyelin (d20:2,C24:1)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1100339990079,330079,"SM_Sphingomyelin (d18:1,C17:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,1,C00550
+1300369990002,360002,"CER_Ceramide (d18:0,C16:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990003,360003,"CER_Ceramide (d18:0,C18:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990004,360004,"CER_Ceramide (d18:1,C14:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990005,360005,"CER_Ceramide (d18:1,C16:0)",Ceramides,"Complex lipids, fatty acids and related",CAS-104404-17-3,1,C00195
+1300369990006,360006,"CER_Ceramide (d18:1,C18:0)",Ceramides,"Complex lipids, fatty acids and related",CAS-104404-17-3,1,C00195
+1300369990008,360008,"CER_Ceramide (d18:1,C19:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990009,360009,"CER_Ceramide (d18:1,C20:0)",Ceramides,"Complex lipids, fatty acids and related",CAS-104404-17-3,1,C00195
+1300369990011,360011,"CER_Ceramide (d18:1,C21:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990012,360012,"CER_Ceramide (d18:1,C22:0)",Ceramides,"Complex lipids, fatty acids and related",CAS-104404-17-3,1,C00195
+1300369990013,360013,"CER_Ceramide (d18:1,C22:1)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990014,360014,"CER_Ceramide (d18:1,C23:0)",Ceramides,"Complex lipids, fatty acids and related",CAS-67605-84-9,1,C00195
+1300369990015,360015,"CER_Ceramide (d18:1,C23:1)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990016,360016,"CER_Ceramide (d18:1,C24:0)",Ceramides,"Complex lipids, fatty acids and related",CAS-104404-17-3,1,C00195
+1300369990017,360017,"CER_Ceramide (d18:1,C24:1)",Ceramides,"Complex lipids, fatty acids and related",CAS-104404-17-3,1,C00195
+1300369990018,360018,"CER_Ceramide (d18:1,C24:2)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990019,360019,"CER_Ceramide (d18:2,C14:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990020,360020,"CER_Ceramide (d18:2,C16:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990021,360021,"CER_Ceramide (d18:2,C18:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990024,360024,"CER_Ceramide (d18:2,C20:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990026,360026,"CER_Ceramide (d18:2,C21:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990027,360027,"CER_Ceramide (d18:2,C22:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990028,360028,"CER_Ceramide (d18:2,C22:1)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990029,360029,"CER_Ceramide (d18:2,C23:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990031,360031,"CER_Ceramide (d18:2,C24:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990032,360032,"CER_Ceramide (d18:2,C24:1)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990033,360033,"CER_Ceramide (d18:2,C24:2)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990034,360034,"CER_Ceramide (d16:1,C16:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990035,360035,"CER_Ceramide (d16:1,C18:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990037,360037,"CER_Ceramide (d16:1,C20:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990038,360038,"CER_Ceramide (d16:1,C21:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990039,360039,"CER_Ceramide (d16:1,C22:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990041,360041,"CER_Ceramide (d16:1,C23:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990042,360042,"CER_Ceramide (d16:1,C24:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990043,360043,"CER_Ceramide (d16:1,C24:1)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990044,360044,"CER_Ceramide (d17:1,C16:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990045,360045,"CER_Ceramide (d17:1,C18:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990046,360046,"CER_Ceramide (d17:1,C20:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990047,360047,"CER_Ceramide (d17:1,C22:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990048,360048,"CER_Ceramide (d17:1,C23:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990049,360049,"CER_Ceramide (d17:1,C24:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990050,360050,"CER_Ceramide (d17:1,C24:1)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990051,360051,"CER_Ceramide (d18:0,C20:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990052,360052,"CER_Ceramide (d18:0,C22:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990053,360053,"CER_Ceramide (d18:0,C23:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990054,360054,"CER_Ceramide (d18:0,C24:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990055,360055,"CER_Ceramide (d18:0,C24:1)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990056,360056,"CER_Ceramide (d18:1,C25:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990057,360057,"CER_Ceramide (d18:1,C26:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990058,360058,"CER_Ceramide (d18:1,C26:1)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990059,360059,"CER_Ceramide (d18:2,C26:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990060,360060,"CER_Ceramide (d19:1,C18:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990061,360061,"CER_Ceramide (d19:1,C20:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990062,360062,"CER_Ceramide (d19:1,C22:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990063,360063,"CER_Ceramide (d19:1,C23:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990064,360064,"CER_Ceramide (d19:1,C24:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990065,360065,"CER_Ceramide (d19:1,C25:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990066,360066,"CER_Ceramide (d20:1,C24:0)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+1300369990067,360067,"CER_Ceramide (d20:1,C24:1)",Ceramides,"Complex lipids, fatty acids and related",NA,1,C00195
+18100021,NA,Glycerol-3-phosphate (additional: Glycerol-2-phosphate),Lipid precursors,"Complex lipids, fatty acids and related",CAS-57-03-4,1,C00093
+18100035,NA,Tryptophan,"Amino acids, aromatic",Amino acids,"CAS-54-12-6 , CAS-73-22-3",1,C00078
+18100035,NA,Tryptophan,"Amino acids, aromatic",Amino acids,"CAS-54-12-6 , CAS-73-22-3",1,C00078
+18100035,NA,Tryptophan,"Amino acids, aromatic",Amino acids,"CAS-54-12-6 , CAS-73-22-3",1,C00078
+18100164,NA,Glutamate,"Amino acids, acidic",Amino acids,"CAS-56-86-0 , CAS-617-65-2",1,C00064
+18100164,NA,Glutamate,"Amino acids, acidic",Amino acids,"CAS-56-86-0 , CAS-617-65-2",1,C00064
+18100240,NA,Citrate (additional: Isocitrate),Citrate cycle,Energy metabolism and related,CAS-77-92-9,1,C00158
+18100294,NA,Hexoses (additional: myo-Inositol),Monosaccharides,Carbohydrates and related,NA,1,C00137
+18100323,NA,"myo-Inositol-2-phosphate (additional: Fructose-6-phosphate, Glucose-6-phosphate, myo-Inositol-1-phosphate, myo-Inositol-4-phosphate)",Polyols,Carbohydrates and related,CAS-7336-80-3,1,C04006
+18100362,NA,Phosphocreatine,Creatine metabolism,Amino acids related,CAS-67-07-2,1,C02305
+28100063,NA,Dodecanol,Fatty alcohols,"Complex lipids, fatty acids and related",CAS-112-53-8,1,C02277
+28100073,NA,Pentadecanol,Fatty alcohols,"Complex lipids, fatty acids and related","CAS-629-76-5 , CAS-31389-11-4",1,NA
+28100488,NA,"N-Acetylneuraminic acid, lipid fraction",Glycolipids,"Complex lipids, fatty acids and related",NA,1,C00270
+28100850,NA,Dihydrocholesterol,Cholesterol and related,"Complex lipids, fatty acids and related",CAS-80-97-7,1,NA
+28101457,NA,Cotinine,Smoking related,Miscellaneous,CAS-486-56-6,1,NA
+28101492,NA,Timolol,Drug related,Miscellaneous,CAS-26839-75-8,1,C07141
+28101494,NA,Betaxolol,Drug related,Miscellaneous,CAS-63659-18-7,1,C06849
+38100017,NA,Sucrose,Disaccharides,Carbohydrates and related,CAS-57-50-1,1,C00089
+38100140,NA,Unknown polar (38100140),Unknown polar,Unknown,NA,4,NA
+38100145,NA,Asparagine,"Amino acids, basic",Amino acids,"CAS-70-47-3 , CAS-5794-13-8",1,C00152
+38100145,NA,Asparagine,"Amino acids, basic",Amino acids,"CAS-70-47-3 , CAS-5794-13-8",1,C00152
+38100443,NA,"Creatinine (additional: Creatine, Phosphocreatine)",Creatine metabolism,Amino acids related,CAS-60-27-5,1,C00791
+38100527,NA,Oxalate,Miscellaneous,Miscellaneous,CAS-144-62-7,1,C00209
+38102051,NA,Phenacetin,Drug related,Miscellaneous,CAS-62-44-2,1,C07591
+38102056,NA,Propranolol,Drug related,Miscellaneous,"CAS-525-66-6 , CAS-13013-17-7",1,C07407
+38102111,NA,Acetaminophen,Drug related,Miscellaneous,CAS-103-90-2,2,C06804
+58100010,NA,Unknown polar (58100010),Unknown polar,Unknown,NA,4,NA
+58100019,NA,Unknown polar (58100019),Unknown polar,Unknown,NA,4,NA
+58100027,NA,Unknown polar (58100027),Unknown polar,Unknown,NA,4,NA
+58100030,NA,Cresol sulfate,Microbiome,Microbiome or alimentary,NA,2,C01467
+58100030,NA,Cresol sulfate,Microbiome,Microbiome or alimentary,NA,2,C01467
+58100031,NA,Glycochenodeoxycholic acid (additional: Glycodeoxycholic acid),Primary bile acids,Bile acids,CAS-640-79-9,2,C05466
+58100031,NA,Glycochenodeoxycholic acid (additional: Glycodeoxycholic acid),Primary bile acids,Bile acids,CAS-640-79-9,2,C05466
+58100032,NA,Unknown polar (58100032),Unknown polar,Unknown,NA,4,NA
+58100130,NA,Succinate,Citrate cycle,Energy metabolism and related,CAS-110-15-6,3,C00042
+58100130,NA,Succinate,Citrate cycle,Energy metabolism and related,CAS-110-15-6,3,C00042
+58100131,NA,Unknown polar (58100131),Unknown polar,Unknown,NA,4,NA
+58100132,NA,Unknown polar (58100132),Unknown polar,Unknown,NA,4,NA
+58100133,NA,Unknown polar (58100133),Unknown polar,Unknown,NA,4,NA
+58100134,NA,Unknown polar (58100134),Unknown polar,Unknown,NA,4,NA
+58100135,NA,Unknown polar (58100135),Unknown polar,Unknown,NA,4,NA
+58100136,NA,Unknown polar (58100136),Unknown polar,Unknown,NA,4,NA
+58100141,NA,Unknown polar (58100141),Unknown polar,Unknown,NA,4,NA
+58100143,NA,Unknown polar (58100143),Unknown polar,Unknown,NA,4,NA
+58100144,NA,Unknown polar (58100144),Unknown polar,Unknown,NA,4,NA
+58100145,NA,Unknown polar (58100145),Unknown polar,Unknown,NA,4,NA
+58100146,NA,Unknown polar (58100146),Unknown polar,Unknown,NA,4,NA
+58100147,NA,Unknown polar (58100147),Unknown polar,Unknown,NA,4,NA
+58100148,NA,Unknown polar (58100148),Unknown polar,Unknown,NA,4,NA
+58100149,NA,Unknown polar (58100149),Unknown polar,Unknown,NA,4,NA
+58100150,NA,Unknown polar (58100150),Unknown polar,Unknown,NA,4,NA
+58100152,NA,Unknown polar (58100152),Unknown polar,Unknown,NA,4,NA
+58100153,NA,Unknown polar (58100153),Unknown polar,Unknown,NA,4,NA
+58100154,NA,Unknown polar (58100154),Unknown polar,Unknown,NA,4,NA
+58100155,NA,Unknown polar (58100155),Unknown polar,Unknown,NA,4,NA
+58100156,NA,Unknown polar (58100156),Unknown polar,Unknown,NA,4,NA
+58100157,NA,Unknown polar (58100157),Unknown polar,Unknown,NA,4,NA
+58100159,NA,Unknown polar (58100159),Unknown polar,Unknown,NA,4,NA
+58100160,NA,Unknown polar (58100160),Unknown polar,Unknown,NA,4,NA
+58100161,NA,Unknown polar (58100161),Unknown polar,Unknown,NA,4,NA
+58100162,NA,Unknown polar (58100162),Unknown polar,Unknown,NA,4,NA
+58100163,NA,Unknown polar (58100163),Unknown polar,Unknown,NA,4,NA
+58100164,NA,Unknown polar (58100164),Unknown polar,Unknown,NA,4,NA
+58100165,NA,Unknown polar (58100165),Unknown polar,Unknown,NA,4,NA
+58100166,NA,Unknown polar (58100166),Unknown polar,Unknown,NA,4,NA
+58100168,NA,Unknown polar (58100168),Unknown polar,Unknown,NA,4,NA
+58100169,NA,Unknown polar (58100169),Unknown polar,Unknown,NA,4,NA
+58100170,NA,Unknown polar (58100170),Unknown polar,Unknown,NA,4,NA
+58100171,NA,Unknown polar (58100171),Unknown polar,Unknown,NA,4,NA
+58100172,NA,Unknown polar (58100172),Unknown polar,Unknown,NA,4,NA
+58100173,NA,Unknown polar (58100173),Unknown polar,Unknown,NA,4,NA
+68100045,NA,Cholesterylester C20:4,Cholesterylesters,"Complex lipids, fatty acids and related",CAS-604-34-2,3,C02530
+68100045,NA,Cholesterylester C20:4,Cholesterylesters,"Complex lipids, fatty acids and related",CAS-604-34-2,3,C02530
+68100046,NA,"Sphingomyelin (d18:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,3,C00550
+68100046,NA,"Sphingomyelin (d18:1,C16:0)",Sphingomyelins,"Complex lipids, fatty acids and related",NA,3,C00550
+68100425,NA,"Phosphatidylcholine hydroperoxide (C16:0,C18:2-OOH)",Lipid hydroperoxides,"Complex lipids, fatty acids and related",NA,1,NA
+68100426,NA,"Phosphatidylcholine hydroperoxide (C16:0,C18:1-OOH)",Lipid hydroperoxides,"Complex lipids, fatty acids and related",NA,2,NA
+68100428,NA,Lysocholine plasmanyl (22:0-alkyl),"Ether lipids, lysocholines","Complex lipids, fatty acids and related",NA,2,NA
+68100429,NA,"Triacylglycerol hydroperoxide (C16:0,C18:1,C18:3-OOH) (additional: Triacylglycerol hydroperoxide (C16:0,C18:2,C18:2-OOH))",Lipid hydroperoxides,"Complex lipids, fatty acids and related",NA,2,C00422
+68100431,NA,"Triacylglycerol hydroperoxide (C16:0,C18:1,C18:2-OOH)",Lipid hydroperoxides,"Complex lipids, fatty acids and related",NA,1,C00422
+68100432,NA,"Triacylglycerol hydroperoxide (C18:1,18:2,C18:2-OOH) (additional: Triacylglycerol hydroperoxide (C16:0,C18:1,C20:4-OOH), Triacylglycerol hydroperoxide (C18:1,C18:1,C18:3-OOH))",Lipid hydroperoxides,"Complex lipids, fatty acids and related",NA,2,C00422
+68100434,NA,"Cholesterylester hydroperoxide (C18:2-9-OOH) (additional: Cholesterylester hydroperoxide (C18:2-13-OOH), Cholesterylester hydroperoxide (C20:4-OOH))",Lipid hydroperoxides,"Complex lipids, fatty acids and related",NA,1,NA
+68100435,NA,"Cholesterol, free",Cholesterol and related,"Complex lipids, fatty acids and related",CAS-57-88-5,3,C00187
+68100435,NA,"Cholesterol, free",Cholesterol and related,"Complex lipids, fatty acids and related",CAS-57-88-5,3,C00187
+68100437,NA,Cholesterylester hydroperoxide (C18:2-9-OOH) (additional: Cholesterylester hydroperoxide (C18:2-13-OOH)),Lipid hydroperoxides,"Complex lipids, fatty acids and related",NA,1,NA
+128100001,NA,Androstenedione,Steroids and related,"Hormones, signal substances and related",CAS-63-05-8,1,C00280
+128100004,NA,Testosterone,Steroids and related,"Hormones, signal substances and related",CAS-58-22-0,1,C00535
+128100014,NA,11-Deoxycortisol,Steroids and related,"Hormones, signal substances and related",CAS-152-58-9,1,C05488
+128100016,NA,Corticosterone,Steroids and related,"Hormones, signal substances and related",CAS-50-22-6,1,C02140
+128100020,NA,Cortisol,Steroids and related,"Hormones, signal substances and related",CAS-50-23-7,1,C00735
+128100020,NA,Cortisol,Steroids and related,"Hormones, signal substances and related",CAS-50-23-7,1,C00735
+78100002,NA,Homovanillic acid (HVA),Catecholamine catabolites,"Hormones, signal substances and related",CAS-306-08-1,1,C05582
+78100006,NA,"3,4-Dihydroxyphenylacetic acid (DOPAC)",Catecholamine catabolites,"Hormones, signal substances and related",CAS-102-32-9,1,C01161
+78100008,NA,"3,4-Dihydroxyphenylglycol (DOPEG)",Catecholamine catabolites,"Hormones, signal substances and related",CAS-3343-19-9,1,C05577
+78100010,NA,Serotonin (5-HT),Serotonin and serotonin metabolism,"Hormones, signal substances and related",CAS-50-67-9,1,C00780
+78100012,NA,Normetanephrine,Catecholamine catabolites,"Hormones, signal substances and related",CAS-97-31-4,1,C05589
+78100018,NA,Noradrenaline (Norepinephrine),Catecholamines,"Hormones, signal substances and related",CAS-51-41-2,1,C00547
+78100024,NA,"3,4-Dihydroxyphenylalanine (DOPA)",Catecholamine precursors,"Hormones, signal substances and related",CAS-59-92-7,1,C00355
+78100025,NA,4-Hydroxy-3-methoxymandelic acid,Catecholamine catabolites,"Hormones, signal substances and related",CAS-55-10-7,1,NA
+78100029,NA,3-Methoxytyrosine,Catecholamine catabolites,"Hormones, signal substances and related",CAS-300-48-1,1,NA
+78100033,NA,4-Hydroxy-3-methoxyphenylglycol (HMPG),Catecholamine catabolites,"Hormones, signal substances and related",CAS-27391-18-0,1,NA
+78100035,NA,Histamine,"Other hormones, signal substances and related","Hormones, signal substances and related",CAS-51-45-6,1,C00388
+248100014,NA,Thromboxane B2,"Eicosanoids, cyclooxygenase branch","Hormones, signal substances and related",CAS-54397-85-2,1,C05963
+248100020,NA,Prostaglandin E2,"Eicosanoids, cyclooxygenase branch","Hormones, signal substances and related",CAS-363-24-6,1,C00584
+248100040,NA,"12-Hydroxyheptadecatrienoic acid (C17:[5,8,10]3) (12-HHT)","Eicosanoids, cyclooxygenase branch","Hormones, signal substances and related",CAS-50683-78-8,1,NA
+248100045,NA,conjugated 13-Hydroxylinoleic acid (C18:cis[9]trans[11]2),"Eicosanoids, lipoxygenase branch","Hormones, signal substances and related","CAS- 73804-64-5 , CAS-5204-88-6 , CAS- 73804-64-5",1,C01967
+248100047,NA,conjugated 9-Hydroxylinoleic acid (C18:trans[10]cis[12]2),"Eicosanoids, lipoxygenase branch","Hormones, signal substances and related","CAS-15514-85-9 , CAS-98524-19-7 , CAS-98524-19-7",1,C01967
+248100051,NA,"11-Hydroxyeicosatetraenoic acid (C20:cis[5,8,12,14]4) (11-HETE)","Eicosanoids, lipoxygenase branch","Hormones, signal substances and related","CAS-73347-43-0 , CAS-73804-65-6 , CAS-73804-65-6",1,NA
+248100053,NA,"15-Hydroxyeicosatetraenoic acid (C20:cis[5,8,11,13]4) (15-HETE)","Eicosanoids, lipoxygenase branch","Hormones, signal substances and related",CAS-54845-95-3,1,NA
+248100054,NA,"8-Hydroxyeicosatetraenoic acid (C20:trans[5]cis[9,11,14]4) (8-HETE)","Eicosanoids, lipoxygenase branch","Hormones, signal substances and related","CAS-79495-84-4 , CAS-98462-03-4 , CAS-79495-84-4",1,NA
+248100057,NA,"5-Hydroxyeicosatetraenoic acid (C20:trans[6]cis[8,11,14]4) (5-HETE)","Eicosanoids, lipoxygenase branch","Hormones, signal substances and related",CAS-70608-72-9,1,NA
+248100058,NA,"12-Hydroxyeicosatetraenoic acid (C20:cis[5,8,10,14]4) (12-HETE)","Eicosanoids, lipoxygenase branch","Hormones, signal substances and related",CAS-71030-37-0,1,NA
+248100068,NA,"14,15-Dihydroxyeicosatrienoic acid (C20:cis[5,8,11]3) (14,15-DiHETrE)","Eicosanoids, cytochrome p450 epoxygenase branch","Hormones, signal substances and related",CAS-77667-09-5,1,NA
+248100070,NA,"11,12-Dihydroxyeicosatrienoic acid (C20:cis[5,8,14]3) (11,12-DiHETrE)","Eicosanoids, cytochrome p450 epoxygenase branch","Hormones, signal substances and related",CAS-192461-95-3,1,NA
+248100072,NA,"8,9-Dihydroxyeicosatrienoic acid (C20:cis[5,11,14]3) (8,9-DiHETrE)","Eicosanoids, cytochrome p450 epoxygenase branch","Hormones, signal substances and related",CAS-192461-96-4,1,NA
+NA,NA,Adenosine triphosphate (ATP),NA,NA,NA,NA,C00002
+NA,NA,Nicotinamide adenine dinucleotide (NAD),NA,NA,NA,NA,C00003
+NA,NA,"Nicotinamide adenine dinucleotide, reduced (NADH)",NA,NA,NA,NA,C00004
+NA,NA,Pyrophosphate (PPi),NA,NA,NA,NA,C00013
+NA,NA,Flavin adenine dinucleotide (FAD),NA,NA,NA,NA,C00016
+NA,NA,Adenosine monophosphate (AMP),NA,NA,NA,NA,C00020
+NA,NA,Tetradecanol,NA,NA,NA,NA,C00032309
+NA,NA,Glutamine (additional: Lysine),NA,NA,NA,NA,C00047
+NA,NA,Uracil,NA,NA,NA,NA,C00106
+NA,NA,"Uracil, lipid fraction",NA,NA,NA,NA,C00106
+NA,NA,Isopentenyl pyrophosphate (IPP),NA,NA,NA,NA,C00129
+NA,NA,Adenine,NA,NA,NA,NA,C00147
+NA,NA,"Diacylglycerol (C34:0) (additional: Diacylglycerol (C14:0,C20:0), Diacylglycerol (C16:0,C18:0))",NA,NA,NA,NA,C00166
+NA,NA,"Diacylglycerol (C38:2) (additional: Diacylglycerol (C18:1,C20:1))",NA,NA,NA,NA,C00171
+NA,NA,Ethanolamine,NA,NA,NA,NA,C00189
+NA,NA,CER_Ceramide (C38:1),NA,NA,NA,NA,C00195
+NA,NA,CER_Ceramide (C38:3),NA,NA,NA,NA,C00195
+NA,NA,CER_Ceramide (C40:0),NA,NA,NA,NA,C00195
+NA,NA,CER_Ceramide (C40:1),NA,NA,NA,NA,C00195
+NA,NA,CER_Ceramide (C40:2),NA,NA,NA,NA,C00195
+NA,NA,CER_Ceramide (C41:1),NA,NA,NA,NA,C00195
+NA,NA,CER_Ceramide (C41:3),NA,NA,NA,NA,C00195
+NA,NA,CER_Ceramide (C42:0),NA,NA,NA,NA,C00195
+NA,NA,CER_Ceramide (C42:4),NA,NA,NA,NA,C00195
+NA,NA,"CER_Ceramide (d18:1,C18:1)",NA,NA,NA,NA,C00195
+NA,NA,"CER_Ceramide (d18:2,C23:1)",NA,NA,NA,NA,C00195
+NA,NA,CER_Ceramide(C41:2),NA,NA,NA,NA,C00195
+NA,NA,Adenosine,NA,NA,NA,NA,C00212
+NA,NA,Ribulose-5-phosphate,NA,NA,NA,NA,C00231
+NA,NA,Pyridoxal,NA,NA,NA,NA,C00250
+NA,NA,Nicotinic acid,NA,NA,NA,NA,C00253
+NA,NA,Riboflavin,NA,NA,NA,NA,C00255
+NA,NA,Gluconic acid (additional: Gluconolacton),NA,NA,NA,NA,C00257
+NA,NA,Arabinose,NA,NA,NA,NA,C00259
+NA,NA,Homoserine,NA,NA,NA,NA,C00263
+NA,NA,"5,6,7,8-Tetrahydrobiopterin",NA,NA,NA,NA,C00272
+NA,NA,Inosine,NA,NA,NA,NA,C00294
+NA,NA,Spermidine,NA,NA,NA,NA,C00315
+NA,NA,Phosphatidylglycerol (C36:3),NA,NA,NA,NA,C00344
+NA,NA,O-Phosphoethanolamine,NA,NA,NA,NA,C00346
+NA,NA,Choline ether lipid (C34:2),NA,NA,NA,NA,C00350
+NA,NA,Choline ether lipid (C40:6),NA,NA,NA,NA,C00350
+NA,NA,"Fructose-1,6-diphosphate",NA,NA,NA,NA,C00354
+NA,NA,Thiamine,NA,NA,NA,NA,C00378
+NA,NA,Cytosine (additional: 2'-Deoxycytidine),NA,NA,NA,NA,C00380
+NA,NA,Guanosine,NA,NA,NA,NA,C00387
+NA,NA,"Triacylglycerol (C49:2) (additional: Triacylglycerol (C15:0,C16:0,C18:2), Triacylglycerol (C15:0,C16:1,C18:1))",NA,NA,NA,NA,C00422
+NA,NA,Triacylglycerol (C50:5),NA,NA,NA,NA,C00422
+NA,NA,Hypotaurine,NA,NA,NA,NA,C00519
+NA,NA,SM_Sphingomyelin (C36:0),NA,NA,NA,NA,C00550
+NA,NA,SM_Sphingomyelin (C36:1),NA,NA,NA,NA,C00550
+NA,NA,SM_Sphingomyelin (C38:1),NA,NA,NA,NA,C00550
+NA,NA,SM_Sphingomyelin (C39:1),NA,NA,NA,NA,C00550
+NA,NA,SM_Sphingomyelin (C39:2),NA,NA,NA,NA,C00550
+NA,NA,SM_Sphingomyelin (C40:1),NA,NA,NA,NA,C00550
+NA,NA,SM_Sphingomyelin (C40:2),NA,NA,NA,NA,C00550
+NA,NA,SM_Sphingomyelin (C43:2),NA,NA,NA,NA,C00550
+NA,NA,SM_Sphingomyelin (C43:3),NA,NA,NA,NA,C00550
+NA,NA,SM_Sphingomyelin (C44:1),NA,NA,NA,NA,C00550
+NA,NA,SM_Sphingomyelin (C44:3),NA,NA,NA,NA,C00550
+NA,NA,"SM_Sphingomyelin (d18:0,C15:0)",NA,NA,NA,NA,C00550
+NA,NA,"SM_Sphingomyelin (d18:0,C16:0)",NA,NA,NA,NA,C00550
+NA,NA,"SM_Sphingomyelin (d18:0,C22:0)",NA,NA,NA,NA,C00550
+NA,NA,"SM_Sphingomyelin (d18:2,C18:2)",NA,NA,NA,NA,C00550
+NA,NA,"SM_Sphingomyelin (d19:1,C25:1)",NA,NA,NA,NA,C00550
+NA,NA,"Adenosine monophosphate, cyclic (cAMP)",NA,NA,NA,NA,C00575
+NA,NA,Choline phosphate,NA,NA,NA,NA,C00588
+NA,NA,"1,2-Anhydroribose (additional: Nucleosides)",NA,NA,NA,NA,C00672
+NA,NA,trans-p-Coumaric acid,NA,NA,NA,NA,C00811
+NA,NA,Saccharic acid,NA,NA,NA,NA,C00818
+NA,NA,2-Aminoadipic acid,NA,NA,NA,NA,C00956
+NA,NA,4-Hydroxyphenylpyruvate,NA,NA,NA,NA,C01179
+NA,NA,"1-Phosphatidyl-myo-inositols, total",NA,NA,NA,NA,C01194
+NA,NA,"Glycerophosphoethanolamine, polar fraction",NA,NA,NA,NA,C01233
+NA,NA,16-Methylheptadecanoic acid,NA,NA,NA,NA,C01607
+NA,NA,18-Hydroxy-11-deoxycorticosterone (additional: 11-Deoxycortisol),NA,NA,NA,NA,C01607
+NA,NA,5-Oxoproline,NA,NA,NA,NA,C01879
+NA,NA,"Coenzyme Q9, reduced",NA,NA,NA,NA,C01967
+NA,NA,7-Methylguanine,NA,NA,NA,NA,C02242
+NA,NA,Cystathionine,NA,NA,NA,NA,C02291
+NA,NA,Xanthurenic acid,NA,NA,NA,NA,C02470
+NA,NA,Glutathione (GSH),NA,NA,NA,NA,C02471
+NA,NA,Cholesterylester C22:6,NA,NA,NA,NA,C02530
+NA,NA,N2-Acetyllysine,NA,NA,NA,NA,C02727
+NA,NA,Putrescine (additional: Agmatine),NA,NA,NA,NA,C02896
+NA,NA,Glycerol-2-phosphate,NA,NA,NA,NA,C02979
+NA,NA,"myo-Inositol-2-phosphate (additional: myo-Inositol-1-phosphate, myo-Inositol-4-phosphate)",NA,NA,NA,NA,C03546
+NA,NA,Pinitol,NA,NA,NA,NA,C03844
+NA,NA,N-Acetylglucosamine,NA,NA,NA,NA,C03878
+NA,NA,Taurocholic acid,NA,NA,NA,NA,C05122
+NA,NA,Fructose-6-phosphate,NA,NA,NA,NA,C05345
+NA,NA,"Ethanolamine ether lipid (C36:2) (additional: Ethanolamine plasmanyl (18:0-alkyl,C18:2), Ethanolamine plasmenyl (18:0-vinyl,C18:1))",NA,NA,NA,NA,C05973
+NA,NA,3-Hydroxyisobutyrate,NA,NA,NA,NA,C06001
+NA,NA,O-Phosphotyrosine,NA,NA,NA,NA,C06501
+NA,NA,"Coenzyme Q10, reduced",NA,NA,NA,NA,C11378
+NA,NA,Eicosadienoic acid (C20:2) No 02,NA,NA,NA,NA,C16525
+NA,NA,Eicoasenoic acid (C20:cis[11]1),NA,NA,NA,NA,C16526
+NA,NA,N-Acetylneuraminic acid,NA,NA,NA,NA,C19910
+NA,NA,7-Ketocholesterol,NA,NA,NA,NA,NA
+NA,NA,"Cholesta-1,3,5-triene",NA,NA,NA,NA,C01673
+NA,NA,Erythronic acid,NA,NA,NA,NA,C01620
+NA,NA,Hydroxyoctadecadienoylcarnitine,NA,NA,NA,NA,NA
+NA,NA,Hydroxyoctadecanoylcarnitine,NA,NA,NA,NA,C03299
+NA,NA,Hydroxyoctadecenoylcarnitine,NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (28800654),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (28800659),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (29800099),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (29800518),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (29801279),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (29801312),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (29801313),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800174),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800176),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800177),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800178),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800179),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800182),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800185),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800187),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800188),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800191),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800195),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800196),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800197),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800198),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800199),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800200),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800201),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800202),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800203),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800208),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800209),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800211),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800212),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800213),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800214),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800215),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800216),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800217),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (68800218),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800020),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800033),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800060),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800077),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800081),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800083),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800086),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800108),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800118),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800121),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800128),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800130),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800137),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800151),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800154),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800166),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800172),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800173),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800446),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800447),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800448),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800449),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800452),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800453),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800455),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800456),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800457),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800458),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800460),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800461),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800462),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800466),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800468),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800469),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800470),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800471),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800473),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800474),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800475),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800476),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800477),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800479),NA,NA,NA,NA,NA
+NA,NA,Unknown lipid (69800480),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (19805511),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (38800418),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (38800589),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (38800781),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (38801137),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (38801139),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (39800389),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (39800418),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (39800430),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (39800449),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (39800471),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (39800992),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (39801139),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (39801255),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (39801829),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (39801907),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (39801927),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (39801929),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (39801933),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800298),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800302),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800304),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800306),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800308),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800309),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800310),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800311),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800313),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800314),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800315),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800316),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800317),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800318),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800319),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800320),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800321),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800322),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800323),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800325),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800326),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800327),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800328),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800330),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800331),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800332),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800333),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800334),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58800336),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805000),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805001),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805002),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805003),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805006),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805007),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805008),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805010),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805013),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805014),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805015),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805016),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805017),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805018),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805019),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805020),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805022),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805024),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805028),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805031),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805032),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805033),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805034),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805035),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805036),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805037),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805038),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805039),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805040),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805041),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805042),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805043),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805044),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805045),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805046),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805047),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805048),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805049),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805050),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805051),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805053),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805054),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805055),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805056),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805058),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805059),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805060),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805061),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805062),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805063),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805064),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805065),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805066),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805067),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805068),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805069),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805070),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805071),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805072),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805073),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805075),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805076),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805079),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805080),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805081),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805082),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805083),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805085),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805086),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805087),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805088),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805089),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805090),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805091),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805092),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805093),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805094),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805095),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805096),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805097),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805098),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805099),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805100),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805101),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805102),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805103),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805104),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805105),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805107),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805108),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805109),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805110),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805111),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805112),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805113),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805114),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805115),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805116),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (58805117),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59800159),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59800818),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59800819),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59800820),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59800821),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805051),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805387),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805478),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805483),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805490),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805500),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805502),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805503),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805507),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805508),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805510),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805511),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805514),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805515),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805516),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805525),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805539),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805558),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805595),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805596),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805597),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805598),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805600),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805602),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805604),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805605),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805606),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805607),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805613),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805615),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805616),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805617),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805622),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805627),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805628),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805631),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805634),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805638),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805642),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805643),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805645),NA,NA,NA,NA,NA
+NA,NA,Unknown polar (59805646),NA,NA,NA,NA,NA
