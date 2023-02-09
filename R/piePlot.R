@@ -248,15 +248,15 @@ piePlot <- function(data,
         colorsOntologyOne$lipidClass,
         nomatch = 0
       )
-    datPie$color <- c("")
-    datPie$color[datPie.lipid$lipidClass %in%
+    datPie.lipid$color <- c("")
+    datPie.lipid$color[datPie.lipid$lipidClass %in%
       colorsOntologyOne$lipidClass] <-
       as.character(colorsOntologyOne$color)[matchColumnColors]
 
     ## plot Pie plots
 
     for (i in seq_along(groups)) {
-      filteredData <- datPie[datPie.lipid$contrast %in% groups[i], ]
+      filteredData <- datPie.lipid[datPie.lipid$contrast %in% groups[i], ]
 
       ## plot
       p <- filteredData %>%
