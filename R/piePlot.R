@@ -216,8 +216,8 @@ piePlot <- function(data,
           gsub("TAG.*", "TAG", Metabolite),
           gsub("[(].*", "", Metabolite)
         )) %>%
-        group_by(contrast, lipid.class) %>%
-        summarise(Freq = length(lipid.class)) %>%
+        group_by(contrast, lipidClass) %>%
+        summarise(Freq = length(lipidClass)) %>%
         arrange(lipid.class) %>%
         ungroup()
     } else {
@@ -225,9 +225,9 @@ piePlot <- function(data,
         dplyr::filter(adj.P.Val < cutoff) %>%
         drop_na(MetaboliteClass) %>%
         dplyr::filter(grepl("Complex lipids", MetaboliteClass)) %>%
-        group_by(contrast, lipid.class) %>%
-        summarise(Freq = length(lipid.class)) %>%
-        arrange(lipid.class) %>%
+        group_by(contrast, lipidClass) %>%
+        summarise(Freq = length(lipidClass)) %>%
+        arrange(lipidClass) %>%
         ungroup()
     }
 
@@ -237,20 +237,20 @@ piePlot <- function(data,
     ## colors
     colorsOntologyOne <-
       data.frame(
-        lipid.class = unique(datPie.lipid$lipid.class),
+        lipid.class = unique(datPie.lipid$lipidClass),
         color = colorRampPalette(RColorBrewer::brewer.pal(9, "Set1"))(length(
-          unique(datPie.lipid$lipid.class)
+          unique(datPie.lipid$lipidClass)
         ))
       )
     ## match colors
     matchColumnColors <-
-      match(datPie.lipid$lipid.class,
-        colorsOntologyOne$lipid.class,
+      match(datPie.lipid$lipidClass,
+        colorsOntologyOne$lipidClass,
         nomatch = 0
       )
     datPie$color <- c("")
-    datPie$color[datPie.lipid$lipid.class %in%
-      colorsOntologyOne$lipid.class] <-
+    datPie$color[datPie.lipid$lipidClass %in%
+      colorsOntologyOne$lipidClass] <-
       as.character(colorsOntologyOne$color)[matchColumnColors]
 
     ## plot Pie plots
@@ -262,7 +262,7 @@ piePlot <- function(data,
       p <- filteredData %>%
         ggplot(aes(x = "", y = Freq)) +
         geom_bar(
-          aes(fill = lipid.class),
+          aes(fill = lipidClass),
           width = 0.1,
           stat = "identity",
           color = "gray50"
