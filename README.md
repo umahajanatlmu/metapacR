@@ -49,5 +49,5 @@ BiocManager::install(packages)
 ```
 ### install package from source  
 ```{r}
-devtools::install_github("umahajanatlmu/metapacR", ref="master", auth_token = "tokenString")
+devtools::install_github("umahajanatlmu/metapacR")
 ```
