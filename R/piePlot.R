@@ -237,7 +237,7 @@ piePlot <- function(data,
     ## colors
     colorsOntologyOne <-
       data.frame(
-        lipid.class = unique(datPie.lipid$lipidClass),
+        lipidClass = unique(datPie.lipid$lipidClass),
         color = colorRampPalette(RColorBrewer::brewer.pal(9, "Set1"))(length(
           unique(datPie.lipid$lipidClass)
         ))
