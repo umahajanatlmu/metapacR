@@ -211,7 +211,7 @@ piePlot <- function(data,
       datPie.lipid <- data %>%
         dplyr::filter(adj.P.Val < cutoff) %>%
         drop_na(MetaboliteClass) %>%
-        filter(Metabolite == "Complex lipids") %>%
+        dplyr::filter(Metabolite == "Complex lipids") %>%
         mutate(lipid.class = ifelse(grepl("^TAG", Metabolite),
           gsub("TAG.*", "TAG", Metabolite),
           gsub("[(].*", "", Metabolite)
@@ -224,7 +224,7 @@ piePlot <- function(data,
       datPie.lipid <- data %>%
         dplyr::filter(adj.P.Val < cutoff) %>%
         drop_na(MetaboliteClass) %>%
-        filter(grepl("Complex lipids", MetaboliteClass)) %>%
+        dplyr::filter(grepl("Complex lipids", MetaboliteClass)) %>%
         group_by(contrast, lipid.class) %>%
         summarise(Freq = length(lipid.class)) %>%
         arrange(lipid.class) %>%
