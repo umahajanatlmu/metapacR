@@ -115,7 +115,7 @@ boxPlots <- function(dataList,
         dodge = 1,
         step.increase = 0.15
       ) %>%
-      filter(p.adj.signif != "ns")
+      dplyr::filter(p.adj.signif != "ns")
 
     ## plot
     p <- ggplot(
