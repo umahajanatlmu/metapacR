@@ -35,7 +35,7 @@ piePlot <- function(data,
                     fig.height = 9,
                     dpi = 300) {
   stopifnot(inherits(data, "data.frame"))
-  validObject(dataList)
+  validObject(data)
 
   save <- match.arg(save, c("pdf", "svg", "png"))
 
