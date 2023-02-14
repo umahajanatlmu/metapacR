@@ -49,8 +49,8 @@ Imports:
     umap (>= 0.2.8.0),
     utils (>= 4.0.4)
 Suggests: 
-    knitr (>= 1.41),
-    rmarkdown (>= 2.18),
+    knitr (>= 1.40),
+    rmarkdown (>= 2.16),
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
 RoxygenNote: 7.2.1
