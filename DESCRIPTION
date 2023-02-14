@@ -1,19 +1,18 @@
-Package: metapacR
 Type: Package
+Package: metapacR
 Title: Data Mining and Analysis of Metabolome Datasets
 Version: 0.1.0
 Author: Ujjwal Mukund Mahajan
 Maintainer: Ujjwal Mukund Mahajan <umahajan@med.lmu.de>
-Description: metapacR is an easy-to-use R package implementing a complete workflow 
-    for downstream analysis of targeted and untargeted metabolome data. 
-    Metabolome results can be imported into metapacR as a numerical matrix,
-    allowing integration into current analysis frameworks. Data mining of metapacR 
-    datasets is enabled through integration with Metabolomics Workbench. metapacR 
-    allows data inspection, normalization, univariate and multivariate analysis, 
-    displaying informative visualizations.
+Description: metapacR is an easy-to-use R package implementing a complete
+    workflow for downstream analysis of targeted and untargeted metabolome
+    data.  Metabolome results can be imported into metapacR as a numerical
+    matrix, allowing integration into current analysis frameworks. Data
+    mining of metapacR datasets is enabled through integration with
+    Metabolomics Workbench. metapacR allows data inspection,
+    normalization, univariate and multivariate analysis, displaying
+    informative visualizations.
 License: CC BY 4.0
-Encoding: UTF-8
-LazyData: true
 Depends: 
     R (>= 4.0.4)
 Imports:
@@ -22,8 +21,8 @@ Imports:
     condformat (>= 0.9.0),
     emmeans (>= 1.7.2),
     FELLA (>= 1.10.0),
-    ggpmisc (>= 0.4.5),
     ggplot2 (>= 3.3.5),
+    ggpmisc (>= 0.4.5),
     ggpubr (>= 0.4.0),
     ggrepel (>= 0.9.1),
     ggtree (>= 3.2.1),
@@ -52,6 +51,9 @@ Suggests:
     knitr (>= 1.40),
     rmarkdown (>= 2.16),
     testthat (>= 3.0.0)
-VignetteBuilder: knitr
-RoxygenNote: 7.2.1
+VignetteBuilder: 
+    knitr
 Config/testthat/edition: 3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.1
