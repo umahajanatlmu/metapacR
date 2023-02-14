@@ -69,7 +69,7 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
   # use_data(chemicalMetadata, overwrite = TRUE)
 
   ## define metabolite classes
-  metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG")]
+  metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_ID")]
 
   if (file.exists(paste(ref.path, "keggDB.rds", sep = "/")) == FALSE) {
     ## reference kegg dataset building
@@ -182,6 +182,9 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
   matchColumnID <-
     match(enrichDat$Metabolite, metabolite_class$CHEMICAL_NAME)
   # add names
+  enrichDat$Metabolite[enrichDat$Metabolite %in% metabolite_class$MET_CHEM_ID] <-
+    metabolite_class$CHEMICAL_NAME[matchColumnID]
+  # add kegg ID
   enrichDat$keggID[enrichDat$Metabolite %in% metabolite_class$CHEMICAL_NAME] <-
     metabolite_class$KEGG[matchColumnID]
   ## define direction

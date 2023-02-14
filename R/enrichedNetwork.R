@@ -80,7 +80,7 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
   chemicalMetadata <- force(chemicalMetadata)
 
   ## define metabolite classes
-  metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG")]
+  metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_ID")]
 
   ## load enriched data
   pathDat <- results %>%
@@ -88,16 +88,20 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
   # metabolite ID to kegg ID
   # match ID
   matchColumnID <-
-    match(pathDat$Metabolite, metabolite_class$CHEMICAL_NAME)
+    match(pathDat$Metabolite, metabolite_class$MET_CHEM_NO)
   # add names
+  pathDat$Metabolite[pathDat$Metabolite %in% metabolite_class$MET_CHEM_ID] <-
+    metabolite_class$CHEMICAL_NAME[matchColumnID]
+  ## add kegg ID
   pathDat$keggID[pathDat$Metabolite %in% metabolite_class$CHEMICAL_NAME] <-
     metabolite_class$KEGG[matchColumnID]
   ## define direction
   pathDat$direction <- ifelse(log2(pathDat$logFC) > fold.changes.cutoff, "up",
-    ifelse(log2(pathDat$logFC) < -fold.changes.cutoff, "down",
-      "nochange"
-    )
+                              ifelse(log2(pathDat$logFC) < -fold.changes.cutoff, "down",
+                                     "nochange"
+                              )
   )
+
 
   ## identify pathways associated with obtained metabolites
 

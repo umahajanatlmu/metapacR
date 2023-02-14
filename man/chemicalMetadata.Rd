@@ -7,6 +7,7 @@
 \format{
 \describe{
         \item{CHEM_ID}{Chemical id}
+        \item{MET_CHEM_NO}{Chemical id}
         \item{LIB_ID}{library id}
         \item{COMP_ID}{CCompound id}
         \item{CHRO_LIB_ENTRY_ID}{CHRO_LIB_ENTRY_ID}
