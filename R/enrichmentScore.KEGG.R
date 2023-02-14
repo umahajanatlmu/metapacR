@@ -33,8 +33,7 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
                                  save = c("pdf", "svg", "png"),
                                  fig.width = 12,
                                  fig.height = 9,
-                                 dpi = 300,
-                                 chemicalMetadata = chemicalMetadata) {
+                                 dpi = 300) {
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
 
