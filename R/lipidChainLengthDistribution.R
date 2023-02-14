@@ -77,10 +77,10 @@ lipidChainLengthDistribution <- function(results,
       mutate(across(everything(), as.character))
 
     ## define metabolites
-    data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
-      data[["Metabolite"]], metabolite.class[["MET_CHEM_NO"]]
+    results[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
+      results[["Metabolite"]], metabolite.class[["MET_CHEM_NO"]]
     )]
-    data <- data %>%
+    results <- results %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
       rename(c(
         "MetaboliteName" = "CHEMICAL_NAME"
