@@ -74,12 +74,11 @@ piePlot <- function(data,
 
     ## define metabolites
     data[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
-      data[["Metabolite"]], metabolite.class[["CHEMICAL_NAME"]]
+      data[["Metabolite"]], metabolite.class[["MET_CHEM_NO"]]
     )]
     data <- data %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
       rename(c(
-        "MetaboliteClass" = "SUPER_PATHWAY",
         "MetaboliteName" = "CHEMICAL_NAME"
       ))
   }
