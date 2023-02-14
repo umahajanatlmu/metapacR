@@ -120,7 +120,7 @@ lipidChainLengthCorrelation <- function(results,
 
   if (data.type == "Metabolon") {
     res <- results %>%
-      filter(MetaboliteClass == "Complex lipids") %>%
+      dplyr::filter(MetaboliteClass == "Complex lipids") %>%
       mutate(newMet = Metabolite) %>%
       mutate(newMet = gsub("O-|P-", "", newMet)) %>%
       separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
@@ -139,7 +139,7 @@ lipidChainLengthCorrelation <- function(results,
       ))
   } else {
     res <- results %>%
-      filter(grepl("Complex lipids", MetaboliteClass)) %>%
+      dplyr::filter(grepl("Complex lipids", MetaboliteClass)) %>%
       mutate(newMet = Metabolite) %>%
       mutate(newMet = gsub("O-|P-", "", newMet)) %>%
       separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
@@ -163,7 +163,7 @@ lipidChainLengthCorrelation <- function(results,
 
   for (i in groups) {
     res.subset <- res %>%
-      filter(contrast == i)
+      dplyr::filter(contrast == i)
 
     p <- ggplot(
       res.subset,

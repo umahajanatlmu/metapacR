@@ -125,8 +125,8 @@ lipidChainLengthDistribution <- function(results,
   if (data.type == "Metabolon") {
     ## subset chain lengths
     results <- results %>%
-      filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
-      filter(MetaboliteClass == "Complex lipids") %>%
+      dplyr::filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
+      dplyr::filter(MetaboliteClass == "Complex lipids") %>%
       mutate(newMet = Metabolite) %>%
       mutate(newMet = gsub("O-|P-", "", newMet)) %>%
       separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
@@ -150,8 +150,8 @@ lipidChainLengthDistribution <- function(results,
       ))
   } else {
     results <- results %>%
-      filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
-      filter(grepl("Complex lipids", MetaboliteClass)) %>%
+      dplyr::filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
+      dplyr::filter(grepl("Complex lipids", MetaboliteClass)) %>%
       mutate(newMet = Metabolite) %>%
       mutate(newMet = gsub("O-|P-", "", newMet)) %>%
       separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
@@ -178,7 +178,7 @@ lipidChainLengthDistribution <- function(results,
   groups <- unique(results$contrast)
   for (i in groups) {
     p <- results %>%
-      filter(contrast == i) %>%
+      dplyr::filter(contrast == i) %>%
       ggplot(aes(
         x = lipid.class,
         y = fatty.acid,
