@@ -34,6 +34,7 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
                                  fig.width = 12,
                                  fig.height = 9,
                                  dpi = 300) {
+
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
 
@@ -45,8 +46,8 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
   if (is.null(ref.path)) {
     ref.path <- here::here()
     ifelse(!dir.exists(file.path(paste0(ref.path), "results")),
-      dir.create(file.path(paste0(ref.path), "results")),
-      FALSE
+           dir.create(file.path(paste0(ref.path), "results")),
+           FALSE
     )
     path <- paste(ref.path, "results", sep = "/")
   } else {
@@ -55,7 +56,7 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
 
   if (save == "pdf") {
     pdf(paste(ref.path, "KEGG.enrichmentScore.pdf", sep = "/"),
-      onefile = TRUE
+        onefile = TRUE
     )
   } else if (save != "pdf") {
     dir.create(paste(ref.path, "KEGG.enrichmentScore", sep = "/"))
@@ -64,11 +65,12 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
   ## load annotation file
   data("chemicalMetadata")
   chemicalMetadata <- force(chemicalMetadata)
-  # chemicalMetadata <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
-  # use_data(chemicalMetadata, overwrite = TRUE)
-
   ## define metabolite classes
-  metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_ID")]
+  columnToSelect <- c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_NO")
+  metabolite_class <- chemicalMetadata %>%
+    dplyr::select(any_of(columnToSelect)) %>%
+    separate_rows(KEGG, sep=",") %>%
+    mutate(KEGG=trimws(KEGG))
 
   if (file.exists(paste(ref.path, "keggDB.rds", sep = "/")) == FALSE) {
     ## reference kegg dataset building
@@ -78,7 +80,6 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
 
     ## empty data-frame
     keggReferenceDB <- data.frame()
-
 
     ## reference KEGG List
 
@@ -120,7 +121,7 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
 
   ## tidy reference list
   keggReferenceDBList <- keggReferenceDB %>%
-    select(pathway, pathwayName, compoundID) %>%
+    dplyr::select(pathway, pathwayName, compoundID) %>%
     separate_rows(compoundID)
 
   ## length of compounds
@@ -160,7 +161,7 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
           )
         )) +
           ((nCompoundkeggReferenceDBList * dupliMetaboliteOccurances[iii, "Percent"]) /
-            100)
+             100)
         keggReferenceDB[jj, "nCompoundAdjusted"] <- as.numeric(round(count))
       }
     }
@@ -170,30 +171,24 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
   for (ii in 1:nrow(dupliMetaboliteOccurances)) {
     nCompoundkeggReferenceDBListAdjusted <- round(nCompoundkeggReferenceDBListAdjusted + ((
       nCompoundkeggReferenceDBListAdjusted * dupliMetaboliteOccurances[ii, "Percent"]) /
-      100))
+        100))
   }
 
   ## load enriched data
   enrichDat <- results %>%
-    dplyr::filter(adj.P.Val < p.value.cutoff)
-  # metabolite ID to kegg ID
-  # match ID
-  matchColumnID <-
-    match(enrichDat$Metabolite, metabolite_class$CHEMICAL_NAME)
-  # add names
-  enrichDat$Metabolite[enrichDat$Metabolite %in% metabolite_class$MET_CHEM_ID] <-
-    metabolite_class$CHEMICAL_NAME[matchColumnID]
-  # add kegg ID
-  enrichDat$keggID[enrichDat$Metabolite %in% metabolite_class$CHEMICAL_NAME] <-
-    metabolite_class$KEGG[matchColumnID]
+    dplyr::filter(adj.P.Val < p.value.cutoff) %>%
+    full_join(metabolite_class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+    dplyr::rename("keggID" ="KEGG")
+
   ## define direction
   enrichDat$direction <- ifelse(log2(enrichDat$logFC) > fold.changes.cutoff, "up",
-    ifelse(log2(enrichDat$logFC) < -fold.changes.cutoff, "down",
-      "nochange"
-    )
+                                ifelse(log2(enrichDat$logFC) < -fold.changes.cutoff, "down",
+                                       "nochange"
+                                )
   )
+
   ## define groups
-  groups <- unique(enrichDat$contrast)
+  groups <- na.omit(unique(enrichDat$contrast))
 
   ## enrichement pathway
 

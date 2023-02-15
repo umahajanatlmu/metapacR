@@ -53,14 +53,14 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
 
-  species <- match.arg(species)
-  save <- match.arg(save)
+  species <- match.arg(species,c("hsa", "mmu"))
+  save <- match.arg(save,c("pdf", "svg", "png"))
 
   if (is.null(ref.path)) {
     ref.path <- here::here()
     ifelse(!dir.exists(file.path(paste0(ref.path), "results")),
-      dir.create(file.path(paste0(ref.path), "results")),
-      FALSE
+           dir.create(file.path(paste0(ref.path), "results")),
+           FALSE
     )
     path <- paste(ref.path, "results", sep = "/")
   } else {
@@ -69,7 +69,7 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
 
   if (save == "pdf") {
     pdf(paste(ref.path, "diffAbundenceScore.pdf", sep = "/"),
-      onefile = TRUE
+        onefile = TRUE
     )
   } else if (save != "pdf") {
     dir.create(paste(ref.path, "diffAbundenceScore", sep = "/"))
@@ -80,62 +80,42 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
   chemicalMetadata <- force(chemicalMetadata)
 
   ## define metabolite classes
-  metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_ID")]
+  columnToSelect <- c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_NO")
+  metabolite_class <- chemicalMetadata %>%
+    dplyr::select(any_of(columnToSelect)) %>%
+    separate_rows(KEGG, sep=",") %>%
+    mutate(KEGG=trimws(KEGG))
 
   ## load enriched data
   pathDat <- results %>%
-    dplyr::filter(adj.P.Val < p.value.cutoff)
-  # metabolite ID to kegg ID
-  # match ID
-  matchColumnID <-
-    match(pathDat$Metabolite, metabolite_class$MET_CHEM_NO)
-  # add names
-  pathDat$Metabolite[pathDat$Metabolite %in% metabolite_class$MET_CHEM_ID] <-
-    metabolite_class$CHEMICAL_NAME[matchColumnID]
-  ## add kegg ID
-  pathDat$keggID[pathDat$Metabolite %in% metabolite_class$CHEMICAL_NAME] <-
-    metabolite_class$KEGG[matchColumnID]
-  ## define direction
-  pathDat$direction <- ifelse(log2(pathDat$logFC) > fold.changes.cutoff, "up",
-    ifelse(log2(pathDat$logFC) < -fold.changes.cutoff, "down",
-      "nochange"
-    )
-  )
+    dplyr::filter(adj.P.Val < p.value.cutoff) %>%
+    left_join(metabolite_class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+    dplyr::rename(keggID =KEGG) %>%
+    drop_na(keggID)
 
-  ## identify pathways associated with obtained metabolites
+  keggTest <- KEGGREST::keggLink("pathway", unique(pathDat$keggID))
+  keggTest <- data.frame(keggID=names(keggTest), keggPath=keggTest, row.names = NULL)
+  keggTest$keggID <- gsub("^.*?:", "", keggTest$keggID)
+  keggTest$keggPath <- gsub("path:map", "", keggTest$keggPath)
 
-  keggTest <- KEGGREST::keggLink("pathway", sort(unique(pathDat$keggID)))
-  rownames <- names(keggTest)
-  keggTest <- as.data.frame(gsub("path:map", "", keggTest))
-  rownames <- gsub("^.*?:", "", rownames)
-  keggTest <- cbind(rownames, keggTest)
-  names(keggTest) <- c("keggID", "keggPath")
-
-  ## identify reference pathways wrt species
-
+  # identify reference pathways wrt species
   keggRef <- KEGGREST::keggLink("pathway", species)
+  keggRef <- data.frame(geneID=names(keggRef), keggPath=keggRef, row.names = NULL)
   # rownamesRef <- names(keggRef)  ## gene ID
-  keggRef <- as.data.frame(gsub(paste0("path:", species), "", keggRef))
-  # rownamesRef <- gsub("^.*?:","",rownamesRef) ## gene ID
-  # keggRef <- cbind(rownamesRef, keggRef) ## gene ID
-  names(keggRef) <- c("keggPath")
-
-  ## Merge two datasets
-
-  keggDf <- keggTest[keggTest$keggPath %in% keggRef$keggPath, ]
-  keggDf$keggPath <- paste0(species, keggDf$keggPath)
+  keggRef$keggPath <- gsub(paste0("path:", species), "", keggRef$keggPath)
 
   ## select pathway dataset
-  pathDatDas <- keggDf %>%
-    full_join(pathDat, by = "keggID") %>%
+  pathDatDas <- keggRef %>%
+    inner_join(keggTest, by ="keggPath") %>%
+    inner_join(pathDat, by = "keggID") %>%
     group_by(contrast, keggPath) %>%
     mutate(direction = ifelse(log2(logFC) > fold.changes.cutoff, "positive",
-      ifelse(log2(logFC) < -fold.changes.cutoff, "negative",
-        "nochange"
-      )
+                              ifelse(log2(logFC) < -fold.changes.cutoff, "negative",
+                                     "nochange"
+                              )
     )) %>%
     dplyr::filter(direction != "nochange") %>%
-    select(contrast, keggPath, direction) %>%
+    dplyr::select(contrast, keggPath, direction) %>%
     drop_na() %>%
     mutate(count = n()) %>%
     reshape2::dcast(contrast + keggPath ~ direction, value.var = "count") %>%
@@ -143,7 +123,9 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
     ##  more than 15 metabolites in common
     dplyr::filter((positive + negative) > common.mets) %>%
     mutate(das = (positive - negative) /
-      (positive + negative))
+             (positive + negative)) %>%
+    ungroup() %>%
+    mutate(keggPath = paste0("hsa", keggPath))
 
   ## create pathway annotations
 
@@ -164,7 +146,7 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
   }
   ## join annotation data-frame with pathway data
   pathDatDas <- pathDatDas %>%
-    full_join(annotation, by = "keggPath")
+    inner_join(annotation, by = "keggPath")
 
   # ## add ceramides and sphigomylins subclass
   # subclass <- keggTest %>%
@@ -186,7 +168,7 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
   ## differential abundance score
 
   ## select groups
-  groups <- unique(pathDatDas$contrast)
+  groups <- na.omit(unique(pathDatDas$contrast))
 
   for (j in seq_along(groups)) {
     ## filtered dataset

@@ -33,6 +33,8 @@ Imports:
     KEGGREST (>= 1.30.1),
     methods (>= 4.0.4),
     nlme (>= 3.1-155),
+    org.Hs.eg.db (>= 3.12.0),
+    org.Mm.eg.db (>= 3.12.0),
     patchwork (>= 1.1.1),
     pheatmap (>= 1.0.12),
     pROC (>= 1.18.0),

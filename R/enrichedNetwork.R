@@ -21,6 +21,8 @@
 #' @import grDevices
 #' @importFrom sjPlot save_plot
 #' @importFrom KEGGREST keggLink
+#' @importFrom org.Hs.eg.db org.Hs.egSYMBOL2EG
+#' @importFrom org.Mm.eg.db org.Mm.egSYMBOL2EG
 #' @import stats
 #' @importFrom FELLA buildGraphFromKEGGREST buildDataFromGraph loadKEGGdata getCom enrich generateResultsGraph getPscores generateResultsTable
 #' @import igraph
@@ -47,8 +49,7 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
 
-  species <- match.arg(species, c("hsa", "mmu"))
-  network.method <- match.arg(network.method)
+  species <- match.arg(species,c("hsa", "mmu"))
   save <- match.arg(save, c("pdf", "svg", "png"))
 
   enrichment.results <- data.frame()
@@ -58,8 +59,8 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
   if (is.null(ref.path)) {
     ref.path <- here::here()
     ifelse(!dir.exists(file.path(paste0(ref.path), "results")),
-      dir.create(file.path(paste0(ref.path), "results")),
-      FALSE
+           dir.create(file.path(paste0(ref.path), "results")),
+           FALSE
     )
     path <- paste(ref.path, "results", sep = "/")
   } else {
@@ -68,8 +69,8 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
 
   if (save == "pdf") {
     pdf(paste(ref.path, "enrichmentNetwork.pdf", sep = "/"),
-      paper = "a4r",
-      onefile = TRUE
+        paper = "a4r",
+        onefile = TRUE
     )
   } else if (save != "pdf") {
     dir.create(paste(ref.path, "enrichmentNetwork", sep = "/"))
@@ -80,21 +81,22 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
   chemicalMetadata <- force(chemicalMetadata)
 
   ## define metabolite classes
-  metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_ID")]
+  metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_NO")]
+
+  ## define metabolite classes
+  columnToSelect <- c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_NO")
+  metabolite_class <- chemicalMetadata %>%
+    dplyr::select(any_of(columnToSelect)) %>%
+    separate_rows(KEGG, sep=",") %>%
+    mutate(KEGG=trimws(KEGG))
 
   ## load enriched data
   pathDat <- results %>%
-    dplyr::filter(adj.P.Val < p.value.cutoff)
-  # metabolite ID to kegg ID
-  # match ID
-  matchColumnID <-
-    match(pathDat$Metabolite, metabolite_class$MET_CHEM_NO)
-  # add names
-  pathDat$Metabolite[pathDat$Metabolite %in% metabolite_class$MET_CHEM_ID] <-
-    metabolite_class$CHEMICAL_NAME[matchColumnID]
-  ## add kegg ID
-  pathDat$keggID[pathDat$Metabolite %in% metabolite_class$CHEMICAL_NAME] <-
-    metabolite_class$KEGG[matchColumnID]
+    dplyr::filter(adj.P.Val < p.value.cutoff) %>%
+    left_join(metabolite_class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+    dplyr::rename(keggID = KEGG) %>%
+    drop_na(keggID)
+
   ## define direction
   pathDat$direction <- ifelse(log2(pathDat$logFC) > fold.changes.cutoff, "up",
                               ifelse(log2(pathDat$logFC) < -fold.changes.cutoff, "down",
@@ -102,36 +104,22 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
                               )
   )
 
-
-  ## identify pathways associated with obtained metabolites
-
-  keggTest <- KEGGREST::keggLink("pathway", sort(unique(pathDat$keggID)))
-  rownames <- names(keggTest)
-  keggTest <- as.data.frame(gsub("path:map", "", keggTest))
-  rownames <- gsub("^.*?:", "", rownames)
-  keggTest <- cbind(rownames, keggTest)
-  names(keggTest) <- c("keggID", "keggPath")
-
   ## identify reference pathways wrt species
+  keggTest <- KEGGREST::keggLink("pathway", unique(pathDat$keggID))
+  keggTest <- data.frame(keggID=names(keggTest), keggPath=keggTest, row.names = NULL)
+  keggTest$keggID <- gsub("^.*?:", "", keggTest$keggID)
+  keggTest$keggPath <- gsub("path:map", "", keggTest$keggPath)
 
+  # identify reference pathways wrt species
   keggRef <- KEGGREST::keggLink("pathway", species)
+  keggRef <- data.frame(geneID=names(keggRef), keggPath=keggRef, row.names = NULL)
   # rownamesRef <- names(keggRef)  ## gene ID
-  keggRef <- as.data.frame(gsub(paste0("path:", species), "", keggRef))
-  # rownamesRef <- gsub("^.*?:","",rownamesRef) ## gene ID
-  # keggRef <- cbind(rownamesRef, keggRef) ## gene ID
-  names(keggRef) <- c("keggPath")
-
-  ## Merge two datasets
-  keggDf <- keggTest[keggTest$keggPath %in% keggRef$keggPath, ]
-  keggDf$keggPath <- paste0(species, keggDf$keggPath)
+  keggRef$keggPath <- gsub(paste0("path:", species), "", keggRef$keggPath)
 
   ## create pathway fella data
-  pathDatFella <- keggDf %>%
-    full_join(pathDat, by = "keggID", all = FALSE) %>%
-    mutate(
-      keggPath = gsub(species, "", keggPath),
-      keggID = gsub(" ", "", keggID)
-    ) %>%
+  pathDatFella <- keggRef %>%
+    inner_join(keggTest, by ="keggPath") %>%
+    inner_join(pathDat, by = "keggID") %>%
     drop_na(contrast)
 
 
@@ -155,9 +143,9 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
     niter = 250
   )
   if (species == "hsa") {
-    alias2entrez <- as.list(org.Hs.egSYMBOL2EG)
+    alias2entrez <- as.list(org.Hs.eg.db::org.Hs.egSYMBOL2EG)
   } else if (species == "mmu") {
-    alias2entrez <- as.list(org.Mm.egSYMBOL2EG)
+    alias2entrez <- as.list(org.Mm.eg.db::org.Mm.egSYMBOL2EG)
   }
 
   ## get associated pathways
@@ -175,18 +163,18 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
 
   ## compound
   idCpd <- FELLA::getCom(fellaData,
-    level = 5,
-    format = "id"
+                         level = 5,
+                         format = "id"
   ) %>% names()
   ## reaction
   idRx <- FELLA::getCom(fellaData,
-    level = 4,
-    format = "id"
+                        level = 4,
+                        format = "id"
   ) %>% names()
   ## enzymes
   idEc <- FELLA::getCom(fellaData,
-    level = 3,
-    format = "id"
+                        level = 3,
+                        format = "id"
   ) %>% names()
 
   groups <- unique(pathDatFella$contrast)
@@ -280,7 +268,8 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
     clust <- clust %>%
       drop_na() %>%
       group_by(cl) %>%
-      summarise(desc = paste(desc, collapse = ":"))
+      summarise(desc = paste(desc, collapse = ":")) %>%
+      ungroup()
 
     n <- legend.pathway
     pat <- paste0("^([^:]+(?::[^:]+){", n - 1, "}).*")
@@ -310,24 +299,25 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
     }
 
     ## plot grid
-    par(mfrow = c(1, 2))
+    #par(mfrow = c(1, 2))
 
     ## plot
     plot(clp,
-      unionGraphUndir,
-      alpha = 0.5,
-      mark.border = "black",
-      vertex.size = (igraph::V(unionGraphUndir)$input + 0.75) * 5,
-      vertex.label = NA,
-      mark.col = mark.col,
-      main = groups[i]
+         unionGraphUndir,
+         alpha = 0.5,
+         mark.border = "black",
+         vertex.size = (igraph::V(unionGraphUndir)$input + 0.75) * 5,
+         vertex.label = NA,
+         mark.col = mark.col,
+         main = groups[i]
     )
-    plot(NA)
-    legend("center",
-      bty = "n",
-      cex = 0.7,
-      legend = levels(Group),
-      fill = colors
+    legend(bty = "n",
+           cex = 0.7,
+           legend = levels(Group),
+           fill = colors,
+           x="bottom",
+           ncol = 2
+
     )
 
     if (save != "pdf") {
