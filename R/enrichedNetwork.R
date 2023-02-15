@@ -84,7 +84,7 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
 
   ## load enriched data
   pathDat <- results %>%
-    filter(adj.P.Val < p.value.cutoff)
+    dplyr::filter(adj.P.Val < p.value.cutoff)
   # metabolite ID to kegg ID
   # match ID
   matchColumnID <-

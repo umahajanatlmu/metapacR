@@ -175,7 +175,7 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
 
   ## load enriched data
   enrichDat <- results %>%
-    filter(adj.P.Val < p.value.cutoff)
+    dplyr::filter(adj.P.Val < p.value.cutoff)
   # metabolite ID to kegg ID
   # match ID
   matchColumnID <-
@@ -378,7 +378,7 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
     } else if (nrow(enrichTable[enrichTable$pValue < p.value.cutoff, ]) != 0) {
       ## tidy enrichTable
       enrichTable <- enrichTable %>%
-        filter(pValue < p.value.cutoff) %>%
+        dplyr::filter(pValue < p.value.cutoff) %>%
         mutate(enrichment = ifelse(direction == "down", -enrichment, enrichment))
 
       enrichTable$pathway <- paste0(

@@ -84,7 +84,7 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
 
   ## load enriched data
   pathDat <- results %>%
-    filter(adj.P.Val < p.value.cutoff)
+    dplyr::filter(adj.P.Val < p.value.cutoff)
   # metabolite ID to kegg ID
   # match ID
   matchColumnID <-
@@ -134,14 +134,14 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
         "nochange"
       )
     )) %>%
-    filter(direction != "nochange") %>%
+    dplyr::filter(direction != "nochange") %>%
     select(contrast, keggPath, direction) %>%
     drop_na() %>%
     mutate(count = n()) %>%
     reshape2::dcast(contrast + keggPath ~ direction, value.var = "count") %>%
     replace(is.na(.), 0) %>%
     ##  more than 15 metabolites in common
-    filter((positive + negative) > common.mets) %>%
+    dplyr::filter((positive + negative) > common.mets) %>%
     mutate(das = (positive - negative) /
       (positive + negative))
 
