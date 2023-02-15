@@ -13,8 +13,7 @@ enrichmentScore.KEGG(
   save = c("pdf", "svg", "png"),
   fig.width = 12,
   fig.height = 9,
-  dpi = 300,
-  chemicalMetadata = chemicalMetadata
+  dpi = 300
 )
 }
 \arguments{
