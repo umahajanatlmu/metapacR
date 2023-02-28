@@ -163,7 +163,7 @@ distributionPlot <- function(data,
         alpha = 0.5,
         show.legend = FALSE
       ) +
-      facet_grid(. ~ MetaboliteClass) +
+      facet_grid(. ~ MetaboliteClass, scales="free_x") +
       scale_fill_manual(values = unique(filteredData$color)) +
       theme_bw() +
       theme(
@@ -280,7 +280,7 @@ distributionPlot <- function(data,
           alpha = 0.5,
           show.legend = FALSE
         ) +
-        facet_grid(. ~ lipidClass) +
+        facet_grid(. ~ lipidClass, scales="free_x") +
         scale_fill_manual(values = unique(filteredData$color)) +
         theme_bw() +
         theme(
