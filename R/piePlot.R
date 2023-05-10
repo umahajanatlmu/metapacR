@@ -2,6 +2,7 @@
 #'
 #' @description plot class distribution using pie charts
 #'
+#' @param species species to use "hsa" or "mmu"
 #' @param data anova results obtained from normalizeDat.binary or normalizeDat function
 #' @param path saving path
 #' @param cutoff significance cutoff
@@ -26,6 +27,7 @@
 
 piePlot <- function(data,
                     path = NULL,
+                    species = c("hsa", "mmu"),
                     cutoff = 0.05,
                     data.type = c("MH", "Metabolon", "Others"),
                     lipid.class = TRUE,
@@ -37,6 +39,7 @@ piePlot <- function(data,
   stopifnot(inherits(data, "data.frame"))
   validObject(data)
 
+  species <- match.arg(species,c("hsa", "mmu"))
   save <- match.arg(save, c("pdf", "svg", "png"))
 
   data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
@@ -65,7 +68,7 @@ piePlot <- function(data,
     dir.create(paste(here(), "piePlots", sep = "/"))
   }
 
-  if (data.type == "Metabolon") {
+  if (data.type == "Metabolon" && species == "hsa") {
     data("chemicalMetadata")
     metabolite.class <- force(chemicalMetadata)
 
@@ -83,9 +86,26 @@ piePlot <- function(data,
       ))
   }
 
-  if (data.type == "MH") {
+  if (data.type == "MH" && species == "hsa") {
     data("chemicalMetadata_MH")
     metabolite.class <- force(chemicalMetadata_MH)
+
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character))
+
+    ## define metabolites
+    data <- data %>%
+      full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+      rename(c(
+        "MetaboliteClass" = "ONTOLOGY1_NAME",
+        "lipidClass" = "ONTOLOGY2_NAME",
+        "MetaboliteName" = "METABOLITE_NAME"
+      ))
+  }
+
+  if (data.type == "MH" && species == "mmu") {
+    data("chemicalMetadata_MH_mmu")
+    metabolite.class <- force(chemicalMetadata_MH_mmu)
 
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))

@@ -8,9 +8,12 @@
 #' @param p.value.cutoff cutoff value of p.value
 #' @param fold.changes.cutoff higher cutoff value of fold changes
 #' @param save either "pdf", "svg" or "png"
+#' @param data.type  select platform used, c("MH", "Metabolon", "Others")
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
 #' @param dpi dpi only applicable for png
+#' @param Other_metadata dataframe with metadata....it must have  columns: Metabolite, Metabolite_Name, Ontology_Class, Ontology_Subclass.
+#, KEGG
 #'
 #' @import tidyverse
 #' @importFrom here here
@@ -31,15 +34,18 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
                                  p.value.cutoff = 0.05,
                                  fold.changes.cutoff = 1.5,
                                  save = c("pdf", "svg", "png"),
+                                 data.type = c("MH", "Metabolon", "Others"),
                                  fig.width = 12,
                                  fig.height = 9,
-                                 dpi = 300) {
+                                 dpi = 300,
+                                 Other_metadata = NULL) {
 
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
 
   species <- match.arg(species, c("hsa", "mmu"))
   save <- match.arg(save, c("pdf", "svg", "png"))
+  data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
 
 
   enrichment.results <- data.frame()
@@ -62,15 +68,76 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
     dir.create(paste(ref.path, "KEGG.enrichmentScore", sep = "/"))
   }
 
+  if (data.type == "Others") {
+    stopifnot(inherits(Other_metadata, "data.frame"))
+    validObject(Other_metadata)
+  }
+
   ## load annotation file
-  data("chemicalMetadata")
-  chemicalMetadata <- force(chemicalMetadata)
-  ## define metabolite classes
-  columnToSelect <- c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_NO")
-  metabolite_class <- chemicalMetadata %>%
-    dplyr::select(any_of(columnToSelect)) %>%
-    separate_rows(KEGG, sep=",") %>%
-    mutate(KEGG=trimws(KEGG))
+  if (data.type == "Metabolon" && species == "hsa") {
+    data("chemicalMetadata")
+    chemicalMetadata <- force(chemicalMetadata)
+
+    chemicalMetadata <- chemicalMetadata %>%
+      mutate(across(everything(), as.character))
+
+    ## define metabolite classes
+    columnToSelect <- c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_NO")
+    metabolite_class <- chemicalMetadata %>%
+      dplyr::select(any_of(columnToSelect)) %>%
+      separate_rows(KEGG, sep=",") %>%
+      mutate(KEGG=trimws(KEGG))
+  }
+
+  if (data.type == "MH" && species == "hsa") {
+    data("chemicalMetadata_MH")
+    chemicalMetadata <- force(chemicalMetadata_MH)
+
+    chemicalMetadata <- chemicalMetadata %>%
+      mutate(across(everything(), as.character))
+
+    ## define metabolite classes
+    columnToSelect <- c("ONTOLOGY1_NAME", "METABOLITE_NAME", "KEGG", "MET_CHEM_NO")
+    metabolite_class <- chemicalMetadata %>%
+      dplyr::select(any_of(columnToSelect)) %>%
+      separate_rows(KEGG, sep=",") %>%
+      mutate(KEGG=trimws(KEGG))
+  }
+
+  if (data.type == "MH" && species == "mmu") {
+    data("chemicalMetadata_MH_mmu")
+    chemicalMetadata <- force(chemicalMetadata_MH_mmu)
+
+    chemicalMetadata <- chemicalMetadata %>%
+      mutate(across(everything(), as.character))
+
+    ## define metabolite classes
+    columnToSelect <- c("ONTOLOGY1_NAME", "METABOLITE_NAME", "KEGG_ID", "MET_CHEM_NO")
+    metabolite_class <- chemicalMetadata %>%
+      dplyr::select(any_of(columnToSelect)) %>%
+      mutate(KEGG = KEGG_ID) %>%
+      dplyr::select(-KEGG_ID) %>%
+      separate_rows(KEGG, sep=",") %>%
+      mutate(KEGG=trimws(KEGG))
+  }
+
+  if (data.type == "Others") {
+    chemicalMetadata <- Other_metadata
+
+    chemicalMetadata <- chemicalMetadata %>%
+      mutate(across(everything(), as.character))
+
+    columnToSelect <- c("Metabolite", "Metabolite_Name", "Ontology_Class", "Ontology_Subclass", "KEGG")
+    metabolite_class <- chemicalMetadata %>%
+      dplyr::select(any_of(columnToSelect)) %>%
+      rename(c(
+        "MET_CHEM_NO" = "Metabolite",
+        "METABOLITE_NAME" = "Metabolite_Name",
+        "ONTOLOGY1_NAME" = "Ontology_Class"
+      )) %>%
+      separate_rows(KEGG, sep=",") %>%
+      mutate(KEGG=trimws(KEGG))
+  }
 
   if (file.exists(paste(ref.path, "keggDB.rds", sep = "/")) == FALSE) {
     ## reference kegg dataset building

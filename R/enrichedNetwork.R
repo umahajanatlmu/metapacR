@@ -6,12 +6,15 @@
 #' @param ref.path saving path
 #' @param results fold changes results
 #' @param p.value.cutoff cutoff value of p.value
+#' @param data.type  select platform used, c("MH", "Metabolon", "Others")
 #' @param fold.changes.cutoff higher cutoff value of fold changes
 #' @param network.method "diffusion" as method of choice, for other method refer to FELLA. CUrrently only caliberated for diffusion.
 #' @param legend.pathway number of pathways to map on plot
 #' @param save either "pdf", "svg" or "png"
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
+#' @param Other_metadata dataframe with metadata....it must have  columns: Metabolite, Metabolite_Name, Ontology_Class, Ontology_Subclass.
+#, KEGG
 #'
 #' @import tidyverse
 #' @importFrom here here
@@ -44,13 +47,16 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
                             network.method = "diffusion",
                             legend.pathway = 3,
                             save = c("pdf", "svg", "png"),
+                            data.type = c("MH", "Metabolon", "Others"),
                             fig.width = 12,
-                            fig.height = 9) {
+                            fig.height = 9,
+                            Other_metadata = NULL) {
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
 
   species <- match.arg(species,c("hsa", "mmu"))
   save <- match.arg(save, c("pdf", "svg", "png"))
+  data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
 
   enrichment.results <- data.frame()
 
@@ -76,26 +82,104 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
     dir.create(paste(ref.path, "enrichmentNetwork", sep = "/"))
   }
 
+  if (data.type == "Others") {
+    stopifnot(inherits(Other_metadata, "data.frame"))
+    validObject(Other_metadata)
+  }
+
   ## load annotation file
-  data("chemicalMetadata")
-  chemicalMetadata <- force(chemicalMetadata)
+  if (data.type == "Metabolon" && species == "hsa") {
+    data("chemicalMetadata")
+    chemicalMetadata <- force(chemicalMetadata)
 
-  ## define metabolite classes
-  metabolite_class <- chemicalMetadata[, colnames(chemicalMetadata) %in% c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_NO")]
+    chemicalMetadata <- chemicalMetadata %>%
+      mutate(across(everything(), as.character))
 
-  ## define metabolite classes
-  columnToSelect <- c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_NO")
-  metabolite_class <- chemicalMetadata %>%
-    dplyr::select(any_of(columnToSelect)) %>%
-    separate_rows(KEGG, sep=",") %>%
-    mutate(KEGG=trimws(KEGG))
+    ## define metabolite classes
+    columnToSelect <- c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_NO")
+    metabolite_class <- chemicalMetadata %>%
+      dplyr::select(any_of(columnToSelect)) %>%
+      separate_rows(KEGG, sep=",") %>%
+      mutate(KEGG=trimws(KEGG))
 
-  ## load enriched data
-  pathDat <- results %>%
-    dplyr::filter(adj.P.Val < p.value.cutoff) %>%
-    left_join(metabolite_class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
-    dplyr::rename(keggID = KEGG) %>%
-    drop_na(keggID)
+    ## load enriched data
+    pathDat <- results %>%
+      dplyr::filter(adj.P.Val < p.value.cutoff) %>%
+      left_join(metabolite_class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+      dplyr::rename(keggID =KEGG) %>%
+      drop_na(keggID)
+  }
+
+  if (data.type == "MH" && species == "hsa") {
+    data("chemicalMetadata_MH")
+    chemicalMetadata <- force(chemicalMetadata_MH)
+
+    chemicalMetadata <- chemicalMetadata %>%
+      mutate(across(everything(), as.character))
+
+    ## define metabolite classes
+    columnToSelect <- c("ONTOLOGY1_NAME", "METABOLITE_NAME", "KEGG", "MET_CHEM_NO")
+    metabolite_class <- chemicalMetadata %>%
+      dplyr::select(any_of(columnToSelect)) %>%
+      separate_rows(KEGG, sep=",") %>%
+      mutate(KEGG=trimws(KEGG))
+
+    ## load enriched data
+    pathDat <- results %>%
+      dplyr::filter(adj.P.Val < p.value.cutoff) %>%
+      left_join(metabolite_class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+      dplyr::rename(keggID =KEGG) %>%
+      drop_na(keggID)
+  }
+
+  if (data.type == "MH" && species == "mmu") {
+    data("chemicalMetadata_MH_mmu")
+    chemicalMetadata <- force(chemicalMetadata_MH_mmu)
+
+    chemicalMetadata <- chemicalMetadata %>%
+      mutate(across(everything(), as.character))
+
+    ## define metabolite classes
+    columnToSelect <- c("ONTOLOGY1_NAME", "METABOLITE_NAME", "KEGG_ID", "MET_CHEM_NO")
+    metabolite_class <- chemicalMetadata %>%
+      dplyr::select(any_of(columnToSelect)) %>%
+      mutate(KEGG = KEGG_ID) %>%
+      dplyr::select(-KEGG_ID) %>%
+      separate_rows(KEGG, sep=",") %>%
+      mutate(KEGG=trimws(KEGG))
+
+    ## load enriched data
+    pathDat <- results %>%
+      dplyr::filter(adj.P.Val < p.value.cutoff) %>%
+      left_join(metabolite_class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+      dplyr::rename(keggID =KEGG) %>%
+      drop_na(keggID)
+  }
+
+  if (data.type == "Others") {
+    chemicalMetadata <- Other_metadata
+
+    chemicalMetadata <- chemicalMetadata %>%
+      mutate(across(everything(), as.character))
+
+    columnToSelect <- c("Metabolite", "Metabolite_Name", "Ontology_Class", "Ontology_Subclass", "KEGG")
+    metabolite_class <- chemicalMetadata %>%
+      dplyr::select(any_of(columnToSelect)) %>%
+      rename(c(
+        "MET_CHEM_NO" = "Metabolite",
+        "METABOLITE_NAME" = "Metabolite_Name",
+        "ONTOLOGY1_NAME" = "Ontology_Class"
+      )) %>%
+      separate_rows(KEGG, sep=",") %>%
+      mutate(KEGG=trimws(KEGG))
+
+    ## load enriched data
+    pathDat <- results %>%
+      dplyr::filter(adj.P.Val < p.value.cutoff) %>%
+      left_join(metabolite_class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+      dplyr::rename(keggID =KEGG) %>%
+      drop_na(keggID)
+  }
 
   ## define direction
   pathDat$direction <- ifelse(log2(pathDat$logFC) > fold.changes.cutoff, "up",

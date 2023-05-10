@@ -2,6 +2,7 @@
 #'
 #' @description compute distribution of chain length per class
 #'
+#' @param species species to use "hsa" or "mmu"
 #' @param results fold changes data
 #' @param p.value.cutoff cutoff of p-values to be used
 #' @param fold.changes.cutoff higher fold changes cutoff to be used
@@ -26,6 +27,7 @@
 #' @export
 
 lipidChainLengthDistribution <- function(results,
+                                         species = c("hsa", "mmu"),
                                          p.value.cutoff = 0.05,
                                          fold.changes.cutoff = 1.5,
                                          path = NULL,
@@ -38,6 +40,7 @@ lipidChainLengthDistribution <- function(results,
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
 
+  species <- match.arg(species,c("hsa", "mmu"))
   data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
 
   if (data.type == "Others") {
@@ -69,7 +72,7 @@ lipidChainLengthDistribution <- function(results,
 
 
   ## load annotation file
-  if (data.type == "Metabolon") {
+  if (data.type == "Metabolon" && species == "hsa") {
     data("chemicalMetadata")
     metabolite.class <- force(chemicalMetadata)
 
@@ -87,9 +90,26 @@ lipidChainLengthDistribution <- function(results,
       ))
   }
 
-  if (data.type == "MH") {
+  if (data.type == "MH" && species == "hsa") {
     data("chemicalMetadata_MH")
     metabolite.class <- force(chemicalMetadata_MH)
+
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character))
+
+    ## define metabolites
+    results <- results %>%
+      full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+      rename(c(
+        "MetaboliteClass" = "ONTOLOGY1_NAME",
+        "lipidClass" = "ONTOLOGY2_NAME",
+        "MetaboliteName" = "METABOLITE_NAME"
+      ))
+  }
+
+  if (data.type == "MH" && species == "mmu") {
+    data("chemicalMetadata_MH_mmu")
+    metabolite.class <- force(chemicalMetadata_MH_mmu)
 
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))

@@ -2,6 +2,7 @@
 #'
 #' @description plot distribution of all metabolites with fold changes and p-values.
 #'
+#' @param species species to use "hsa" or "mmu"
 #' @param data fold changes data
 #' @param path saving path
 #' @param cutoff cutoff of p value
@@ -25,6 +26,7 @@
 
 distributionPlot <- function(data,
                              path = NULL,
+                             species = c("hsa", "mmu"),
                              cutoff = 0.01,
                              lipid.class = TRUE,
                              data.type = c("MH", "Metabolon", "Others"),
@@ -36,6 +38,7 @@ distributionPlot <- function(data,
   stopifnot(inherits(data, "data.frame"))
   validObject(data)
 
+  species <- match.arg(species,c("hsa", "mmu"))
   data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
 
   if (data.type == "Others") {
@@ -66,7 +69,7 @@ distributionPlot <- function(data,
 
   # metabolite.class <- readRDS("inst/extdata/ref/Chemical_annotations.rds")
   # use_data(metabolite.class, overwrite = TRUE)
-  if (data.type == "Metabolon") {
+  if (data.type == "Metabolon" && species == "hsa") {
     data("chemicalMetadata")
     metabolite.class <- force(chemicalMetadata)
 
@@ -84,9 +87,26 @@ distributionPlot <- function(data,
       ))
   }
 
-  if (data.type == "MH") {
+  if (data.type == "MH" && species == "hsa") {
     data("chemicalMetadata_MH")
     metabolite.class <- force(chemicalMetadata_MH)
+
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character))
+
+    ## define metabolites
+    data <- data %>%
+      full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+      rename(c(
+        "MetaboliteClass" = "ONTOLOGY1_NAME",
+        "lipidClass" = "ONTOLOGY2_NAME",
+        "MetaboliteName" = "METABOLITE_NAME"
+      ))
+  }
+
+  if (data.type == "MH" && species == "mmu") {
+    data("chemicalMetadata_MH_mmu")
+    metabolite.class <- force(chemicalMetadata_MH_mmu)
 
     metabolite.class <- metabolite.class %>%
       mutate(across(everything(), as.character))
