@@ -7,6 +7,7 @@
 plotMetaboliteAlteration(
   data,
   path = NULL,
+  species = c("hsa", "mmu"),
   cutoff = 0.01,
   lipid.class = TRUE,
   data.type = c("MH", "Metabolon", "Others"),
@@ -21,6 +22,8 @@ plotMetaboliteAlteration(
 \item{data}{fold changes data}
 
 \item{path}{saving path}
+
+\item{species}{species to use "hsa" or "mmu"}
 
 \item{cutoff}{significance cutoff}
 

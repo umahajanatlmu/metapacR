@@ -6,6 +6,7 @@
 \usage{
 lipidChainLengthDistribution(
   results,
+  species = c("hsa", "mmu"),
   p.value.cutoff = 0.05,
   fold.changes.cutoff = 1.5,
   path = NULL,
@@ -19,6 +20,8 @@ lipidChainLengthDistribution(
 }
 \arguments{
 \item{results}{fold changes data}
+
+\item{species}{species to use "hsa" or "mmu"}
 
 \item{p.value.cutoff}{cutoff of p-values to be used}
 

@@ -7,6 +7,7 @@
 lipidChainLengthCorrelation(
   results,
   path = NULL,
+  species = c("hsa", "mmu"),
   save = c("pdf", "svg", "png"),
   data.type = c("MH", "Metabolon", "Others"),
   fig.width = 12,
@@ -19,6 +20,8 @@ lipidChainLengthCorrelation(
 \item{results}{fold changes data}
 
 \item{path}{saving path}
+
+\item{species}{species to use "hsa" or "mmu"}
 
 \item{save}{either "pdf", "svg" or "png"}
 

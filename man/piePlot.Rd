@@ -7,6 +7,7 @@
 piePlot(
   data,
   path = NULL,
+  species = c("hsa", "mmu"),
   cutoff = 0.05,
   data.type = c("MH", "Metabolon", "Others"),
   lipid.class = TRUE,
@@ -21,6 +22,8 @@ piePlot(
 \item{data}{anova results obtained from normalizeDat.binary or normalizeDat function}
 
 \item{path}{saving path}
+
+\item{species}{species to use "hsa" or "mmu"}
 
 \item{cutoff}{significance cutoff}
 
