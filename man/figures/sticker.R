@@ -14,7 +14,7 @@ sticker(
   # package name
   package="metapacR",
   p_size=90,
-  p_color = "#96c5b0", # 00030A 010101 #383838
+  p_color = "#e8e8e8", # 00030A 010101 #383838
   p_y = 1,
   p_family = "myfont",
   p_fontface = "bold",
