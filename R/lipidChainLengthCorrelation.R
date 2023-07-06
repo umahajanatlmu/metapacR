@@ -141,7 +141,7 @@ lipidChainLengthCorrelation <- function(results,
   if (data.type == "Metabolon") {
     res <- results %>%
       dplyr::filter(MetaboliteClass == "Complex lipids") %>%
-      mutate(newMet = Metabolite) %>%
+      mutate(newMet = MetaboliteName) %>%
       mutate(newMet = gsub("O-|P-", "", newMet)) %>%
       separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
       mutate(fatty.acid = gsub(".*/", "", fatty.acid)) %>%
@@ -160,7 +160,7 @@ lipidChainLengthCorrelation <- function(results,
   } else {
     res <- results %>%
       dplyr::filter(grepl("Complex lipids", MetaboliteClass)) %>%
-      mutate(newMet = Metabolite) %>%
+      mutate(newMet = MetaboliteName) %>%
       mutate(newMet = gsub("O-|P-", "", newMet)) %>%
       separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
       mutate(fatty.acid = gsub(".*/", "", fatty.acid)) %>%

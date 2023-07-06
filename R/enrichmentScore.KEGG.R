@@ -216,7 +216,7 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
   ##  balance reference dataset for duplicate IDs in test dataset
 
   for (jj in 1:nrow(keggReferenceDB)) {
-    (keggReferenceDB[jj, "nCompoundAdjusted"] <- keggReferenceDB[j, "nCompound"])
+    (keggReferenceDB[jj, "nCompoundAdjusted"] <- keggReferenceDB[jj, "nCompound"])
 
     for (iii in 1:nrow(dupliMetaboliteOccurances)) {
       keggID <- dupliMetaboliteOccurances[iii, "keggID"]

@@ -147,7 +147,7 @@ lipidChainLengthDistribution <- function(results,
     results <- results %>%
       dplyr::filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
       dplyr::filter(MetaboliteClass == "Complex lipids") %>%
-      mutate(newMet = Metabolite) %>%
+      mutate(newMet = MetaboliteName) %>%
       mutate(newMet = gsub("O-|P-", "", newMet)) %>%
       separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
       mutate(fatty.acid = gsub(".*/", "", fatty.acid)) %>%
@@ -172,7 +172,7 @@ lipidChainLengthDistribution <- function(results,
     results <- results %>%
       dplyr::filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
       dplyr::filter(grepl("Complex lipids", MetaboliteClass)) %>%
-      mutate(newMet = Metabolite) %>%
+      mutate(newMet = MetaboliteName) %>%
       mutate(newMet = gsub("O-|P-", "", newMet)) %>%
       separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
       mutate(fatty.acid = gsub(".*/", "", fatty.acid)) %>%
