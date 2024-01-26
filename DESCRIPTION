@@ -1,7 +1,7 @@
 Type: Package
 Package: metapacR
 Title: Data Mining and Analysis of Metabolome Datasets
-Version: 0.1.0
+Version: 0.1.1
 Author: Ujjwal Mukund Mahajan
 Maintainer: Ujjwal Mukund Mahajan <umahajan@med.lmu.de>
 Description: metapacR is an easy-to-use R package implementing a complete

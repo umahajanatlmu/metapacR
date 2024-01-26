@@ -117,6 +117,7 @@ boxPlots <- function(dataList,
   ## subset metadata
   ## ----------------------------------------------------------------
   select.columns <- group
+  row_names <- rownames(metadata.data)
   metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
 
   ## define factors
@@ -130,11 +131,11 @@ boxPlots <- function(dataList,
       metadata.data[[c]] <- as.numeric(metadata.data[[c]])
     }
   }
+  rownames(metadata.data) <- row_names
 
   ## merge Data
   ## ----------------------------------------------------------------
-  data <- merge(metadata.data, imputed.data, by = 0) %>%
-    column_to_rownames("Row.names")
+  data <- bind_cols(metadata.data, imputed.data)
 
   ## save as pdf
   ## ----------------------------------------------------------------

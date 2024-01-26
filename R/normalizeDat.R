@@ -50,6 +50,7 @@ normalizeDat <- function(dataList,
   ## subset metadata
   ## ----------------------------------------------------------------
   select.columns <- c(confounders, stratifier)
+  row_names <- rownames(metadata.data)
   metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
 
   ## define factors
@@ -64,10 +65,12 @@ normalizeDat <- function(dataList,
     }
   }
 
+  rownames(metadata.data) <- row_names
+
   ## merge Data
   ## ----------------------------------------------------------------
-  data <- merge(metadata.data, imputed.data, by = 0) %>%
-    column_to_rownames("Row.names")
+  data <- bind_cols(metadata.data, imputed.data)
+
 
   ## set references
   data[[stratifier]] <- relevel(data[[stratifier]], ref = reference)

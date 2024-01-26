@@ -151,6 +151,7 @@ findMarkers <- function(results,
   ## subset metadata
   ## ----------------------------------------------------------------
   select.columns <- group
+  row_names <- rownames(metadata.data)
   metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns,
                                  drop = FALSE
   ]
@@ -167,10 +168,12 @@ findMarkers <- function(results,
     }
   }
 
+  rownames(metadata.data) <- row_names
+
   ## merge Data
   ## ----------------------------------------------------------------
-  data <- merge(metadata.data, imputed.data, by = 0) %>%
-    column_to_rownames("Row.names")
+  data <- bind_cols(metadata.data, imputed.data)
+
 
   roc.results <- data.frame()
   for (m in unique(na.omit(results$contrast))) {

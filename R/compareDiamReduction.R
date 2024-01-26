@@ -59,6 +59,7 @@ compareDiamReduction <- function(dataList,
   ## subset metadata
   ## ----------------------------------------------------------------
   select.columns <- plotting.variable
+  row_names <- rownames(metadata.data)
   metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
 
   group <- plotting.variable
@@ -74,6 +75,9 @@ compareDiamReduction <- function(dataList,
       metadata.data[[c]] <- as.numeric(metadata.data[[c]])
     }
   }
+
+  rownames(metadata.data) <- row_names
+
 
   ## number of groups
   nVar <- length(unique(metadata.data[[group]]))
@@ -101,7 +105,7 @@ compareDiamReduction <- function(dataList,
   pca <- prcomp(dataNumeric)
   ## plot PCA
   plot.dat.pca <- as.data.frame(pca$x)
-  plot.dat.pca <- merge(plot.dat.pca, metadata.data, by = 0)
+  plot.dat.pca <- bind_cols(plot.dat.pca, metadata.data)
 
   ## PCA componants
   pc1var <- round(summary(pca)$importance[2, 1] * 100, digits = 2)
@@ -149,7 +153,7 @@ compareDiamReduction <- function(dataList,
   )
   ## plot opls
   plot.dat.opls <- data.frame(opls@scoreMN)
-  plot.dat.opls <- merge(plot.dat.opls, metadata.data, by = 0)
+  plot.dat.opls <- bind_cols(plot.dat.opls, metadata.data)
 
   N <- nrow(plot.dat.opls)
   pscores <- plot.dat.opls[["p1"]]
@@ -223,7 +227,7 @@ compareDiamReduction <- function(dataList,
   ## plot rtsne
   plot.dat.rtsne.pca <- as.data.frame(rtsne.pca$Y)
   rownames(plot.dat.rtsne.pca) <- rownames(dataNumeric)
-  plot.dat.rtsne.pca <- merge(plot.dat.rtsne.pca, metadata.data, by = 0)
+  plot.dat.rtsne.pca <- bind_cols(plot.dat.rtsne.pca, metadata.data)
 
   ## plot
   p_rtsne.pca <- ggplot(plot.dat.rtsne.pca, aes(
@@ -266,7 +270,7 @@ compareDiamReduction <- function(dataList,
   ## plot rtsne
   plot.dat.rtsne <- as.data.frame(rtsne$Y)
   rownames(plot.dat.rtsne) <- rownames(dataNumeric)
-  plot.dat.rtsne <- merge(plot.dat.rtsne, metadata.data, by = 0)
+  plot.dat.rtsne <- bind_cols(plot.dat.rtsne, metadata.data)
 
   ## plot
   p_rtsne <- ggplot(plot.dat.rtsne, aes(
@@ -306,7 +310,7 @@ compareDiamReduction <- function(dataList,
 
   ## plot rtsne
   plot.dat.umap <- as.data.frame(umap$layout)
-  plot.dat.umap <- merge(plot.dat.umap, metadata.data, by = 0)
+  plot.dat.umap <- bind_cols(plot.dat.umap, metadata.data)
 
   p_umap <- ggplot(plot.dat.umap, aes(
     x = V1,

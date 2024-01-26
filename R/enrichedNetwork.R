@@ -39,9 +39,9 @@
 #'
 #' @export
 
-enrichedNetwork <- function(species = c("hsa", "mmu"),
+enrichedNetwork <- function(results,
+                            species = c("hsa", "mmu"),
                             ref.path = NULL,
-                            results,
                             p.value.cutoff = 0.05,
                             fold.changes.cutoff = 1.5,
                             network.method = "diffusion",

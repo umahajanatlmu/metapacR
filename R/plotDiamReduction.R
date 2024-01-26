@@ -70,11 +70,14 @@ plotDiamReduction <- function(dataList,
   ## subset imputed data for markers
   ## ----------------------------------------------------------------
   select.markers <- dist.variables
+  row_names_imp <- rownames(imputed.data)
   imputed.data <- imputed.data[, colnames(imputed.data) %in% select.markers, drop = FALSE]
+  rownames(imputed.data) <- row_names_imp
 
   ## subset metadata
   ## ----------------------------------------------------------------
   select.columns <- grouping.variables
+  row_names <- rownames(metadata.data)
   metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
 
   ## group <- plotting.variable
@@ -91,6 +94,9 @@ plotDiamReduction <- function(dataList,
     }
   }
 
+  rownames(metadata.data) <- row_names
+
+
   ## number of groups
   ## nVar <- length(unique(metadata.data[[group]]))
 
@@ -103,9 +109,9 @@ plotDiamReduction <- function(dataList,
   if (diam.method == "pca") {
     plot.dat <- as.data.frame(plot$x)
     plot.dat <- plot.dat[, 1:2]
-    plot.dat <- merge(plot.dat, metadata.data, by = 0) %>%
+    plot.dat <- bind_cols(plot.dat, metadata.data) %>%
       column_to_rownames("Row.names")
-    plot.dat <- merge(plot.dat, imputed.data, by = 0)
+    plot.dat <- bind_cols(plot.dat, imputed.data)
 
 
     ## PCA componants
@@ -193,9 +199,9 @@ plotDiamReduction <- function(dataList,
   if (diam.method == "opls") {
     ## plot opls
     plot.dat <- data.frame(plot@scoreMN)
-    plot.dat <- merge(plot.dat, metadata.data, by = 0) %>%
+    plot.dat <- bind_cols(plot.dat, metadata.data) %>%
       column_to_rownames("Row.names")
-    plot.dat <- merge(plot.dat, imputed.data, by = 0)
+    plot.dat <- bind_cols(plot.dat, imputed.data)
 
     N <- nrow(plot.dat)
     pscores <- plot.dat[["p1"]]
@@ -350,9 +356,9 @@ plotDiamReduction <- function(dataList,
   }
   if (diam.method == "umap") {
     plot.dat <- as.data.frame(plot$layout)
-    plot.dat <- merge(plot.dat, metadata.data, by = 0) %>%
+    plot.dat <- bind_cols(plot.dat, metadata.data) %>%
       column_to_rownames("Row.names")
-    plot.dat <- merge(plot.dat, imputed.data, by = 0)
+    plot.dat <- bind_cols(plot.dat, imputed.data)
 
     for (pl in select.columns) {
       nVar <- length(unique(plot.dat[[pl]]))
@@ -436,9 +442,9 @@ plotDiamReduction <- function(dataList,
     ## plot rtsne
     plot.dat <- as.data.frame(plot$Y)
     rownames(plot.dat) <- rownames(imputed.data)
-    plot.dat <- merge(plot.dat, metadata.data, by = 0) %>%
+    plot.dat <- bind_cols(plot.dat, metadata.data, by = 0) %>%
       column_to_rownames("Row.names")
-    plot.dat <- merge(plot.dat, imputed.data, by = 0)
+    plot.dat <- bind_cols(plot.dat, imputed.data, by = 0)
 
     for (pl in select.columns) {
       nVar <- length(unique(plot.dat[[pl]]))
@@ -522,9 +528,9 @@ plotDiamReduction <- function(dataList,
     ## plot rtsne
     plot.dat <- as.data.frame(plot$Y)
     rownames(plot.dat) <- rownames(imputed.data)
-    plot.dat <- merge(plot.dat, metadata.data, by = 0) %>%
+    plot.dat <- bind_cols(plot.dat, metadata.data) %>%
       column_to_rownames("Row.names")
-    plot.dat <- merge(plot.dat, imputed.data, by = 0)
+    plot.dat <- bind_cols(plot.dat, imputed.data)
 
     for (pl in select.columns) {
       nVar <- length(unique(plot.dat[[pl]]))

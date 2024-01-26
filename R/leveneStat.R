@@ -29,7 +29,7 @@ leveneStat <- function(group,
   stopifnot(inherits(dataList, "list"))
   validObject(dataList)
 
-  location <- match.arg(location)
+  location <- match.arg(location, c("mean", "median"))
 
   if (is.null(group)) {
     stop("group variable is missing")
@@ -48,6 +48,7 @@ leveneStat <- function(group,
   ## subset metadata
   ## ----------------------------------------------------------------
   select.columns <- group
+  row_names <- rownames(metadata.data)
   metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
 
   ## define factors
@@ -61,11 +62,11 @@ leveneStat <- function(group,
       metadata.data[[c]] <- as.numeric(metadata.data[[c]])
     }
   }
+  rownames(metadata.data) <- row_names
 
   ## merge Data
   ## ----------------------------------------------------------------
-  data <- merge(metadata.data, imputed.data, by = 0) %>%
-    column_to_rownames("Row.names")
+  data <- bind_cols(metadata.data, imputed.data)
 
   ## select variables
 
