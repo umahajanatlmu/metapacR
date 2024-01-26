@@ -29,6 +29,11 @@ ImputeTransformScale <- function(Data,
   nCol <- ncol(Data)
   ## empty data-frame
   scaleData <- data.frame(matrix(NA, nrow = nrow(Data), ncol = nCol))
+
+  if (!is.null(rownames(hd4_clp_cells))) {
+    rownames(scaleData) <- rownames(Data)
+  }
+
   ## column names to empty dataframe
   colnames(scaleData) <- colnames(Data)
 

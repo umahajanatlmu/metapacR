@@ -4,6 +4,7 @@
 #'
 #' @param dataList raw metabolome data list from imputeTransformScale function.It need to have imputed.matrix and metadata.
 #' @param plotting.variable plotting grouping variable..should be 1
+#' @param crossvalI number of cross-validation segments
 #'
 #' @import tidyverse
 #' @importFrom ropls opls
@@ -30,7 +31,8 @@
 #' @export
 
 compareDiamReduction <- function(dataList,
-                                 plotting.variable = NULL) {
+                                 plotting.variable = NULL,
+                                 crossvalI = 7) {
   stopifnot(inherits(dataList, "list"))
   validObject(dataList)
 
@@ -90,8 +92,8 @@ compareDiamReduction <- function(dataList,
   print(paste("Performing kmeans for", nVar, "clusters...."))
 
   kmeans <- kmeans(dataNumeric,
-    centers = nVar,
-    nstart = 100
+                   centers = nVar,
+                   nstart = 100
   )
 
   print("Performing PCA ....")
@@ -140,10 +142,10 @@ compareDiamReduction <- function(dataList,
   ## ----------------------------------------------------------------
   ## perform opls
   opls <- ropls::opls(dataNumeric,
-    scaleC = "none",
-    y = metadata.data[[group]],
-    log10L = FALSE,
-    append = FALSE
+                      scaleC = "none",
+                      y = metadata.data[[group]],
+                      log10L = FALSE,
+                      crossvalI = crossvalI
   )
   ## plot opls
   plot.dat.opls <- data.frame(opls@scoreMN)
@@ -214,7 +216,9 @@ compareDiamReduction <- function(dataList,
   print("Performing t-SNE....")
   # perform t-SNE plus PCA
   ## ----------------------------------------------------------------
-  rtsne.pca <- Rtsne::Rtsne(dataNumeric)
+  rtsne.pca <- Rtsne::Rtsne(dataNumeric,
+                            perplexity = floor((nrow(dataNumeric)-1)/3),
+                            dims = 2)
 
   ## plot rtsne
   plot.dat.rtsne.pca <- as.data.frame(rtsne.pca$Y)
@@ -254,7 +258,10 @@ compareDiamReduction <- function(dataList,
   print("Performing t-SNE and PCA ....")
   # perform t-SNE w/o PCA
   ## ----------------------------------------------------------------
-  rtsne <- Rtsne(dataNumeric, pca = FALSE)
+  rtsne <- Rtsne::Rtsne(dataNumeric,
+                        perplexity = floor((nrow(dataNumeric)-1)/3),
+                        dims = 2,
+                        pca=FALSE)
 
   ## plot rtsne
   plot.dat.rtsne <- as.data.frame(rtsne$Y)
@@ -294,7 +301,8 @@ compareDiamReduction <- function(dataList,
   print("Performing UMAP....")
   # perform umap
   ## ----------------------------------------------------------------
-  umap <- umap::umap(dataNumeric)
+  n_neighbors <- min(nrow(dataNumeric) - 1, 10)
+  umap <- umap::umap(dataNumeric, n_neighbors = n_neighbors)
 
   ## plot rtsne
   plot.dat.umap <- as.data.frame(umap$layout)
@@ -330,14 +338,14 @@ compareDiamReduction <- function(dataList,
     ggtitle("UMAP")
 
   p <- ggpubr::ggarrange(p_pca,
-    p_opls,
-    p_rtsne,
-    p_rtsne.pca,
-    p_umap,
-    ncol = 3,
-    nrow = 2,
-    common.legend = TRUE,
-    legend = "bottom"
+                         p_opls,
+                         p_rtsne,
+                         p_rtsne.pca,
+                         p_umap,
+                         ncol = 3,
+                         nrow = 2,
+                         common.legend = TRUE,
+                         legend = "bottom"
   )
 
   return(list(

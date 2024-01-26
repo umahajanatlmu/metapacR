@@ -7,7 +7,7 @@
 #' @param p.value.cutoff cutoff of p-values to be used
 #' @param fold.changes.cutoff higher fold changes cutoff to be used
 #' @param path saving path
-#' @param save either "pdf", "svg" or "png"
+#' @param save either "pdf", "svg" , "png", "none"
 #' @param data.type  select platform used, c("MH", "Metabolon", "Others")
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
@@ -16,7 +16,6 @@
 #'
 #' @import tidyverse
 #' @importFrom here here
-#' @importFrom sjPlot save_plot
 #' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
@@ -31,7 +30,7 @@ lipidChainLengthDistribution <- function(results,
                                          p.value.cutoff = 0.05,
                                          fold.changes.cutoff = 1.5,
                                          path = NULL,
-                                         save = c("pdf", "svg", "png"),
+                                         save = c("pdf", "svg", "png", "none"),
                                          data.type = c("MH", "Metabolon", "Others"),
                                          fig.width = 12,
                                          fig.height = 9,
@@ -40,7 +39,7 @@ lipidChainLengthDistribution <- function(results,
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
 
-  species <- match.arg(species,c("hsa", "mmu"))
+  species <- match.arg(species, c("hsa", "mmu"))
   data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
 
   if (data.type == "Others") {
@@ -48,31 +47,20 @@ lipidChainLengthDistribution <- function(results,
     validObject(Other_metadata)
   }
 
-  save <- match.arg(save, c("pdf", "svg", "png"))
+  save <- match.arg(save, c("pdf", "svg", "png", "none"))
 
   if (is.null(path)) {
     path <- here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
-      dir.create(file.path(paste0(path), "results")),
-      FALSE
-    )
+           dir.create(file.path(paste0(path), "results")),
+           FALSE)
     path <- paste(path, "results", sep = "/")
   } else {
     path <- path
   }
 
-  if (save == "pdf") {
-    pdf(paste(path, "chainLengthDistribution.pdf", sep = "/"),
-      paper = "a4r",
-      onefile = TRUE
-    )
-  } else if (save != "pdf") {
-    dir.create(paste(here(), "chainLengthDistribution", sep = "/"))
-  }
-
-
   ## load annotation file
-  if (data.type == "Metabolon" && species == "hsa") {
+  if (data.type == "Metabolon" && species %in% c("hsa", "mmu")) {
     data("chemicalMetadata")
     metabolite.class <- force(chemicalMetadata)
 
@@ -80,14 +68,11 @@ lipidChainLengthDistribution <- function(results,
       mutate(across(everything(), as.character))
 
     ## define metabolites
-    results[["MetaboliteClass"]] <- metabolite.class[["SUPER_PATHWAY"]][match(
-      results[["Metabolite"]], metabolite.class[["MET_CHEM_NO"]]
-    )]
+    results[["MetaboliteClass"]] <-
+      metabolite.class[["SUPER_PATHWAY"]][match(results[["Metabolite"]], metabolite.class[["MET_CHEM_NO"]])]
     results <- results %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
-      rename(c(
-        "MetaboliteName" = "CHEMICAL_NAME"
-      ))
+      rename(c("MetaboliteName" = "CHEMICAL_NAME"))
   }
 
   if (data.type == "MH" && species == "hsa") {
@@ -100,11 +85,13 @@ lipidChainLengthDistribution <- function(results,
     ## define metabolites
     results <- results %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
-      rename(c(
-        "MetaboliteClass" = "ONTOLOGY1_NAME",
-        "lipidClass" = "ONTOLOGY2_NAME",
-        "MetaboliteName" = "METABOLITE_NAME"
-      ))
+      rename(
+        c(
+          "MetaboliteClass" = "ONTOLOGY1_NAME",
+          "lipidClass" = "ONTOLOGY2_NAME",
+          "MetaboliteName" = "METABOLITE_NAME"
+        )
+      )
   }
 
   if (data.type == "MH" && species == "mmu") {
@@ -117,11 +104,13 @@ lipidChainLengthDistribution <- function(results,
     ## define metabolites
     results <- results %>%
       full_join(metabolite.class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
-      rename(c(
-        "MetaboliteClass" = "ONTOLOGY1_NAME",
-        "lipidClass" = "ONTOLOGY2_NAME",
-        "MetaboliteName" = "METABOLITE_NAME"
-      ))
+      rename(
+        c(
+          "MetaboliteClass" = "ONTOLOGY1_NAME",
+          "lipidClass" = "ONTOLOGY2_NAME",
+          "MetaboliteName" = "METABOLITE_NAME"
+        )
+      )
   }
 
   if (data.type == "Others") {
@@ -133,11 +122,13 @@ lipidChainLengthDistribution <- function(results,
     ## define metabolites
     results <- results %>%
       full_join(metabolite.class, by = "Metabolite") %>%
-      rename(c(
-        "MetaboliteClass" = "Ontology_Class",
-        "lipidClass" = "Ontology_Subclass",
-        "MetaboliteName" = "Metabolite_Name"
-      ))
+      rename(
+        c(
+          "MetaboliteClass" = "Ontology_Class",
+          "lipidClass" = "Ontology_Subclass",
+          "MetaboliteName" = "Metabolite_Name"
+        )
+      )
   }
 
   ## subset chain lengths
@@ -145,16 +136,18 @@ lipidChainLengthDistribution <- function(results,
   if (data.type == "Metabolon") {
     ## subset chain lengths
     results <- results %>%
-      dplyr::filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
+      dplyr::filter(
+        adj.P.Val < p.value.cutoff,
+        logFC > fold.changes.cutoff |
+          logFC < (fold.changes.cutoff - 1)
+      ) %>%
       dplyr::filter(MetaboliteClass == "Complex lipids") %>%
       mutate(newMet = MetaboliteName) %>%
       mutate(newMet = gsub("O-|P-", "", newMet)) %>%
       separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
       mutate(fatty.acid = gsub(".*/", "", fatty.acid)) %>%
-      mutate(lipid.class = case_when(
-        str_detect(lipid.class, "TAG") ~ "TAG",
-        TRUE ~ lipid.class
-      )) %>%
+      mutate(lipid.class = case_when(str_detect(lipid.class, "TAG") ~ "TAG",
+                                     TRUE ~ lipid.class)) %>%
       mutate(fatty.acid = gsub("FA", "", fatty.acid)) %>%
       select(contrast, logFC, adj.P.Val, lipid.class, fatty.acid) %>%
       group_by(contrast, lipid.class, fatty.acid) %>%
@@ -163,23 +156,26 @@ lipidChainLengthDistribution <- function(results,
       mutate(new.fatty.acid = fatty.acid) %>%
       separate(new.fatty.acid, c("chain.length", "saturation"), ":") %>%
       mutate(chain.length = as.numeric(as.character(chain.length))) %>%
-      mutate(saturation.class = ifelse(saturation == "0", "saturated",
+      mutate(saturation.class = ifelse(
+        saturation == "0",
+        "saturated",
         ifelse(saturation == "1", "mono-unsaturated",
-          "poly-unsaturated"
-        )
+               "poly-unsaturated")
       ))
   } else {
     results <- results %>%
-      dplyr::filter(adj.P.Val < p.value.cutoff, logFC > fold.changes.cutoff | logFC < (fold.changes.cutoff - 1)) %>%
+      dplyr::filter(
+        adj.P.Val < p.value.cutoff,
+        logFC > fold.changes.cutoff |
+          logFC < (fold.changes.cutoff - 1)
+      ) %>%
       dplyr::filter(grepl("Complex lipids", MetaboliteClass)) %>%
       mutate(newMet = MetaboliteName) %>%
       mutate(newMet = gsub("O-|P-", "", newMet)) %>%
       separate(newMet, c("lipid.class", "fatty.acid"), "[()]|-") %>%
       mutate(fatty.acid = gsub(".*/", "", fatty.acid)) %>%
-      mutate(lipid.class = case_when(
-        str_detect(lipid.class, "TAG") ~ "TAG",
-        TRUE ~ lipid.class
-      )) %>%
+      mutate(lipid.class = case_when(str_detect(lipid.class, "TAG") ~ "TAG",
+                                     TRUE ~ lipid.class)) %>%
       mutate(fatty.acid = gsub("FA", "", fatty.acid)) %>%
       select(contrast, logFC, adj.P.Val, lipid.class, fatty.acid) %>%
       group_by(contrast, lipid.class, fatty.acid) %>%
@@ -188,24 +184,28 @@ lipidChainLengthDistribution <- function(results,
       mutate(new.fatty.acid = fatty.acid) %>%
       separate(new.fatty.acid, c("chain.length", "saturation"), ":") %>%
       mutate(chain.length = as.numeric(as.character(chain.length))) %>%
-      mutate(saturation.class = ifelse(saturation == "0", "saturated",
+      mutate(saturation.class = ifelse(
+        saturation == "0",
+        "saturated",
         ifelse(saturation == "1", "mono-unsaturated",
-          "poly-unsaturated"
-        )
+               "poly-unsaturated")
       ))
   }
 
   groups <- unique(results$contrast)
+
   for (i in groups) {
     p <- results %>%
       dplyr::filter(contrast == i) %>%
-      ggplot(aes(
-        x = lipid.class,
-        y = fatty.acid,
-        color = log2(logFC),
-        size = -log10(adj.P.Val),
-        shape = saturation.class
-      )) +
+      ggplot(
+        aes(
+          x = lipid.class,
+          y = fatty.acid,
+          color = log2(logFC),
+          size = -log10(adj.P.Val),
+          shape = saturation.class
+        )
+      ) +
       geom_point() +
       theme_bw() +
       theme(
@@ -214,11 +214,9 @@ lipidChainLengthDistribution <- function(results,
           fill = NA,
           size = 1
         ),
-        axis.text = element_text(
-          size = 11,
-          # face = "bold",
-          colour = "black"
-        ),
+        axis.text = element_text(size = 11,
+                                 # face = "bold",
+                                 colour = "black"),
         axis.title = element_text(size = 12, face = "bold")
       ) +
       scale_colour_gradientn(
@@ -245,22 +243,22 @@ lipidChainLengthDistribution <- function(results,
         vjust = 0.5
       ))
 
-    if (save == "pdf") {
-      ## print
-      print(p)
-    }
+
     ## save plots
-    if (save != "pdf") {
-      sjPlot::save_plot(
-        filename = paste(here(), "chainLengthDistribution", paste0(groups[i], ".", save), sep = "/"),
-        fig = p,
+    if (save != "none") {
+      ggsave(
+        filename = paste(
+          path,
+          paste0(i, "_chainLengthDistribution", ".", save),
+          sep = "/"
+        ),
+        plot = p,
         width = fig.width,
         height = fig.height,
         dpi = dpi
       )
+    } else if (save == "none") {
+      print(p)
     }
-  }
-  if (save == "pdf") {
-    dev.off()
   }
 }

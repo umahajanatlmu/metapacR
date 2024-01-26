@@ -8,7 +8,7 @@
 #' @param cutoff significance cutoff
 #' @param data.type  select platform used, c("MH", "Metabolon", "Others")
 #' @param lipid.class wheather to plot lipid or not
-#' @param save either "pdf", "svg" or "png"
+#' @param save either "pdf", "svg", "png" or "none"
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
 #' @param dpi  dpi only applicable for png
@@ -19,7 +19,6 @@
 #' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
-#' @importFrom sjPlot save_plot
 #'
 #' @return output in save format in defined path
 #'
@@ -31,7 +30,7 @@ piePlot <- function(data,
                     cutoff = 0.05,
                     data.type = c("MH", "Metabolon", "Others"),
                     lipid.class = TRUE,
-                    save = c("pdf", "svg", "png"),
+                    save = c("pdf", "svg", "png", "none"),
                     Other_metadata = NULL,
                     fig.width = 12,
                     fig.height = 9,
@@ -40,7 +39,7 @@ piePlot <- function(data,
   validObject(data)
 
   species <- match.arg(species,c("hsa", "mmu"))
-  save <- match.arg(save, c("pdf", "svg", "png"))
+  save <- match.arg(save, c("pdf", "svg", "png", "none"))
 
   data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
 
@@ -52,23 +51,16 @@ piePlot <- function(data,
   if (is.null(path)) {
     path <- here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
-      dir.create(file.path(paste0(path), "results")),
-      FALSE
+           dir.create(file.path(paste0(path), "results")),
+           FALSE
     )
     path <- paste(path, "results", sep = "/")
   } else {
     path <- path
   }
 
-  if (save == "pdf") {
-    pdf(paste(path, "piePlots.pdf", sep = "/"),
-      onefile = TRUE
-    )
-  } else if (save != "pdf") {
-    dir.create(paste(here(), "piePlots", sep = "/"))
-  }
 
-  if (data.type == "Metabolon" && species == "hsa") {
+  if (data.type == "Metabolon" && species %in% c("hsa", "mmu")) {
     data("chemicalMetadata")
     metabolite.class <- force(chemicalMetadata)
 
@@ -158,18 +150,18 @@ piePlot <- function(data,
   ## match colors
   matchColumnColors <-
     match(datPie$MetaboliteClass,
-      colorsOntologyOne$MetaboliteClass,
-      nomatch = 0
+          colorsOntologyOne$MetaboliteClass,
+          nomatch = 0
     )
   datPie$color <- c("")
   datPie$color[datPie$MetaboliteClass %in%
-    colorsOntologyOne$MetaboliteClass] <-
+                 colorsOntologyOne$MetaboliteClass] <-
     as.character(colorsOntologyOne$color)[matchColumnColors]
 
   ## plot Pie plots
 
-  for (i in seq_along(groups)) {
-    filteredData <- datPie[datPie$contrast %in% groups[i], ]
+  for (i in unique(na.omit(groups))) {
+    filteredData <- datPie[datPie$contrast %in% i, ]
 
     ## plot
     p <- filteredData %>%
@@ -185,7 +177,7 @@ piePlot <- function(data,
       theme_void() +
       labs(title = paste(
         "Distribution of Metabolites:",
-        groups[i]
+        i
       )) +
       theme(
         legend.title = element_blank(),
@@ -197,34 +189,25 @@ piePlot <- function(data,
         c(1, 1, 1, 1),
         "lines"
       ))
-    if (save == "pdf") {
+    if (save == "none") {
       ## print
       print(p)
     }
 
-    if (save != "pdf") {
-      sjPlot::save_plot(
-        filename = paste(here(), "piePlots", paste0(groups[i], ".", save), sep = "/"),
-        fig = p,
+    else if (save != "none") {
+      ggsave(
+        filename = paste(path, "/piePlots_", paste0(i, ".", save), sep = "i"),
+        plot = p,
         width = fig.width,
         height = fig.height,
         dpi = dpi
       )
     }
   }
-  if (save == "pdf") {
-    dev.off()
-  }
+
   ## lipid class
   if (isTRUE(lipid.class)) {
-    if (save == "pdf") {
-      pdf(paste(path, "piechart_lipids.pdf", sep = "/"),
-        paper = "a4r",
-        onefile = TRUE
-      )
-    } else if (save != "pdf") {
-      dir.create(paste(here(), "piechart_lipids", sep = "/"))
-    }
+
     ## prepare distibution data
     if (data.type == "Metabolon") {
       datPie.lipid <- data %>%
@@ -232,8 +215,8 @@ piePlot <- function(data,
         drop_na(MetaboliteClass) %>%
         dplyr::filter(MetaboliteClass == "Complex lipids") %>%
         mutate(lipidClass = ifelse(grepl("^TAG", Metabolite),
-          gsub("TAG.*", "TAG", Metabolite),
-          gsub("[(].*", "", Metabolite)
+                                   gsub("TAG.*", "TAG", Metabolite),
+                                   gsub("[(].*", "", Metabolite)
         )) %>%
         group_by(contrast, lipidClass) %>%
         summarise(Freq = length(lipidClass)) %>%
@@ -264,21 +247,21 @@ piePlot <- function(data,
     ## match colors
     matchColumnColors <-
       match(datPie.lipid$lipidClass,
-        colorsOntologyOne$lipidClass,
-        nomatch = 0
+            colorsOntologyOne$lipidClass,
+            nomatch = 0
       )
     datPie.lipid$color <- c("")
     datPie.lipid$color[datPie.lipid$lipidClass %in%
-      colorsOntologyOne$lipidClass] <-
+                         colorsOntologyOne$lipidClass] <-
       as.character(colorsOntologyOne$color)[matchColumnColors]
 
     ## plot Pie plots
 
-    for (i in seq_along(groups)) {
-      filteredData <- datPie.lipid[datPie.lipid$contrast %in% groups[i], ]
+    for (i in unique(na.omit(groups))) {
+      filteredData <- datPie.lipid[datPie.lipid$contrast %in% i, ]
 
       ## plot
-      p <- filteredData %>%
+      p1 <- filteredData %>%
         ggplot(aes(x = "", y = Freq)) +
         geom_bar(
           aes(fill = lipidClass),
@@ -291,8 +274,9 @@ piePlot <- function(data,
         theme_void() +
         labs(title = paste(
           "Distribution of Metabolites:",
-          groups[i]
-        )) +
+          i
+        ),
+        subtitle = " Complex lipids") +
         theme(
           legend.title = element_blank(),
           legend.position = "bottom",
@@ -303,24 +287,22 @@ piePlot <- function(data,
           c(1, 1, 1, 1),
           "lines"
         ))
-      if (save == "pdf") {
+      if (save == "none") {
         ## print
-        print(p)
+        print(p1)
       }
 
       ## save plots
-      if (save != "pdf") {
-        sjPlot::save_plot(
-          filename = paste(here(), "pieplot_lipids", paste0(groups[i], ".", save), sep = "/"),
-          fig = p,
+      if (save != "none") {
+        ggsave(
+          filename = paste(path, "/pieplot_lipids_", paste0(i, ".", save), sep = ""),
+          plot = p,
           width = fig.width,
           height = fig.height,
           dpi = dpi
         )
       }
     }
-    if (save == "pdf") {
-      dev.off()
-    }
+
   }
 }

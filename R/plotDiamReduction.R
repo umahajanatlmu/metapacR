@@ -46,7 +46,7 @@ plotDiamReduction <- function(dataList,
   }
 
   if (is.null(dist.variables)) {
-    print("no distribution varibale listed")
+    print("warning: no distribution varibale listed")
   }
 
 
@@ -146,46 +146,47 @@ plotDiamReduction <- function(dataList,
       ## add to list
       plot.list.group[[pl]] <- p_diam
     }
-
-    for (dist in dist.variables) {
-      ## plot
-      p_dist <- ggplot(plot.dat, aes(
-        x = PC1,
-        y = PC2,
-        color = .data[[dist]]
-      )) +
-        geom_point(
-          size = 3,
-          alpha = 0.8
-        ) +
-        xlab(paste0("PC1: ", pc1var, "%")) +
-        ylab(paste0("PC2: ", pc2var, "%")) +
-        labs(color = "") +
-        theme_bw() +
-        theme(
-          panel.border = element_rect(colour = "black", fill = NA, size = 1),
-          axis.text = element_text(
-            size = 11,
-            # face = "bold",
-            colour = "black"
-          ),
-          axis.title = element_text(size = 12, face = "bold")
-        ) +
-        scale_color_gradientn(
-          colours = RColorBrewer::brewer.pal(8, "Greens"),
-          limits = c(-3, 3),
-          oob = scales::squish,
-          name = ""
-        ) +
-        theme(legend.position = "right") +
-        ggtitle(dist) +
-        guides(colour = guide_colourbar(
-          barwidth = unit(0.4, "cm"),
-          ticks.colour = "black",
-          frame.colour = "black"
-        ))
-      ## add to list
-      plot.list.dist[[dist]] <- p_dist
+    if (!is.null(dist.variables)) {
+      for (dist in dist.variables) {
+        ## plot
+        p_dist <- ggplot(plot.dat, aes(
+          x = PC1,
+          y = PC2,
+          color = .data[[dist]]
+        )) +
+          geom_point(
+            size = 3,
+            alpha = 0.8
+          ) +
+          xlab(paste0("PC1: ", pc1var, "%")) +
+          ylab(paste0("PC2: ", pc2var, "%")) +
+          labs(color = "") +
+          theme_bw() +
+          theme(
+            panel.border = element_rect(colour = "black", fill = NA, size = 1),
+            axis.text = element_text(
+              size = 11,
+              # face = "bold",
+              colour = "black"
+            ),
+            axis.title = element_text(size = 12, face = "bold")
+          ) +
+          scale_color_gradientn(
+            colours = RColorBrewer::brewer.pal(8, "Greens"),
+            limits = c(-3, 3),
+            oob = scales::squish,
+            name = ""
+          ) +
+          theme(legend.position = "right") +
+          ggtitle(dist) +
+          guides(colour = guide_colourbar(
+            barwidth = unit(0.4, "cm"),
+            ticks.colour = "black",
+            frame.colour = "black"
+          ))
+        ## add to list
+        plot.list.dist[[dist]] <- p_dist
+      }
     }
   }
 
@@ -268,82 +269,83 @@ plotDiamReduction <- function(dataList,
       ## add to list
       plot.list.group[[pl]] <- p_diam
     }
-
-    for (dist in dist.variables) {
-      ## plot
-      p_dist <- ggplot(plot.dat, aes(x = p1, y = p2, color = .data[[dist]])) +
-        gg_circle(
-          rx = sqrt(var(pscores) * hotFisN),
-          ry = sqrt(var(oscores) * hotFisN),
-          xc = 0,
-          yc = 0,
-          size = 1,
-          color = "black",
-          fill = "white"
-        ) +
-        geom_hline(yintercept = 0, size = 1, color = "black") +
-        geom_vline(xintercept = 0, size = 1, color = "black") +
-        geom_point(
-          size = 3,
-          alpha = 0.75
-        ) +
-        theme_bw() +
-        theme(
-          panel.border = element_rect(colour = "black", fill = NA, size = 1),
-          axis.text = element_text(
-            size = 11,
-            # face = "bold",
-            colour = "black"
-          ),
-          axis.title = element_text(size = 12, face = "bold")
-        ) +
-        scale_color_gradientn(
-          colours = RColorBrewer::brewer.pal(8, "Greens"),
-          limits = c(-3, 3),
-          oob = scales::squish,
-          name = ""
-        ) +
-        theme(legend.position = "right") +
-        ggtitle(dist) +
-        xlab(paste(
-          "t1 =", plot@modelDF[1, 1] * 100, "%",
-          "[between groups variation] ", sprintf("\u2192")
-        )) +
-        ylab(paste(
-          "t2 =", plot@modelDF[2, 1] * 100, "%",
-          "[within groups variation] ", sprintf("\u2192")
-        )) +
-        theme(panel.grid.major = element_line(colour = "grey93")) +
-        annotate(
-          geom = "text", label = paste("R2X =", plot@summaryDF[[1]]),
-          x = min(plot.dat$p1),
-          y = max(plot.dat$p2),
-          vjust = 1,
-          size = 4
-        ) +
-        annotate(
-          geom = "text", label = paste("R2Y =", plot@summaryDF[[2]]),
-          x = min(plot.dat$p1),
-          y = 0.9 * max(plot.dat$p2),
-          vjust = 1,
-          size = 4
-        ) +
-        annotate(
-          geom = "text", label = paste("RMSEE =", plot@summaryDF[[4]]),
-          x = min(plot.dat$p1),
-          y = 0.8 * max(plot.dat$p2),
-          vjust = 1,
-          size = 4
-        ) +
-        labs(color = "") +
-        theme(panel.background = element_rect(fill = "grey90")) +
-        guides(colour = guide_colourbar(
-          barwidth = unit(0.3, "cm"),
-          ticks.colour = "black",
-          frame.colour = "black"
-        ))
-      ## add to list
-      plot.list.dist[[dist]] <- p_dist
+    if (!is.null(dist.variables)) {
+      for (dist in dist.variables) {
+        ## plot
+        p_dist <- ggplot(plot.dat, aes(x = p1, y = p2, color = .data[[dist]])) +
+          gg_circle(
+            rx = sqrt(var(pscores) * hotFisN),
+            ry = sqrt(var(oscores) * hotFisN),
+            xc = 0,
+            yc = 0,
+            size = 1,
+            color = "black",
+            fill = "white"
+          ) +
+          geom_hline(yintercept = 0, size = 1, color = "black") +
+          geom_vline(xintercept = 0, size = 1, color = "black") +
+          geom_point(
+            size = 3,
+            alpha = 0.75
+          ) +
+          theme_bw() +
+          theme(
+            panel.border = element_rect(colour = "black", fill = NA, size = 1),
+            axis.text = element_text(
+              size = 11,
+              # face = "bold",
+              colour = "black"
+            ),
+            axis.title = element_text(size = 12, face = "bold")
+          ) +
+          scale_color_gradientn(
+            colours = RColorBrewer::brewer.pal(8, "Greens"),
+            limits = c(-3, 3),
+            oob = scales::squish,
+            name = ""
+          ) +
+          theme(legend.position = "right") +
+          ggtitle(dist) +
+          xlab(paste(
+            "t1 =", plot@modelDF[1, 1] * 100, "%",
+            "[between groups variation] ", sprintf("\u2192")
+          )) +
+          ylab(paste(
+            "t2 =", plot@modelDF[2, 1] * 100, "%",
+            "[within groups variation] ", sprintf("\u2192")
+          )) +
+          theme(panel.grid.major = element_line(colour = "grey93")) +
+          annotate(
+            geom = "text", label = paste("R2X =", plot@summaryDF[[1]]),
+            x = min(plot.dat$p1),
+            y = max(plot.dat$p2),
+            vjust = 1,
+            size = 4
+          ) +
+          annotate(
+            geom = "text", label = paste("R2Y =", plot@summaryDF[[2]]),
+            x = min(plot.dat$p1),
+            y = 0.9 * max(plot.dat$p2),
+            vjust = 1,
+            size = 4
+          ) +
+          annotate(
+            geom = "text", label = paste("RMSEE =", plot@summaryDF[[4]]),
+            x = min(plot.dat$p1),
+            y = 0.8 * max(plot.dat$p2),
+            vjust = 1,
+            size = 4
+          ) +
+          labs(color = "") +
+          theme(panel.background = element_rect(fill = "grey90")) +
+          guides(colour = guide_colourbar(
+            barwidth = unit(0.3, "cm"),
+            ticks.colour = "black",
+            frame.colour = "black"
+          ))
+        ## add to list
+        plot.list.dist[[dist]] <- p_dist
+      }
     }
   }
   if (diam.method == "umap") {
@@ -387,45 +389,47 @@ plotDiamReduction <- function(dataList,
       plot.list.group[[pl]] <- p_diam
     }
 
-    for (dist in dist.variables) {
-      ## plot
-      p_dist <- ggplot(plot.dat, aes(
-        x = V1,
-        y = V2,
-        color = .data[[dist]]
-      )) +
-        geom_point(
-          size = 3,
-          alpha = 0.8
-        ) +
-        xlab("UMAP1") +
-        ylab("UMAP2") +
-        labs(color = "") +
-        theme_bw() +
-        theme(
-          panel.border = element_rect(colour = "black", fill = NA, size = 1),
-          axis.text = element_text(
-            size = 11,
-            # face = "bold",
-            colour = "black"
-          ),
-          axis.title = element_text(size = 12, face = "bold")
-        ) +
-        scale_color_gradientn(
-          colours = RColorBrewer::brewer.pal(8, "Greens"),
-          limits = c(-3, 3),
-          oob = scales::squish,
-          name = ""
-        ) +
-        theme(legend.position = "right") +
-        ggtitle(dist) +
-        guides(colour = guide_colourbar(
-          barwidth = unit(0.4, "cm"),
-          ticks.colour = "black",
-          frame.colour = "black"
-        ))
-      ## add to list
-      plot.list.dist[[dist]] <- p_dist
+    if (!is.null(dist.variables)) {
+      for (dist in dist.variables) {
+        ## plot
+        p_dist <- ggplot(plot.dat, aes(
+          x = V1,
+          y = V2,
+          color = .data[[dist]]
+        )) +
+          geom_point(
+            size = 3,
+            alpha = 0.8
+          ) +
+          xlab("UMAP1") +
+          ylab("UMAP2") +
+          labs(color = "") +
+          theme_bw() +
+          theme(
+            panel.border = element_rect(colour = "black", fill = NA, size = 1),
+            axis.text = element_text(
+              size = 11,
+              # face = "bold",
+              colour = "black"
+            ),
+            axis.title = element_text(size = 12, face = "bold")
+          ) +
+          scale_color_gradientn(
+            colours = RColorBrewer::brewer.pal(8, "Greens"),
+            limits = c(-3, 3),
+            oob = scales::squish,
+            name = ""
+          ) +
+          theme(legend.position = "right") +
+          ggtitle(dist) +
+          guides(colour = guide_colourbar(
+            barwidth = unit(0.4, "cm"),
+            ticks.colour = "black",
+            frame.colour = "black"
+          ))
+        ## add to list
+        plot.list.dist[[dist]] <- p_dist
+      }
     }
   }
   if (diam.method == "tsne") {
@@ -471,45 +475,47 @@ plotDiamReduction <- function(dataList,
       plot.list.group[[pl]] <- p_diam
     }
 
-    for (dist in dist.variables) {
-      ## plot
-      p_dist <- ggplot(plot.dat, aes(
-        x = V1,
-        y = V2,
-        color = .data[[dist]]
-      )) +
-        geom_point(
-          size = 3,
-          alpha = 0.8
-        ) +
-        xlab("tSNE1") +
-        ylab("tSNE2") +
-        labs(color = "") +
-        theme_bw() +
-        theme(
-          panel.border = element_rect(colour = "black", fill = NA, size = 1),
-          axis.text = element_text(
-            size = 11,
-            # face = "bold",
-            colour = "black"
-          ),
-          axis.title = element_text(size = 12, face = "bold")
-        ) +
-        scale_color_gradientn(
-          colours = RColorBrewer::brewer.pal(8, "Greens"),
-          limits = c(-3, 3),
-          oob = scales::squish,
-          name = ""
-        ) +
-        theme(legend.position = "right") +
-        ggtitle(dist) +
-        guides(colour = guide_colourbar(
-          barwidth = unit(0.4, "cm"),
-          ticks.colour = "black",
-          frame.colour = "black"
-        ))
-      ## add to list
-      plot.list.dist[[dist]] <- p_dist
+    if (!is.null(dist.variables)) {
+      for (dist in dist.variables) {
+        ## plot
+        p_dist <- ggplot(plot.dat, aes(
+          x = V1,
+          y = V2,
+          color = .data[[dist]]
+        )) +
+          geom_point(
+            size = 3,
+            alpha = 0.8
+          ) +
+          xlab("tSNE1") +
+          ylab("tSNE2") +
+          labs(color = "") +
+          theme_bw() +
+          theme(
+            panel.border = element_rect(colour = "black", fill = NA, size = 1),
+            axis.text = element_text(
+              size = 11,
+              # face = "bold",
+              colour = "black"
+            ),
+            axis.title = element_text(size = 12, face = "bold")
+          ) +
+          scale_color_gradientn(
+            colours = RColorBrewer::brewer.pal(8, "Greens"),
+            limits = c(-3, 3),
+            oob = scales::squish,
+            name = ""
+          ) +
+          theme(legend.position = "right") +
+          ggtitle(dist) +
+          guides(colour = guide_colourbar(
+            barwidth = unit(0.4, "cm"),
+            ticks.colour = "black",
+            frame.colour = "black"
+          ))
+        ## add to list
+        plot.list.dist[[dist]] <- p_dist
+      }
     }
   }
   if (diam.method == "tsne_pca") {
@@ -555,45 +561,47 @@ plotDiamReduction <- function(dataList,
       plot.list.group[[pl]] <- p_diam
     }
 
-    for (dist in dist.variables) {
-      ## plot
-      p_dist <- ggplot(plot.dat, aes(
-        x = V1,
-        y = V2,
-        color = .data[[dist]]
-      )) +
-        geom_point(
-          size = 3,
-          alpha = 0.8
-        ) +
-        xlab("tSNE1") +
-        ylab("tSNE2") +
-        labs(color = "") +
-        theme_bw() +
-        theme(
-          panel.border = element_rect(colour = "black", fill = NA, size = 1),
-          axis.text = element_text(
-            size = 11,
-            # face = "bold",
-            colour = "black"
-          ),
-          axis.title = element_text(size = 12, face = "bold")
-        ) +
-        scale_color_gradientn(
-          colours = RColorBrewer::brewer.pal(8, "Greens"),
-          limits = c(-3, 3),
-          oob = scales::squish,
-          name = ""
-        ) +
-        theme(legend.position = "right") +
-        ggtitle(dist) +
-        guides(colour = guide_colourbar(
-          barwidth = unit(0.4, "cm"),
-          ticks.colour = "black",
-          frame.colour = "black"
-        ))
-      ## add to list
-      plot.list.dist[[dist]] <- p_dist
+    if (!is.null(dist.variables)) {
+      for (dist in dist.variables) {
+        ## plot
+        p_dist <- ggplot(plot.dat, aes(
+          x = V1,
+          y = V2,
+          color = .data[[dist]]
+        )) +
+          geom_point(
+            size = 3,
+            alpha = 0.8
+          ) +
+          xlab("tSNE1") +
+          ylab("tSNE2") +
+          labs(color = "") +
+          theme_bw() +
+          theme(
+            panel.border = element_rect(colour = "black", fill = NA, size = 1),
+            axis.text = element_text(
+              size = 11,
+              # face = "bold",
+              colour = "black"
+            ),
+            axis.title = element_text(size = 12, face = "bold")
+          ) +
+          scale_color_gradientn(
+            colours = RColorBrewer::brewer.pal(8, "Greens"),
+            limits = c(-3, 3),
+            oob = scales::squish,
+            name = ""
+          ) +
+          theme(legend.position = "right") +
+          ggtitle(dist) +
+          guides(colour = guide_colourbar(
+            barwidth = unit(0.4, "cm"),
+            ticks.colour = "black",
+            frame.colour = "black"
+          ))
+        ## add to list
+        plot.list.dist[[dist]] <- p_dist
+      }
     }
   }
 
@@ -615,8 +623,15 @@ plotDiamReduction <- function(dataList,
 
   p2 <- patchwork::wrap_plots(plot.list.dist, ncol = ncol)
 
-  return(list(
-    group.plot = p1,
-    distribution.plot = p2
-  ))
+
+  if (!is.null(dist.variables)) {
+    return(list(
+      group.plot = p1,
+      distribution.plot = p2
+    ))
+  } else {
+    return(list(
+      group.plot = p1))
+  }
+
 }

@@ -3,13 +3,11 @@
 #' @description compute and plot roc curves
 #'
 #' @param dataList normalized data
+#' @param data.type  select platform used, c("MH", "Metabolon", "Others")
+#' @param species species to use "hsa" or "mmu"
 #' @param group grouping variables
 #' @param path saving path
 #' @param var.imp  disease for which ROC should be compared---should be one.
-#' @param save either "pdf", "svg" or "png"
-#' @param fig.width plot width not applicable for pdf
-#' @param fig.height plot height not applicable for pdf
-#' @param dpi  dpi only applicable for png
 #'
 #' @import tidyverse
 #' @importFrom here here
@@ -19,26 +17,24 @@
 #' @import utils
 #' @import graphics
 #' @import grDevices
-#' @importFrom sjPlot save_plot
 #'
 #' @return summaryROC results table. rocPlots in save oblect in defined path.
 #'
 #' @export
 
 rocPlots <- function(dataList,
+                     data.type = c("MH", "Metabolon", "Others"),
+                     species = c("hsa", "mmu"),
                      group,
                      path = NULL,
-                     var.imp = "PDAC",
-                     save = c("pdf", "svg", "png"),
-                     fig.width = 12,
-                     fig.height = 9,
-                     dpi = 300) {
+                     var.imp = "PDAC") {
   options(warn = -1) ## supress all warning
 
   stopifnot(inherits(dataList, "list"))
   validObject(dataList)
 
-  save <- match.arg(save, c("pdf", "svg", "png"))
+  species <- match.arg(species, c("hsa", "mmu"))
+  data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
 
   if (is.null(group)) {
     stop("group variable is missing")
@@ -55,25 +51,78 @@ rocPlots <- function(dataList,
   if (is.null(path)) {
     path <- here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
-      dir.create(file.path(paste0(path), "results")),
-      FALSE
+           dir.create(file.path(paste0(path), "results")),
+           FALSE
     )
     path <- paste(path, "results", sep = "/")
   } else {
     path <- path
   }
 
-  if (save == "pdf") {
-    pdf(paste(path, "rocCurves.pdf", sep = "/"),
+  ## add metabolite annotation
+  ## ----------------------------------------------------------------
+  if (data.type == "Metabolon" && species %in% c("hsa", "mmu")) {
+    data("chemicalMetadata")
+    metabolite.class <- force(chemicalMetadata)
+
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character)) %>%
+      rename(c("Metabolite" = "MET_CHEM_NO",
+               "MetaboliteName" = "CHEMICAL_NAME"))
+  }
+
+  if (data.type == "MH" && species == "hsa") {
+
+    data("chemicalMetadata_MH")
+    metabolite.class <- force(chemicalMetadata_MH)
+
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character)) %>%
+      rename(
+        c("MetaboliteClass" = "ONTOLOGY1_NAME",
+          "lipidClass" = "ONTOLOGY2_NAME",
+          "MetaboliteName" = "METABOLITE_NAME"
+        )
+      )
+  }
+
+  if (data.type == "MH" && species == "mmu") {
+    data("chemicalMetadata_MH_mmu")
+    metabolite.class <- force(chemicalMetadata_MH_mmu) %>%
+      rename(
+        c(
+          "MetaboliteClass" = "ONTOLOGY1_NAME",
+          "lipidClass" = "ONTOLOGY2_NAME",
+          "MetaboliteName" = "METABOLITE_NAME"
+        )
+      )
+  }
+
+  if (data.type == "Others") {
+    metabolite.class <- Other_metadata
+
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character)) %>%
+      rename(
+        c(
+          "MetaboliteClass" = "Ontology_Class",
+          "lipidClass" = "Ontology_Subclass",
+          "MetaboliteName" = "Metabolite_Name"
+        )
+      )
+  }
+
+  ## save as pdf
+  ## ----------------------------------------------------------------
+  pdf(paste(path, "rocCurves.pdf", sep = "/"),
       paper = "a4r",
       onefile = TRUE
-    )
-  } else if (save != "pdf") {
-    dir.create(paste(here(), "rocPlots", sep = "/"))
-  }
+  )
+
   ## load imputed data matrix
   ## ----------------------------------------------------------------
   imputed.data <- dataList[["imputed.matrix"]]
+  colnames(imputed.data) <- metabolite.class$MetaboliteName[match(colnames(imputed.data), metabolite.class$Metabolite)]
 
   ## load metadata
   ## ----------------------------------------------------------------
@@ -103,6 +152,7 @@ rocPlots <- function(dataList,
 
   ## convert to characters
   data[[group]] <- as.character(data[[group]])
+  data <- data[, !is.na(colnames(data))]
 
   ## convert to numeric
   data <- data %>%
@@ -155,11 +205,11 @@ rocPlots <- function(dataList,
         pROC::coords(rocObj, "best", ret = "all", transpose = FALSE)
 
       rownames(bestObj)[1] <- paste(i,
-        "_",
-        uniqueComp[1],
-        "--",
-        uniqueComp[2],
-        sep = ""
+                                    "_",
+                                    uniqueComp[1],
+                                    "--",
+                                    uniqueComp[2],
+                                    sep = ""
       )
 
       ## add results
@@ -167,7 +217,7 @@ rocPlots <- function(dataList,
 
       ## plot
       ## ----------------------------------------------------------------
-      p <- ggroc(rocObj, size = 2, color = "#377eb8") +
+      p <- pROC::ggroc(rocObj, size = 2, color = "#377eb8") +
         geom_segment(
           aes(
             x = 1,
@@ -234,28 +284,13 @@ rocPlots <- function(dataList,
       ## print
       print(p)
 
-      ## save plot
-      if (save != "pdf") {
-        sjPlot::save_plot(
-          filename = paste(here(), "rocPlots", paste0(
-            i,
-            "_", uniqueComp[1],
-            "_", uniqueComp[2],
-            ".", save
-          ), sep = "/"),
-          fig = p,
-          width = fig.width,
-          height = fig.height,
-          dpi = dpi
-        )
-      }
     }
     Sys.sleep(0.01)
     setTxtProgressBar(pb, which(colnames(data) == i))
   }
-  if (save == "pdf") {
-    dev.off()
-  }
+
+  dev.off()
+
   close(pb)
   options(warn = 0) ## reset all warning
   summaryROC <- summaryROC %>%

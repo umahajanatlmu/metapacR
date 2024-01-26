@@ -1,8 +1,11 @@
+
 #' @title boxPlots
 #'
 #' @description function to plot box and violin plot from normalized metabolome data
 #'
 #' @param dataList raw metabolome data list from imputeTransformScale function.It need to have imputed.matrix and metadata.
+#' @param data.type  select platform used, c("MH", "Metabolon", "Others")
+#' @param species species to use "hsa" or "mmu"
 #' @param group plotting grouping variable..should be 1
 #' @param path saving path
 #'
@@ -20,10 +23,16 @@
 #' @export
 
 boxPlots <- function(dataList,
+                     data.type = c("MH", "Metabolon", "Others"),
+                     species = c("hsa", "mmu"),
                      group = NULL,
                      path = NULL) {
+
   stopifnot(inherits(dataList, "list"))
   validObject(dataList)
+
+  species <- match.arg(species, c("hsa", "mmu"))
+  data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
 
   if (is.null(group)) {
     stop("grouping variable is missing")
@@ -34,17 +43,72 @@ boxPlots <- function(dataList,
   if (is.null(path)) {
     path <- here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
-      dir.create(file.path(paste0(path), "results")),
-      FALSE
+           dir.create(file.path(paste0(path), "results")),
+           FALSE
     )
     path <- paste(path, "results", sep = "/")
   } else {
     path <- path
   }
 
+  ## add metabolite annotation
+  ## ----------------------------------------------------------------
+  if (data.type == "Metabolon" && species %in% c("hsa", "mmu")) {
+    data("chemicalMetadata")
+    metabolite.class <- force(chemicalMetadata)
+
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character)) %>%
+      rename(c("Metabolite" = "MET_CHEM_NO",
+               "MetaboliteName" = "CHEMICAL_NAME"))
+  }
+
+  if (data.type == "MH" && species == "hsa") {
+
+    data("chemicalMetadata_MH")
+    metabolite.class <- force(chemicalMetadata_MH)
+
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character)) %>%
+      rename(
+        c("MetaboliteClass" = "ONTOLOGY1_NAME",
+          "lipidClass" = "ONTOLOGY2_NAME",
+          "MetaboliteName" = "METABOLITE_NAME"
+        )
+      )
+  }
+
+  if (data.type == "MH" && species == "mmu") {
+    data("chemicalMetadata_MH_mmu")
+    metabolite.class <- force(chemicalMetadata_MH_mmu) %>%
+      rename(
+        c(
+          "MetaboliteClass" = "ONTOLOGY1_NAME",
+          "lipidClass" = "ONTOLOGY2_NAME",
+          "MetaboliteName" = "METABOLITE_NAME"
+        )
+      )
+  }
+
+  if (data.type == "Others") {
+    metabolite.class <- Other_metadata
+
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character)) %>%
+      rename(
+        c(
+          "MetaboliteClass" = "Ontology_Class",
+          "lipidClass" = "Ontology_Subclass",
+          "MetaboliteName" = "Metabolite_Name"
+        )
+      )
+  }
+
   ## load imputed data matrix
   ## ----------------------------------------------------------------
   imputed.data <- dataList[["imputed.matrix"]]
+
+  colnames(imputed.data) <- metabolite.class$MetaboliteName[match(colnames(imputed.data), metabolite.class$Metabolite)]
 
   ## load metadata
   ## ----------------------------------------------------------------
@@ -75,12 +139,14 @@ boxPlots <- function(dataList,
   ## save as pdf
   ## ----------------------------------------------------------------
   pdf(paste(path, "boxplots.pdf", sep = "/"),
-    paper = "a4r",
-    onefile = TRUE
+      paper = "a4r",
+      onefile = TRUE
   )
 
   ## convert to characters
   data[[group]] <- as.character(data[[group]])
+
+  data <- data[, !is.na(colnames(data))]
 
   ## convert to numeric
   data <- data %>%

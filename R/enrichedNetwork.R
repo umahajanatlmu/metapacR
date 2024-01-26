@@ -10,7 +10,7 @@
 #' @param fold.changes.cutoff higher cutoff value of fold changes
 #' @param network.method "diffusion" as method of choice, for other method refer to FELLA. CUrrently only caliberated for diffusion.
 #' @param legend.pathway number of pathways to map on plot
-#' @param save either "pdf", "svg" or "png"
+#' @param save either "pdf", "svg", "png" or "none"
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
 #' @param Other_metadata dataframe with metadata....it must have  columns: Metabolite, Metabolite_Name, Ontology_Class, Ontology_Subclass.
@@ -46,7 +46,7 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
                             fold.changes.cutoff = 1.5,
                             network.method = "diffusion",
                             legend.pathway = 3,
-                            save = c("pdf", "svg", "png"),
+                            save = c("pdf", "svg", "png", "none"),
                             data.type = c("MH", "Metabolon", "Others"),
                             fig.width = 12,
                             fig.height = 9,
@@ -55,7 +55,7 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
   validObject(results)
 
   species <- match.arg(species,c("hsa", "mmu"))
-  save <- match.arg(save, c("pdf", "svg", "png"))
+  save <- match.arg(save, c("pdf", "svg", "png", "none"))
   data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
 
   enrichment.results <- data.frame()
@@ -73,22 +73,13 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
     ref.path <- ref.path
   }
 
-  if (save == "pdf") {
-    pdf(paste(ref.path, "enrichmentNetwork.pdf", sep = "/"),
-        paper = "a4r",
-        onefile = TRUE
-    )
-  } else if (save != "pdf") {
-    dir.create(paste(ref.path, "enrichmentNetwork", sep = "/"))
-  }
-
   if (data.type == "Others") {
     stopifnot(inherits(Other_metadata, "data.frame"))
     validObject(Other_metadata)
   }
 
   ## load annotation file
-  if (data.type == "Metabolon" && species == "hsa") {
+  if (data.type == "Metabolon" && species %in% c("hsa", "mmu")) {
     data("chemicalMetadata")
     chemicalMetadata <- force(chemicalMetadata)
 
@@ -370,13 +361,19 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
 
     if (save == "svg") {
       svg(
-        paste(ref.path, "enrichmentNetwork", paste0("enrichmentNetwork_", groups[i], ".", save), sep = "/"),
+        paste(ref.path, "/enrichmentNetwork_", paste0("enrichmentNetwork_", groups[i], ".", save), sep = ""),
         width = fig.width,
         height = fig.height
       )
     } else if (save == "png") {
       png(
-        paste(ref.path, "enrichmentNetwork", paste0("enrichmentNetwork_", groups[i], ".", save), sep = "/"),
+        paste(ref.path, "/enrichmentNetwork_", paste0("enrichmentNetwork_", groups[i], ".", save), sep = ""),
+        width = fig.width,
+        height = fig.height
+      )
+    } else if (save == "pdf") {
+      pdf(
+        paste(ref.path, "/enrichmentNetwork_", paste0("enrichmentNetwork_", groups[i], ".", save), sep = ""),
         width = fig.width,
         height = fig.height
       )
@@ -404,7 +401,7 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
 
     )
 
-    if (save != "pdf") {
+    if (save != "none") {
       ## print
       dev.off()
     }
@@ -474,9 +471,6 @@ enrichedNetwork <- function(species = c("hsa", "mmu"),
     enrichment.results <- bind_rows(enrichment.results, table.plot)
   }
 
-  if (save == "pdf") {
-    dev.off()
-  }
   return(list(
     results = enrichment.results,
     plot.pathway.impact = plot.pathway.impact

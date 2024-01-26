@@ -7,7 +7,7 @@
 #' @param results fold changes results
 #' @param p.value.cutoff cutoff value of p.value
 #' @param fold.changes.cutoff higher cutoff value of fold changes
-#' @param save either "pdf", "svg" or "png"
+#' @param save either "pdf", "svg", "png" or "none"
 #' @param data.type  select platform used, c("MH", "Metabolon", "Others")
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
@@ -20,7 +20,6 @@
 #' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
-#' @importFrom sjPlot save_plot
 #' @importFrom KEGGREST keggLink keggGet
 #' @import stats
 #'
@@ -33,18 +32,20 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
                                  results,
                                  p.value.cutoff = 0.05,
                                  fold.changes.cutoff = 1.5,
-                                 save = c("pdf", "svg", "png"),
+                                 save = c("pdf", "svg", "png", "none"),
                                  data.type = c("MH", "Metabolon", "Others"),
                                  fig.width = 12,
                                  fig.height = 9,
                                  dpi = 300,
                                  Other_metadata = NULL) {
 
+  options(warn = -1) ## supress all warning
+
   stopifnot(inherits(results, "data.frame"))
   validObject(results)
 
   species <- match.arg(species, c("hsa", "mmu"))
-  save <- match.arg(save, c("pdf", "svg", "png"))
+  save <- match.arg(save, c("pdf", "svg", "png", "none"))
   data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
 
 
@@ -60,13 +61,6 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
     ref.path <- ref.path
   }
 
-  if (save == "pdf") {
-    pdf(paste(ref.path, "KEGG.enrichmentScore.pdf", sep = "/"),
-        onefile = TRUE
-    )
-  } else if (save != "pdf") {
-    dir.create(paste(ref.path, "KEGG.enrichmentScore", sep = "/"))
-  }
 
   if (data.type == "Others") {
     stopifnot(inherits(Other_metadata, "data.frame"))
@@ -74,7 +68,7 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
   }
 
   ## load annotation file
-  if (data.type == "Metabolon" && species == "hsa") {
+  if (data.type == "Metabolon" && species %in% c("hsa", "mmu")) {
     data("chemicalMetadata")
     chemicalMetadata <- force(chemicalMetadata)
 
@@ -152,25 +146,21 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
 
     for (rp in seq_along(referencesPathway)) {
       ## selected pathway
-      pathway <- referencesPathway[rp]
-      pathwayName <- KEGGREST::keggGet(pathway)[[1]]$NAME
+      try({
+        pathway <- referencesPathway[rp]
+        pathwayName <- KEGGREST::keggGet(pathway)[[1]][["NAME"]]
 
-      ## list reference compounds
-      listReferenceComp <- suppressWarnings(KEGGREST::keggGet(pathway)[[1]]$COMPOUND)
-      compoundID <- names(listReferenceComp)
-      nCompound <- length(compoundID)
+        ## list reference compounds
+        listReferenceComp <- suppressWarnings(KEGGREST::keggGet(pathway)[[1]][["COMPOUND"]])
+        compoundID <- names(listReferenceComp)
+        nCompound <- length(compoundID)
 
-      ## list reference genes
-      listReferenceGenes <- KEGGREST::keggGet(pathway)[[1]]$GENE
-      genes <- gsub(";.*", "", listReferenceGenes)
-      genes <- genes[is.na(as.numeric(genes))]
-
-      ## build dataset
-      keggReferenceDB[rp, "pathway"] <- pathway
-      keggReferenceDB[rp, "pathwayName"] <- pathwayName
-      keggReferenceDB[rp, "genes"] <- paste(genes, collapse = ",")
-      keggReferenceDB[rp, "compoundID"] <- paste(compoundID, collapse = ",")
-      keggReferenceDB[rp, "nCompound"] <- nCompound
+        ## build dataset
+        keggReferenceDB[rp, "pathway"] <- pathway
+        keggReferenceDB[rp, "pathwayName"] <- pathwayName
+        keggReferenceDB[rp, "compoundID"] <- paste(compoundID, collapse = ",")
+        keggReferenceDB[rp, "nCompound"] <- nCompound
+      })
     }
 
     ## filter non-NA compounds
@@ -484,15 +474,15 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
         ylab("Enrichment score") +
         ggtitle(paste0("Enriched pathways:", groups[i])) +
         scale_fill_manual(values = c(up = "#e41a1c", down = "#377eb8"))
-      if (save == "pdf") {
+      if (save == "none") {
         ## print
         print(p)
       }
       ## save results
-      if (save != "pdf") {
-        sjPlot::save_plot(
-          paste(ref.path, "KEGG.enrichmentScore", paste0("barplot_", groups[i], ".", save), sep = "/"),
-          fig = p,
+      if (save != "none") {
+        ggsave(
+          paste(ref.path, "/KEGG.enrichmentScore_", paste0("barplot_", groups[i], ".", save), sep = ""),
+          plot = p,
           width = fig.width,
           height = fig.height,
           dpi = dpi
@@ -500,8 +490,7 @@ enrichmentScore.KEGG <- function(species = c("hsa", "mmu"),
       }
     }
   }
-  if (save == "pdf") {
-    dev.off()
-  }
+
   return(results = enrichment.results)
+  options(warn = 0) ## reset all warnings
 }

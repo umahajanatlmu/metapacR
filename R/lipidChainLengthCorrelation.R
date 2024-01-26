@@ -5,7 +5,7 @@
 #' @param species species to use "hsa" or "mmu"
 #' @param results fold changes data
 #' @param path saving path
-#' @param save either "pdf", "svg" or "png"
+#' @param save either "pdf", "svg" , "png" or "none"
 #' @param data.type  select platform used, c("MH", "Metabolon", "Others")
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
@@ -14,7 +14,6 @@
 #'
 #' @import tidyverse
 #' @importFrom here here
-#' @importFrom sjPlot save_plot
 #' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
@@ -27,7 +26,7 @@
 lipidChainLengthCorrelation <- function(results,
                                         path = NULL,
                                         species = c("hsa", "mmu"),
-                                        save = c("pdf", "svg", "png"),
+                                        save = c("pdf", "svg", "png", "none"),
                                         data.type = c("MH", "Metabolon", "Others"),
                                         fig.width = 12,
                                         fig.height = 9,
@@ -44,31 +43,21 @@ lipidChainLengthCorrelation <- function(results,
     validObject(Other_metadata)
   }
 
-  save <- match.arg(save, c("pdf", "svg", "png"))
+  save <- match.arg(save, c("pdf", "svg", "png", "none"))
 
   if (is.null(path)) {
     path <- here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
-      dir.create(file.path(paste0(path), "results")),
-      FALSE
+           dir.create(file.path(paste0(path), "results")),
+           FALSE
     )
     path <- paste(path, "results", sep = "/")
   } else {
     path <- path
   }
 
-  if (save == "pdf") {
-    pdf(paste(path, "chainLengthCorrelation.pdf", sep = "/"),
-      paper = "a4r",
-      onefile = TRUE
-    )
-  } else if (save != "pdf") {
-    dir.create(paste(here(), "chainLengthCorrelations", sep = "/"))
-  }
-
-
   ## load annotation file
-  if (data.type == "Metabolon" && species == "hsa") {
+  if (data.type == "Metabolon" && species %in% c("hsa","mmu")) {
     data("chemicalMetadata")
     metabolite.class <- force(chemicalMetadata)
 
@@ -153,9 +142,9 @@ lipidChainLengthCorrelation <- function(results,
       separate(fatty.acid, c("chain.length", "saturation"), ":") %>%
       mutate(chain.length = as.numeric(as.character(chain.length))) %>%
       mutate(saturation.class = ifelse(saturation == "0", "saturated",
-        ifelse(saturation == "1", "mono-unsaturated",
-          "poly-unsaturated"
-        )
+                                       ifelse(saturation == "1", "mono-unsaturated",
+                                              "poly-unsaturated"
+                                       )
       ))
   } else {
     res <- results %>%
@@ -172,9 +161,9 @@ lipidChainLengthCorrelation <- function(results,
       separate(fatty.acid, c("chain.length", "saturation"), ":") %>%
       mutate(chain.length = as.numeric(as.character(chain.length))) %>%
       mutate(saturation.class = ifelse(saturation == "0", "saturated",
-        ifelse(saturation == "1", "mono-unsaturated",
-          "poly-unsaturated"
-        )
+                                       ifelse(saturation == "1", "mono-unsaturated",
+                                              "poly-unsaturated"
+                                       )
       ))
   }
 
@@ -209,7 +198,7 @@ lipidChainLengthCorrelation <- function(results,
         method.args = list(formula = y ~ x),
         aes(label = sprintf(
           'R^2~"="~%.3f~~italic(p)~"="~%.2f',
-          stat(..r.squared..),
+          after_stat(..r.squared..),
           stat(..p.value..)
         )),
         parse = TRUE,
@@ -234,22 +223,22 @@ lipidChainLengthCorrelation <- function(results,
       theme(legend.position = "bottom") +
       labs(color = "Saturation status")
 
-    if (save == "pdf") {
-      ## print
-      print(p)
-    }
     ## save plots
-    if (save != "pdf") {
-      sjPlot::save_plot(
-        filename = paste(here(), "chainLengthCorrelations", paste0(groups[i], ".", save), sep = "/"),
-        fig = p,
+    if (save != "none") {
+      ggsave(
+        filename = paste(
+          path,
+          paste0(i, "_chainLengthCorrelation", ".", save),
+          sep = "/"
+        ),
+        plot = p,
         width = fig.width,
         height = fig.height,
         dpi = dpi
       )
+    } else if (save == "none") {
+      print(p)
     }
   }
-  if (save == "pdf") {
-    dev.off()
-  }
+
 }

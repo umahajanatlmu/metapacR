@@ -6,7 +6,7 @@
 #' @param data fold changes data
 #' @param path saving path
 #' @param data.type  select platform used, c("MH", "Metabolon", "Others")
-#' @param save either "pdf", "svg" or "png"
+#' @param save either "pdf", "svg" ,"png" or "none"
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
 #' @param dpi  dpi only applicable for png
@@ -18,7 +18,6 @@
 #' @importFrom RColorBrewer brewer.pal
 #' @import graphics
 #' @import grDevices
-#' @importFrom sjPlot save_plot
 #'
 #' @return plots in save object in defined path
 #'
@@ -27,7 +26,7 @@
 volcanoPlot <- function(data,
                         path = NULL,
                         species = c("hsa", "mmu"),
-                        save = c("pdf", "svg", "png"),
+                        save = c("pdf", "svg", "png", "none"),
                         data.type = c("MH", "Metabolon", "Others"),
                         fig.width = 12,
                         fig.height = 9,
@@ -37,7 +36,7 @@ volcanoPlot <- function(data,
   validObject(data)
 
   species <- match.arg(species,c("hsa", "mmu"))
-  save <- match.arg(save, c("pdf", "svg", "png"))
+  save <- match.arg(save, c("pdf", "svg", "png", "none"))
 
   data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
 
@@ -49,23 +48,16 @@ volcanoPlot <- function(data,
   if (is.null(path)) {
     path <- here::here()
     ifelse(!dir.exists(file.path(paste0(path), "results")),
-      dir.create(file.path(paste0(path), "results")),
-      FALSE
+           dir.create(file.path(paste0(path), "results")),
+           FALSE
     )
     path <- paste(path, "results", sep = "/")
   } else {
     path <- path
   }
 
-  if (save == "pdf") {
-    pdf(paste(path, "volcanoPlots.pdf", sep = "/"),
-      onefile = TRUE
-    )
-  } else if (save != "pdf") {
-    dir.create(paste(here(), "volcanoPlots", sep = "/"))
-  }
 
-  if (data.type == "Metabolon" && species == "hsa") {
+  if (data.type == "Metabolon" && species %in% c("hsa", "mmu")) {
     data("chemicalMetadata")
     metabolite.class <- force(chemicalMetadata)
 
@@ -151,18 +143,18 @@ volcanoPlot <- function(data,
   ## match colors
   matchColumnColors <-
     match(datVolcano$MetaboliteClass,
-      colorsOntologyOne$MetaboliteClass,
-      nomatch = 0
+          colorsOntologyOne$MetaboliteClass,
+          nomatch = 0
     )
   datVolcano$color <- c("")
   datVolcano$color[datVolcano$MetaboliteClass %in%
-    colorsOntologyOne$MetaboliteClass] <-
+                     colorsOntologyOne$MetaboliteClass] <-
     as.character(colorsOntologyOne$color)[matchColumnColors]
 
   ## plot volcano plots
 
-  for (i in seq_along(na.omit(groups))) {
-    filteredData <- datVolcano[datVolcano$contrast %in% groups[i], ]
+  for (i in unique(na.omit(groups))) {
+    filteredData <- datVolcano[datVolcano$contrast %in% i, ]
 
     ## plot
     p <-
@@ -172,9 +164,10 @@ volcanoPlot <- function(data,
         aes(fill = MetaboliteClass),
         size = 3,
         color = "black",
-        pch = 21
+        pch = 21,
+        alpha = 0.5
       ) +
-      ggtitle(groups[i]) +
+      ggtitle(i) +
       ggrepel::geom_text_repel(
         data = head(filteredData, 5),
         aes(label = Metabolite),
@@ -203,23 +196,20 @@ volcanoPlot <- function(data,
         y = "p value (-log10)"
       )
 
-    if (save == "pdf") {
+    if (save == "none") {
       ## print
       print(p)
     }
 
     ## save plots
-    if (save != "pdf") {
-      sjPlot::save_plot(
-        filename = paste(here(), "volcanoPlots", paste0(groups[i], ".", save), sep = "/"),
-        fig = p,
+    if (save != "none") {
+      ggsave(
+        filename = paste(path, "/volcanoPlots_", paste0(i, ".", save), sep = ""),
+        plot = p,
         width = fig.width,
         height = fig.height,
         dpi = dpi
       )
     }
-  }
-  if (save == "pdf") {
-    dev.off()
   }
 }

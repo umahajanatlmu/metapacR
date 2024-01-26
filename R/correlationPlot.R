@@ -3,15 +3,15 @@
 #' @description function to plot intragroup correlation plot.
 #'
 #' @param dataList normalized data
-#' @param h cluster size
-#' @param save either "pdf", "svg" or "png"
-#' @param fig.width plot width not applicable for pdf
-#' @param fig.height plot height not applicable for pdf
-#' @param path  saving path
+#' @param data.type  select platform used, c("MH", "Metabolon", "Others")
+#' @param species species to use "hsa" or "mmu"
+#' @param group grouping variables
 #'
 #' @import tidyverse
 #' @importFrom Hmisc rcorr
-#' @importFrom pheatmap pheatmap
+#' @importFrom psych corr.test
+#' @importFrom ggnewscale new_scale_fill
+#' @importFrom reshape2 melt
 #' @import graphics
 #' @import grDevices
 #' @import here
@@ -21,92 +21,173 @@
 #' @export
 
 correlationPlot <- function(dataList,
-                            h = 3,
-                            path = NULL,
-                            save = c("pdf", "svg", "png"),
-                            fig.width = 12,
-                            fig.height = 9) {
+                            data.type = c("MH", "Metabolon", "Others"),
+                            species = c("hsa", "mmu"),
+                            group = NULL,
+                            var.imp = NULL) {
+
+  options(warn = -1) ## supress all warning
+
   stopifnot(inherits(dataList, "list"))
   validObject(dataList)
-  save <- match.arg(save, c("pdf", "svg", "png"))
 
-  if (is.null(path)) {
-    path <- here()
-    ifelse(!dir.exists(file.path(paste0(path), "results")),
-      dir.create(file.path(paste0(path), "results")),
-      FALSE
-    )
-    path <- paste(path, "results", sep = "/")
-  } else {
-    path <- path
+  species <- match.arg(species, c("hsa", "mmu"))
+  data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
+
+  if (is.null(group)) {
+    stop("group variable is missing")
+  } else if (length(group) != 1) {
+    stop("multiple group variables available....provide only one group variable")
   }
-  if (save == "pdf") {
-    pdf(paste(path, "correlationPlots.pdf", sep = "/"),
-      onefile = TRUE
-    )
-  } else if (save != "pdf") {
-    dir.create(paste(here(), "correlationPlots.pdf", sep = "/"))
+
+
+  ## add metabolite annotation
+  ## ----------------------------------------------------------------
+  if (data.type == "Metabolon" && species %in% c("hsa", "mmu")) {
+    data("chemicalMetadata")
+    metabolite.class <- force(chemicalMetadata)
+
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character)) %>%
+      rename(c("Metabolite" = "MET_CHEM_NO",
+               "MetaboliteName" = "CHEMICAL_NAME"))
   }
+
+  if (data.type == "MH" && species == "hsa") {
+
+    data("chemicalMetadata_MH")
+    metabolite.class <- force(chemicalMetadata_MH)
+
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character)) %>%
+      rename(
+        c("MetaboliteClass" = "ONTOLOGY1_NAME",
+          "lipidClass" = "ONTOLOGY2_NAME",
+          "MetaboliteName" = "METABOLITE_NAME"
+        )
+      )
+  }
+
+  if (data.type == "MH" && species == "mmu") {
+    data("chemicalMetadata_MH_mmu")
+    metabolite.class <- force(chemicalMetadata_MH_mmu) %>%
+      rename(
+        c(
+          "MetaboliteClass" = "ONTOLOGY1_NAME",
+          "lipidClass" = "ONTOLOGY2_NAME",
+          "MetaboliteName" = "METABOLITE_NAME"
+        )
+      )
+  }
+
+  if (data.type == "Others") {
+    metabolite.class <- Other_metadata
+
+    metabolite.class <- metabolite.class %>%
+      mutate(across(everything(), as.character)) %>%
+      rename(
+        c(
+          "MetaboliteClass" = "Ontology_Class",
+          "lipidClass" = "Ontology_Subclass",
+          "MetaboliteName" = "Metabolite_Name"
+        )
+      )
+  }
+
 
   ## load imputed data matrix
   ## ----------------------------------------------------------------
-  data <- dataList[["imputed.matrix"]]
+  imputed.data <- dataList[["imputed.matrix"]]
 
-  ## convert to numeric
-  data <- data %>%
-    select_if(., is.numeric) %>%
-    mutate_all(~ ifelse(is.nan(.), NA, .)) %>%
-    select_if(~ !all(is.na(.)))
+  colnames(imputed.data) <- metabolite.class$MetaboliteName[match(colnames(imputed.data), metabolite.class$Metabolite)]
 
-  ## make correlation matrix
-  corrMat <- Hmisc::rcorr(as.matrix(data))
+  ## load metadata
+  ## ----------------------------------------------------------------
+  metadata.data <- dataList[["metadata"]]
 
-  ## define matrix colors
-  macolor <- colorRampPalette(c("navyblue", "white", "red"))(100)
+  ## subset metadata
+  ## ----------------------------------------------------------------
+  select.columns <- group
+  metadata.data <- metadata.data[, colnames(metadata.data) %in% select.columns, drop = FALSE]
 
-  ## define matrix
-  M <- corrMat$r
-  p_mat <- corrMat$p
-  row_names <- rownames(M)
-
-  ## plot pheatmap
-  p <- pheatmap::pheatmap(M,
-    color = macolor,
-    silent = TRUE
-  )
-
-  tree_cut <- cutree(p$tree_row, h = h)
-
-  tc <- data.frame(
-    tip = names(tree_cut),
-    clust_membership = as.character(unname(
-      tree_cut
-    ))
-  )
-  row.names(tc) <- tc$tip
-  tc <- tc["clust_membership"]
-
-  ## plot heatmap
-  p <- pheatmap::pheatmap(M,
-    color = rev(macolor),
-    clustering_method = "complete",
-    annotation_row = tc,
-    annotation_col = tc,
-    fontsize_row = 0.8,
-    fontsize_col = 0.8
-  )
-
-  if (save == "svg") {
-    svg(paste(path, "correlationPlots.svg", sep = "/"), height = fig.height, width = fig.width)
-  } else if (save == "png") {
-    svg(paste(path, "correlationPlots.png", sep = "/"), height = fig.height, width = fig.width)
+  ## define factors
+  ## ----------------------------------------------------------------
+  for (c in colnames(metadata.data)) {
+    if (mode(metadata.data[[c]]) %in% c("character", "factor")) {
+      metadata.data[[c]] <- as.factor(metadata.data[[c]])
+    } else if (mode(metadata.data[[c]]) == "difftime") {
+      metadata.data[[c]] <- as.numeric(metadata.data[[c]])
+    } else {
+      metadata.data[[c]] <- as.numeric(metadata.data[[c]])
+    }
   }
 
-  ## print
-  print(p)
+  ## merge Data
+  ## ----------------------------------------------------------------
+  data <- merge(metadata.data, imputed.data, by = 0) %>%
+    column_to_rownames("Row.names")
 
-  ## dev off
-  dev.off()
+  ## convert to characters
+  data[[group]] <- as.character(data[[group]])
 
-  return(result = corrMat)
+  data <- data[, !is.na(colnames(data))]
+
+  ## unique combinations
+  if (length(unique(data[[group]])) == 2) {
+
+    corr_mat_list <- list()
+
+    for (i in unique(data[[group]])) {
+      temp <- data[data[[group]] == i, !colnames(data) %in% group]
+
+      temp <- temp[, colSums(is.na(temp)) != nrow(temp)]
+
+      #temp <- t(temp)
+      corr_mat <- psych::corr.test(temp,
+                                   y = NULL,
+                                   use = "complete.obs",
+                                   method="pearson",
+                                   adjust="fdr",
+                                   alpha=.05,
+                                   ci=FALSE,
+                                   normal=FALSE)
+      ## save corr mat
+      corr_mat_list[[i]] <- corr_mat
+    }
+  }
+  else if (length(unique(data[[group]])) > 2) {
+
+    if (is.null(var.imp)) {
+      stop("provide one var.imp")
+    }
+
+    data[[group]] <- ifelse(data[[group]] == var.imp, var.imp, "rest")
+
+
+    corr_mat_list <- list()
+
+    for (i in unique(data[[group]])) {
+      temp <- data[data[[group]] == i, !colnames(data) %in% group]
+      #temp <- t(temp)
+      corr_mat <- psych::corr.test(temp,
+                                   y = NULL,
+                                   use = "complete.obs",
+                                   method="pearson",
+                                   adjust="fdr",
+                                   alpha=.05,
+                                   ci=FALSE,
+                                   minlength=5,
+                                   normal=FALSE)
+      ## save corr mat
+      corr_mat_list[[i]] <- corr_mat
+    }
+
+
+  }
+
+  return(list(results = corr_mat_list))
+
+  options(warn = 0) ## reset all warnings
+
 }
+

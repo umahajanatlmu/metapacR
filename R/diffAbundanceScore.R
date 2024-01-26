@@ -20,7 +20,7 @@
 #' @param p.value.cutoff cutoff value of p.value
 #' @param fold.changes.cutoff higher cutoff value of fold changes
 #' @param common.mets minimum number of common metaolites
-#' @param save either "pdf", "svg" or "png"
+#' @param save either "pdf", "svg", "png", "none"
 #' @param data.type  select platform used, c("MH", "Metabolon", "Others")
 #' @param fig.width plot width not applicable for pdf
 #' @param fig.height plot height not applicable for pdf
@@ -31,9 +31,9 @@
 #' @import tidyverse
 #' @importFrom here here
 #' @importFrom RColorBrewer brewer.pal
+#' @importFrom scales rescale
 #' @import graphics
 #' @import grDevices
-#' @importFrom sjPlot save_plot
 #' @importFrom KEGGREST keggGet keggLink
 #' @import stats
 #' @importFrom reshape2 dcast
@@ -49,7 +49,7 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
                                p.value.cutoff = 0.05,
                                fold.changes.cutoff = 1.5,
                                common.mets = 15,
-                               save = c("pdf", "svg", "png"),
+                               save = c("pdf", "svg", "png", "none"),
                                data.type = c("MH", "Metabolon", "Others"),
                                fig.width = 12,
                                fig.height = 9,
@@ -59,7 +59,7 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
   validObject(results)
 
   species <- match.arg(species,c("hsa", "mmu"))
-  save <- match.arg(save,c("pdf", "svg", "png"))
+  save <- match.arg(save,c("pdf", "svg", "png", "none"))
   data.type <- match.arg(data.type, c("MH", "Metabolon", "Others"))
 
   if (is.null(ref.path)) {
@@ -73,40 +73,32 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
     ref.path <- ref.path
   }
 
-  if (save == "pdf") {
-    pdf(paste(ref.path, "diffAbundenceScore.pdf", sep = "/"),
-        onefile = TRUE
-    )
-  } else if (save != "pdf") {
-    dir.create(paste(ref.path, "diffAbundenceScore", sep = "/"))
-  }
-
   if (data.type == "Others") {
     stopifnot(inherits(Other_metadata, "data.frame"))
     validObject(Other_metadata)
   }
 
   ## load annotation file
-  if (data.type == "Metabolon" && species == "hsa") {
-  data("chemicalMetadata")
-  chemicalMetadata <- force(chemicalMetadata)
+  if (data.type == "Metabolon" && species %in% c("hsa", "mmu")) {
+    data("chemicalMetadata")
+    chemicalMetadata <- force(chemicalMetadata)
 
-  chemicalMetadata <- chemicalMetadata %>%
-    mutate(across(everything(), as.character))
+    chemicalMetadata <- chemicalMetadata %>%
+      mutate(across(everything(), as.character))
 
-  ## define metabolite classes
-  columnToSelect <- c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_NO")
-  metabolite_class <- chemicalMetadata %>%
-    dplyr::select(any_of(columnToSelect)) %>%
-    separate_rows(KEGG, sep=",") %>%
-    mutate(KEGG=trimws(KEGG))
+    ## define metabolite classes
+    columnToSelect <- c("SUPER_PATHWAY", "CHEMICAL_NAME", "KEGG", "MET_CHEM_NO")
+    metabolite_class <- chemicalMetadata %>%
+      dplyr::select(any_of(columnToSelect)) %>%
+      separate_rows(KEGG, sep=",") %>%
+      mutate(KEGG=trimws(KEGG))
 
-  ## load enriched data
-  pathDat <- results %>%
-    dplyr::filter(adj.P.Val < p.value.cutoff) %>%
-    left_join(metabolite_class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
-    dplyr::rename(keggID =KEGG) %>%
-    drop_na(keggID)
+    ## load enriched data
+    pathDat <- results %>%
+      dplyr::filter(adj.P.Val < p.value.cutoff) %>%
+      left_join(metabolite_class, by = c("Metabolite" = "MET_CHEM_NO")) %>%
+      dplyr::rename(keggID =KEGG) %>%
+      drop_na(keggID)
   }
 
   if (data.type == "MH" && species == "hsa") {
@@ -260,7 +252,9 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
   for (j in seq_along(groups)) {
     ## filtered dataset
     datFiltered <- pathDatDas[pathDatDas$contrast %in% groups[j], ] %>%
-      arrange(keggName)
+      arrange(keggName) %>%
+      mutate(size = (positive + negative),
+             size = scales::rescale(size, to = c(0, 100)))
     ## plot
     p <- datFiltered %>%
       drop_na(keggName) %>%
@@ -270,7 +264,7 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
         width = 0.15, alpha = 0.5
       ) +
       geom_point(aes(
-        size = (positive + negative),
+        size = size,
         fill = das
       ), shape = 21) +
       geom_hline(yintercept = 0, lty = 1) +
@@ -312,21 +306,20 @@ diffAbundanceScore <- function(species = c("hsa", "mmu"),
       )) +
       theme(axis.text.x = element_text(size = 8)) +
       coord_flip()
-    if (save == "pdf") {
+
+    if (save == "none") {
       print(p)
     }
     ## save results
-    if (save != "pdf") {
-      sjPlot::save_plot(
-        paste(ref.path, "diffAbundenceScore", paste0("das_", groups[j], ".", save), sep = "/"),
-        fig = p,
+    if (save != "none") {
+      ggsave(
+        paste(ref.path, "/diffAbundenceScore_", paste0("das_", groups[j], ".", save), sep = ""),
+        plot = p,
         width = 22,
         height = 12,
         dpi = 300
       )
     }
   }
-  if (save == "pdf") {
-    dev.off()
-  }
 }
+
