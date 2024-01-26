@@ -6,25 +6,20 @@
 \usage{
 correlationPlot(
   dataList,
-  h = 3,
-  path = NULL,
-  save = c("pdf", "svg", "png"),
-  fig.width = 12,
-  fig.height = 9
+  data.type = c("MH", "Metabolon", "Others"),
+  species = c("hsa", "mmu"),
+  group = NULL,
+  var.imp = NULL
 )
 }
 \arguments{
 \item{dataList}{normalized data}
 
-\item{h}{cluster size}
+\item{data.type}{select platform used, c("MH", "Metabolon", "Others")}
 
-\item{path}{saving path}
+\item{species}{species to use "hsa" or "mmu"}
 
-\item{save}{either "pdf", "svg" or "png"}
-
-\item{fig.width}{plot width not applicable for pdf}
-
-\item{fig.height}{plot height not applicable for pdf}
+\item{group}{grouping variables}
 }
 \value{
 correlation matrix as a list and pdf output in defined path folder.

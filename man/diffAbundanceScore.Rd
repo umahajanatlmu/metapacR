@@ -11,7 +11,7 @@ diffAbundanceScore(
   p.value.cutoff = 0.05,
   fold.changes.cutoff = 1.5,
   common.mets = 15,
-  save = c("pdf", "svg", "png"),
+  save = c("pdf", "svg", "png", "none"),
   data.type = c("MH", "Metabolon", "Others"),
   fig.width = 12,
   fig.height = 9,
@@ -32,7 +32,7 @@ diffAbundanceScore(
 
 \item{common.mets}{minimum number of common metaolites}
 
-\item{save}{either "pdf", "svg" or "png"}
+\item{save}{either "pdf", "svg", "png", "none"}
 
 \item{data.type}{select platform used, c("MH", "Metabolon", "Others")}
 

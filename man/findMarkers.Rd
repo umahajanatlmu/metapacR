@@ -8,6 +8,8 @@ findMarkers(
   results,
   dataList,
   group,
+  data.type = c("MH", "Metabolon", "Others"),
+  species = c("hsa", "mmu"),
   p.value.cutoff = 0.05,
   auc.threshould = 0.6,
   fold.changes.cutoff = 1.5,
@@ -24,6 +26,10 @@ findMarkers(
 
 \item{group}{grouping variable, need to be one variable}
 
+\item{data.type}{select platform used, c("MH", "Metabolon", "Others")}
+
+\item{species}{species to use "hsa" or "mmu"}
+
 \item{p.value.cutoff}{p-value cutoff value}
 
 \item{auc.threshould}{auc cutoff threshold}
@@ -34,7 +40,7 @@ findMarkers(
 
 \item{rank.plot}{whether to plot rank plot}
 
-\item{dot.plot}{whether to plot dot plot}
+\item{dot.plot}{whether to plot dot plot, only if more than 1 comparisons}
 
 \item{heatmap}{whether to plot heatmap}
 }

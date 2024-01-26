@@ -11,7 +11,7 @@ plotMetaboliteAlteration(
   cutoff = 0.01,
   lipid.class = TRUE,
   data.type = c("MH", "Metabolon", "Others"),
-  save = c("pdf", "svg", "png"),
+  save = c("pdf", "svg", "png", "none"),
   fig.width = 12,
   fig.height = 9,
   dpi = 300,
@@ -31,7 +31,7 @@ plotMetaboliteAlteration(
 
 \item{data.type}{select platform used, c("MH", "Metabolon", "Others")}
 
-\item{save}{either "pdf", "svg" or "png"}
+\item{save}{either "pdf", "svg", "png" or "none"}
 
 \item{fig.width}{plot width not applicable for pdf}
 

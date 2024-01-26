@@ -4,10 +4,20 @@
 \alias{boxPlots}
 \title{boxPlots}
 \usage{
-boxPlots(dataList, group = NULL, path = NULL)
+boxPlots(
+  dataList,
+  data.type = c("MH", "Metabolon", "Others"),
+  species = c("hsa", "mmu"),
+  group = NULL,
+  path = NULL
+)
 }
 \arguments{
 \item{dataList}{raw metabolome data list from imputeTransformScale function.It need to have imputed.matrix and metadata.}
+
+\item{data.type}{select platform used, c("MH", "Metabolon", "Others")}
+
+\item{species}{species to use "hsa" or "mmu"}
 
 \item{group}{plotting grouping variable..should be 1}
 

@@ -11,7 +11,7 @@ piePlot(
   cutoff = 0.05,
   data.type = c("MH", "Metabolon", "Others"),
   lipid.class = TRUE,
-  save = c("pdf", "svg", "png"),
+  save = c("pdf", "svg", "png", "none"),
   Other_metadata = NULL,
   fig.width = 12,
   fig.height = 9,
@@ -31,7 +31,7 @@ piePlot(
 
 \item{lipid.class}{wheather to plot lipid or not}
 
-\item{save}{either "pdf", "svg" or "png"}
+\item{save}{either "pdf", "svg", "png" or "none"}
 
 \item{Other_metadata}{dataframe with metadata....it must have  columns: Metabolite, Metabolite_Name, Ontology_Class, Ontology_Subclass}
 

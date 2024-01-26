@@ -10,7 +10,7 @@ lipidChainLengthDistribution(
   p.value.cutoff = 0.05,
   fold.changes.cutoff = 1.5,
   path = NULL,
-  save = c("pdf", "svg", "png"),
+  save = c("pdf", "svg", "png", "none"),
   data.type = c("MH", "Metabolon", "Others"),
   fig.width = 12,
   fig.height = 9,
@@ -29,7 +29,7 @@ lipidChainLengthDistribution(
 
 \item{path}{saving path}
 
-\item{save}{either "pdf", "svg" or "png"}
+\item{save}{either "pdf", "svg" , "png", "none"}
 
 \item{data.type}{select platform used, c("MH", "Metabolon", "Others")}
 

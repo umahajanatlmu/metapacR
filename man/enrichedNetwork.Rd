@@ -12,7 +12,7 @@ enrichedNetwork(
   fold.changes.cutoff = 1.5,
   network.method = "diffusion",
   legend.pathway = 3,
-  save = c("pdf", "svg", "png"),
+  save = c("pdf", "svg", "png", "none"),
   data.type = c("MH", "Metabolon", "Others"),
   fig.width = 12,
   fig.height = 9,
@@ -34,7 +34,7 @@ enrichedNetwork(
 
 \item{legend.pathway}{number of pathways to map on plot}
 
-\item{save}{either "pdf", "svg" or "png"}
+\item{save}{either "pdf", "svg", "png" or "none"}
 
 \item{data.type}{select platform used, c("MH", "Metabolon", "Others")}
 

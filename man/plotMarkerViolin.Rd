@@ -4,12 +4,23 @@
 \alias{plotMarkerViolin}
 \title{plotMarkerViolin}
 \usage{
-plotMarkerViolin(dataList, grouping.variable, markers = markers, n.markers = 5)
+plotMarkerViolin(
+  dataList,
+  grouping.variable,
+  data.type = c("MH", "Metabolon", "Others"),
+  species = c("hsa", "mmu"),
+  markers = markers,
+  n.markers = 5
+)
 }
 \arguments{
 \item{dataList}{raw data list of metabolome data}
 
 \item{grouping.variable}{grouping variable to plot..need to be binary or multinomial}
+
+\item{data.type}{select platform used, c("MH", "Metabolon", "Others")}
+
+\item{species}{species to use "hsa" or "mmu"}
 
 \item{markers}{list of markers to plots. List can be supplemented from findMarkers function.}
 

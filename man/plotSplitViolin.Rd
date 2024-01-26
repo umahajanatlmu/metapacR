@@ -4,12 +4,22 @@
 \alias{plotSplitViolin}
 \title{plotSplitViolin}
 \usage{
-plotSplitViolin(dataList, grouping.variable = NULL, markers = NULL)
+plotSplitViolin(
+  dataList,
+  grouping.variable = NULL,
+  data.type = c("MH", "Metabolon", "Others"),
+  species = c("hsa", "mmu"),
+  markers = NULL
+)
 }
 \arguments{
 \item{dataList}{raw data from metabolome study}
 
 \item{grouping.variable}{grouping variable to plot..need to be binary or multinomial variable}
+
+\item{data.type}{select platform used, c("MH", "Metabolon", "Others")}
+
+\item{species}{species to use "hsa" or "mmu"}
 
 \item{markers}{list of markers to plots}
 }

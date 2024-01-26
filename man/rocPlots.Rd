@@ -6,31 +6,25 @@
 \usage{
 rocPlots(
   dataList,
+  data.type = c("MH", "Metabolon", "Others"),
+  species = c("hsa", "mmu"),
   group,
   path = NULL,
-  var.imp = "PDAC",
-  save = c("pdf", "svg", "png"),
-  fig.width = 12,
-  fig.height = 9,
-  dpi = 300
+  var.imp = "PDAC"
 )
 }
 \arguments{
 \item{dataList}{normalized data}
+
+\item{data.type}{select platform used, c("MH", "Metabolon", "Others")}
+
+\item{species}{species to use "hsa" or "mmu"}
 
 \item{group}{grouping variables}
 
 \item{path}{saving path}
 
 \item{var.imp}{disease for which ROC should be compared---should be one.}
-
-\item{save}{either "pdf", "svg" or "png"}
-
-\item{fig.width}{plot width not applicable for pdf}
-
-\item{fig.height}{plot height not applicable for pdf}
-
-\item{dpi}{dpi only applicable for png}
 }
 \value{
 summaryROC results table. rocPlots in save oblect in defined path.

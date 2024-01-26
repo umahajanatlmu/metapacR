@@ -4,12 +4,14 @@
 \alias{compareDiamReduction}
 \title{compareDiamReduction}
 \usage{
-compareDiamReduction(dataList, plotting.variable = NULL)
+compareDiamReduction(dataList, plotting.variable = NULL, crossvalI = 7)
 }
 \arguments{
 \item{dataList}{raw metabolome data list from imputeTransformScale function.It need to have imputed.matrix and metadata.}
 
 \item{plotting.variable}{plotting grouping variable..should be 1}
+
+\item{crossvalI}{number of cross-validation segments}
 }
 \value{
 Multivariate analyses results in list object.
