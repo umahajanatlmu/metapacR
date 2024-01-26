@@ -5,9 +5,9 @@
 \title{enrichedNetwork}
 \usage{
 enrichedNetwork(
+  results,
   species = c("hsa", "mmu"),
   ref.path = NULL,
-  results,
   p.value.cutoff = 0.05,
   fold.changes.cutoff = 1.5,
   network.method = "diffusion",
@@ -20,11 +20,11 @@ enrichedNetwork(
 )
 }
 \arguments{
+\item{results}{fold changes results}
+
 \item{species}{species to use "hsa" or "mmu"}
 
 \item{ref.path}{saving path}
-
-\item{results}{fold changes results}
 
 \item{p.value.cutoff}{cutoff value of p.value}
 
