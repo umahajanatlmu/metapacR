@@ -129,7 +129,6 @@ correlationPlot <- function(dataList,
   ## ----------------------------------------------------------------
   data <- bind_cols(metadata.data, imputed.data)
 
-
   ## convert to characters
   data[[group]] <- as.character(data[[group]])
 
@@ -146,10 +145,10 @@ correlationPlot <- function(dataList,
       temp <- temp[, colSums(is.na(temp)) != nrow(temp)]
 
       #temp <- t(temp)
-      corr_mat <- psych::corr.test(temp,
+      corr_mat <- psych::corr.test(as.matrix(temp),
                                    y = NULL,
                                    use = "complete.obs",
-                                   method="pearson",
+                                   method="kendall",
                                    adjust="fdr",
                                    alpha=.05,
                                    ci=FALSE,
@@ -172,10 +171,10 @@ correlationPlot <- function(dataList,
     for (i in unique(data[[group]])) {
       temp <- data[data[[group]] == i, !colnames(data) %in% group]
       #temp <- t(temp)
-      corr_mat <- psych::corr.test(temp,
+      corr_mat <- psych::corr.test(as.matrix(temp),
                                    y = NULL,
                                    use = "complete.obs",
-                                   method="pearson",
+                                   method="kendall",
                                    adjust="fdr",
                                    alpha=.05,
                                    ci=FALSE,
