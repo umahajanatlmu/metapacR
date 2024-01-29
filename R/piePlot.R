@@ -196,7 +196,7 @@ piePlot <- function(data,
 
     else if (save != "none") {
       ggsave(
-        filename = paste(path, "/piePlots_", paste0(i, ".", save), sep = "i"),
+        filename = paste(path, "/piePlots_", paste0(i, ".", save), sep = ""),
         plot = p,
         width = fig.width,
         height = fig.height,
