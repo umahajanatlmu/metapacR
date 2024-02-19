@@ -1,0 +1,3 @@
+load("/Users/ujjwalmahajan/Desktop/UJJWAL_LAB/DATA/MetaPac/R_analysis/metapacR/data/chemicalMetadata.rda")
+write.csv("chemicalMetadata.csv", chemicalMetadata)
+write.csv(chemicalMetadata, "chemicalMetadata.csv")
